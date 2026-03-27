@@ -1,0 +1,96 @@
+---
+title: "Schedule"
+sidebar: false
+toc: false
+page-layout: full
+format:
+  html:
+    anchor-sections: false
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(ggmeasr)
+library(here)
+library(gt)
+library(gtExtras)
+library(glue)
+library(fontawesome)
+
+sched <- read_csv(here("data", "schedule.csv"))
+```
+
+::: {.schedule-page}
+
+Here's your roadmap for the workshop!
+
+- [**Materials**](/materials/) ({{< fa book-open-reader >}}): This page contains the slides for each session.
+
+- [**Exercises**](https://github.com/measr-workshop/ncme2024-exercises) ({{< fa laptop-code >}}): This Github repository contains all of the exercises for each session.
+
+```{r}
+#| echo: false
+#| results: asis
+#| html-table-processing: none
+
+print_sched <- function(group, data) {
+  cat(as.character(paste("\n\n###", group, "{.unnumbered}\n\n")))
+
+  data |>
+    mutate(
+      time = str_replace(time, ":00$", ""),
+      time_end = str_replace(time_end, ":00$", ""),
+      time_range = paste0(time, "&ndash;", time_end),
+      time_range = map(time_range, html)
+    ) |>
+    select(title, time_range, content, example) |>
+    mutate(
+      content = ifelse(
+        !is.na(content),
+        glue(
+          '<a href="{content}.qmd"><i class="fa-solid fa-book-open-reader fa-lg"></i></a>'
+        ),
+        glue(
+          '<font color="#e9ecef"><i class="fa-solid fa-book-open-reader fa-lg"></i></font>'
+        )
+      ),
+      example = ifelse(
+        !is.na(example),
+        glue(
+          '<a href="{example}"><i class="fa-solid fa-laptop-code fa-lg"></i></a>'
+        ),
+        glue(
+          '<font color="#e9ecef"><i class="fa-solid fa-laptop-code fa-lg"></i></font>'
+        )
+      ),
+      content = map(content, html),
+      example = map(example, html)
+    ) |>
+    mutate(
+      title = case_when(
+        title == "Break" ~ glue("{emoji::emoji('coffee')} Break"),
+        TRUE ~ title
+      )
+    ) |>
+    gt() |>
+    gt_merge_stack(
+      title,
+      time_range,
+      small_cap = FALSE,
+      font_size = c("17px", "13px")
+    ) |>
+    cols_width(title ~ px(400), everything() ~ px(150)) |>
+    cols_label(title = "TITLE", content = "MATERIALS", example = "EXERCISES") |>
+    gt_theme_measr(table.align = "center") |>
+    cols_align(align = "left", columns = title) |>
+    cols_align(align = "center", columns = -title) |>
+    print()
+}
+
+sched |>
+  select(-deadline, -subgroup) |>
+  nest(data = -group) |>
+  pwalk(print_sched)
+```
+
+:::

@@ -1,0 +1,36 @@
+author: Jake Thompson
+
+instructor:
+  name: W. Jake Thompson, Ph.D.
+  name_no_title: Jake Thompson
+  work: ATLAS, University of Kansas
+  work_url: "https://atlas.ku.edu"
+  email: wjakethompson@ku.edu
+  url: "https://wjakethompson.com"
+  linkedin: in/wjakethompson
+  github: wjakethompson
+  mastodon: wjakethompson@fosstodon.org
+  bluesky: wjakethompson.com
+
+event:
+  name: "National Council on Measurement in Education"
+  time: "8:00am–10:00am (intro)"
+  time2: "10:30am-12:30pm (advanced)"
+  location: "Los Angeles, CA"
+  room: "InterContinental Los Angeles Downtown, Hollywood Ballroom II"
+  dates: "April 8, 2026"
+  github: "https://www.github.com/r-dcm/learn.r-dcm.org"
+  url: "https://learn.r-dcm.org"
+  copyright_year: "2026"
+
+university:
+  name: University of Kansas
+  url: "https://ku.edu/"
+
+institute:
+  name: Achievement and Assessment Institute
+  url: "https://aai.ku.edu/"
+
+center:
+  name: Accessible Teaching, Learning, and Assessment Systems
+  url: "https://atlas.ku.edu/"
