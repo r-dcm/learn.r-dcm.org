@@ -1,0 +1,669 @@
+---
+title: Estimating diagnostic </br> classification models
+subtitle: With Stan and measr
+author: W. Jake Thompson, Ph.D.
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(ggmeasr)
+library(ggdist)
+library(magick)
+library(distributional)
+library(knitr)
+library(measr)
+library(here)
+library(fs)
+library(downlit)
+library(countdown)
+library(cmdstanr)
+
+set_theme(plot_margin = margin(5, 0, 0, 0))
+
+# copy grid-worms
+if (!dir_exists(here("_site/materials/slides/"))) {
+  dir_create(here("_site/materials/slides/"))
+}
+dir_copy(
+  here("materials", "slides", "grid-worms"),
+  here("_site/materials/slides/grid-worms"),
+  overwrite = TRUE
+)
+```
+
+# Example data
+
+## Data for examples
+
+* Examination for the certificate of proficiency in English (ECPE; [Templin & Hoffman, 2013](https://doi.org/10.1111/emip.12010))
+  * 28 items measuring 3 total attributes
+  * 2,922 respondents
+
+* 3 attributes
+  * Morphosyntactic rules
+  * Cohesive rules
+  * Lexical rules
+
+## ECPE data
+
+```{r}
+#| label: ecpe-data
+#| echo: true
+
+library(dcmdata)
+
+ecpe_data
+```
+
+## ECPE Q-matrix
+
+```{r}
+#| label: ecpe-qmatrix
+#| echo: true
+#| code-line-numbers: "|5|6,12|7,11"
+
+ecpe_qmatrix
+```
+
+## Data for exercises {.exercise}
+
+* Rapid online assessment of reading and phonological awareness (ROAR-PA; [Gijbels et al., 2024](https://doi.org/10.1038/s41598-024-60834-9))
+
+## Exercise 1 {.exercise}
+
+1. Download the exercise files
+```{r}
+#| label: download-materials
+#| echo: true
+#| eval: false
+
+usethis::use_course("r-dcm/ncme2026-exercises")
+```
+
+2. Open `estimation.Rmd`
+
+3. Run the `setup` chunk
+
+4. Explore the ROAR-PA data and Q-matrix
+    * How many items are in the data?
+    * How many respondents are in the data? 
+    * How many attributes are measured?
+    
+{{< countdown "3:00" bottom="15%" >}}
+
+## {.exercise data-menu-title="Solution 1"}
+
+::: {.panel-tabset}
+
+### ROAR-PA data
+
+:::{.columns}
+
+:::{.column width="60%"}
+```{r}
+#| label: roarpa-data
+#| echo: true
+
+roarpa_data
+```
+
+:::
+
+:::{.column width="40%"}
+
+* 57 items
+* 272 respondents
+
+:::
+
+:::
+
+### ROAR-PA Q-matrix
+
+:::{.columns}
+
+:::{.column width="60%"}
+```{r}
+#| label: roarpa-qmatrix
+#| echo: true
+
+roarpa_qmatrix
+```
+
+:::
+
+:::{.column width="40%"}
+
+* 57 items
+* 3 attributes
+  * First sound matching (`fsm`)
+  * Last sound matching (`lsm`)
+  * Deletion (`del`)
+
+:::
+
+:::
+
+:::
+
+# Estimation options
+
+## Existing software
+
+</br>
+
+:::{.columns}
+:::{.column width="50%"}
+:::{.center}
+**Software Programs**
+:::
+
+* Mplus, flexMIRT, mdltm
+* Limitations
+  * Tedious to implement, expensive, limited licenses, etc.
+:::
+
+:::{.column width="50%"}
+:::{.center}
+**R Packages**
+:::
+
+* CDM, GDINA, mirt, blatant
+* Limitations
+  * Limited to constrained DCMs, under-documented
+  * Different packages have different functionality, and don't talk to each other
+:::
+:::
+
+## DCMs with Stan
+
+:::{.columns}
+:::{.column width="60%"}
+* Stan is free and open-source
+* Existing documentation for implementing DCMs
+  * [Case study using the DINA model](https://mc-stan.org/learn-stan/case-studies/dina_independent.html)
+  * [Paper describing LCDM implmentation](https://doi.org/10.3758/s13428-018-1069-9)
+* Access to other packages in the Stan ecosystem
+  * [loo](https://mc-stan.org/loo/)
+  * [tidybayes](http://mjskay.github.io/tidybayes/)
+  * [posterior](https://mc-stan.org/posterior/)
+:::
+
+:::{.column width="40%"}
+:::{.center}
+![](figure/stan.png){fig-alt="Stan logo."}
+:::
+:::
+:::
+
+## Limitations of Stan for DCMs
+
+* Very tedious---prone to typos
+* Complexity increases with the number of attributes and item structure
+* Stan code must be customized to each particular Q-matrix
+
+* Just need to automate the creation of the Stan scripts...
+
+
+# {.empty data-menu-title="measr" background-color="#023047" background-iframe="grid-worms/index.html"}
+
+```{r}
+#| label: big-image
+#| out-width: 100%
+#| fig-alt: "Hex logo for the measr R package."
+
+include_graphics(here("materials", "slides", "figure", "measr.png"))
+```
+
+## What is measr?
+
+* R package that automates the creation of Stan scripts for DCMs
+* Wraps [rstan](https://mc-stan.org/rstan) or [cmdstanr](https://mc-stan.org/cmdstanr) to estimate the models
+* Provides additional functions to automate the evaluation of DCMs
+  * Model fit
+  * Classification accuracy and consistency
+
+## Model specification
+
+Specify a DCM with `dcm_specify()`</br></br>
+
+```{r}
+#| label: specify-ecpe
+#| echo: true
+
+ecpe_spec <- dcm_specify(
+  qmatrix = ecpe_qmatrix, # <1>
+  identifier = "item_id", # <1>
+  measurement_model = lcdm(), # <2>
+  structural_model = unconstrained() # <2>
+)
+```
+
+1. Specify your Q-matrix, and ID column (if present)
+2. Choose the measurement and structural model to estimate
+
+## Model estimation
+
+Estimate a DCM with `dcm_estimate()`</br></br>
+
+```{r}
+#| label: estimate-ecpe
+#| echo: true
+
+ecpe_lcdm <- dcm_estimate(
+  dcm_spec = ecpe_spec, # <1>
+  data = ecpe_data, # <2>
+  identifier = "resp_id", # <2>
+  method = "pathfinder", # <3>
+  backend = "cmdstanr", # <3>
+  single_path_draws = 1000, # <4>
+  num_paths = 10, # <4>
+  draws = 2000, # <4>
+  file = here("materials", "slides", "fits", "ecpe-lcdm-uncst") # <5>
+)
+```
+
+1. Define your model specification
+2. Specify your data and ID column (if present)
+3. Choose your estimation method and backend
+4. Pass additional arguments to the backend
+5. Save the model for future efficiency
+
+
+## `dcm_estimate()` options
+
+* `method`: How to estimate the model
+  * Full posterior sampling with "mcmc"
+  * Quicker, but more limited "optim"
+  * Posterior approximation with "variational" (default) or "pathfinder"
+    * Variational inference does not always converge
+    * Pathfinder is only available for the cmdstanr backend
+
+* `...`: Additional arguments that are passed to, depending on the `method` and `backend`
+
+:::{.columns}
+:::{.column width="50%"}
+* 
+  * `r autolink("rstan::sampling()")`
+  * `r autolink("rstan::optimizing()")`
+  * `r autolink("rstan::vb()")`
+:::
+
+:::{.column width="50%"}
+*
+  * `r autolink("cmdstanr::sample()")`
+  * `r autolink("cmdstanr::optimize()")`
+  * `r autolink("cmdstanr::variational()")`
+  * `r autolink("cmdstanr::pathfinder()")`
+:::
+
+:::  
+
+## Exercise 2 {.exercise}
+
+* Estimate an LCDM on the ROAR-PA data using Stan's variational algorithm.
+  * Use `{rstan}` for the backend
+  * Use seed: 19891213
+
+{{< countdown "15:00" bottom="15%" >}}
+
+## {.exercise data-menu-title="Solution 2"}
+
+:::{.panel-tabset}
+
+### Specification
+
+```{r}
+#| label: roarpa-spec
+#| echo: true
+
+roarpa_spec <- dcm_specify(
+  qmatrix = roarpa_qmatrix,
+  identifier = "item",
+  measurement_model = lcdm(),
+  structural_model = unconstrained()
+)
+```
+
+### Estimation
+
+```{r}
+#| label: roarpa-model
+#| echo: true
+
+roarpa_lcdm <- dcm_estimate(
+  roarpa_spec,
+  data = roarpa_data,
+  identifier = "id",
+  method = "variational",
+  backend = "rstan",
+  seed = "19891213",
+  file = here("materials", "slides", "fits", "roarpa-lcdm-uncst")
+)
+```
+
+:::
+
+
+## Extracting item parameters
+
+:::{.small}
+`measr_extract()` can be used to pull out components of an estimated model.
+:::
+
+```{r}
+#| label: ecpe-item
+#| echo: true
+
+measr_extract(ecpe_lcdm, "item_param")
+```
+
+## Extracting structural parameters
+
+```{r}
+#| label: ecpe-strc
+#| echo: true
+#| code-line-numbers: "|5,8,11,12"
+
+measr_extract(ecpe_lcdm, "strc_param")
+```
+
+## Extracting respondent probabilities
+
+```{r}
+#| label: add-ecpe-prob
+
+ecpe_lcdm <- add_respondent_estimates(ecpe_lcdm)
+```
+
+```{r}
+#| label: ecpe-prob
+#| echo: true
+
+measr_extract(ecpe_lcdm, "attribute_prob")
+```
+
+## Exercise 3 {.exercise}
+
+What proportion of respondents have mastered both first and last sound matching in the ROAR-PA data?
+
+What is the probability that respondent 153 has mastered deletion?
+
+{{< countdown "3:00" bottom="15%" >}}
+
+## {.exercise data-menu-title="Solution 3"}
+
+:::{.panel-tabset}
+
+### Structural parameters
+
+```{r}
+#| label: roarpa-strc
+#| echo: true
+#| code-line-numbers: "|10,12|20"
+
+measr_extract(roarpa_lcdm, "strc_param")
+
+measr_extract(roarpa_lcdm, "strc_param") |>
+  filter(fsm == 1, lsm == 1) |>
+  summarize(estimate = rvar_sum(estimate))
+```
+
+
+### Respondent probabilities
+
+```{r}
+#| label: add-roarpa-prob
+
+roarpa_lcdm <- add_respondent_estimates(roarpa_lcdm)
+```
+
+```{r}
+#| label: roarpa-prob
+#| echo: true
+
+measr_extract(roarpa_lcdm, "attribute_prob") |>
+  filter(id == 153)
+```
+
+:::
+
+# Priors
+
+## Default priors
+
+```{r}
+#| label: default-priors
+#| echo: true
+
+default_dcm_priors(
+  measurement_model = lcdm(),
+  structural_model = unconstrained()
+)
+```
+
+## Weakly informative priors {.empty-white}
+
+```{r}
+#| label: calc-prior
+#| include: false
+#| cache: true
+
+library(rstan)
+
+prior_mod <- "
+parameters{
+  real l1_0;
+  real<lower=0> l1_11;
+  real<lower=0> l1_12;
+  real<lower=-1*min([l1_11,l1_12])> l1_212;
+}
+transformed parameters {
+  matrix[1,4] pi;
+
+  pi[1,1] = inv_logit(l1_0);
+  pi[1,2] = inv_logit(l1_0 + l1_11);
+  pi[1,3] = inv_logit(l1_0 + l1_12);
+  pi[1,4] = inv_logit(l1_0 + l1_11 + l1_12 + l1_212);
+}
+model {
+  l1_0 ~ normal(0, 2);
+  l1_11 ~ lognormal(0, 1);
+  l1_12 ~ lognormal(0, 1);
+  l1_212 ~ normal(0, 2);
+}
+"
+
+prior_stan <- stan(model_code = prior_mod)
+
+draws <- posterior::as_draws_df(prior_stan) |>
+  posterior::subset_draws("pi") |>
+  as_tibble() |>
+  pivot_longer(starts_with("pi")) |>
+  mutate(
+    class = case_when(
+      name == "pi[1,1]" ~ "[0,0]",
+      name == "pi[1,2]" ~ "[1,0]",
+      name == "pi[1,3]" ~ "[0,1]",
+      name == "pi[1,4]" ~ "[1,1]"
+    ),
+    class = fct_inorder(class)
+  )
+```
+
+```{r}
+#| label: plot-prior
+#| out-width: 80%
+#| out-height: 80%
+#| fig-alt: "The distribution of expected probabilities of providing a correct response for each class, based on the default priors."
+
+ramp_msr <- make_color_pal(palette_measr[c(3, 4, 1)])
+
+ggplot(draws, aes(x = value, y = class)) +
+  stat_interval(.width = c(0.67, 0.89, 0.97), linewidth = 10) +
+  scale_color_manual(
+    values = ramp_msr(seq(0.9, 0.1, length.out = 3)),
+    breaks = c(0.67, 0.89, 0.97)
+  ) +
+  labs(x = "Probability of Correct Response", y = "Class", color = "Interval")
+```
+
+## Creating custom priors
+
+```{r}
+#| label: class-prior
+#| echo: true
+
+prior(normal(0, 10), type = "maineffect")
+```
+
+</br> </br>
+
+:::{.fragment}
+```{r}
+#| label: coef-prior
+#| echo: true
+
+prior(normal(0, 1), type = "intercept", coefficient = "l3_0")
+```
+
+:::
+
+## Specifying custom priors
+
+:::{.panel-tabset}
+
+### Define separately
+
+```{r}
+#| label: sep-prior
+#| echo: true
+#| code-line-numbers: "|1-4,11"
+
+my_prior <- c(
+  prior(normal(-1, 1), type = "intercept"),
+  prior(lognormal(0, 5), type = "maineffect")
+)
+
+new_spec <- dcm_specify(
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id",
+  measurement_model = lcdm(),
+  structural_model = unconstrained(),
+  priors = my_prior
+)
+```
+
+### Define in `dcm_specify()`
+
+```{r}
+#| label: func-prior
+#| echo: true
+#| code-line-numbers: "|6-9"
+
+new_spec <- dcm_specify(
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id",
+  measurement_model = lcdm(),
+  structural_model = unconstrained(),
+  priors = c(
+    prior(normal(-1, 1), type = "intercept"),
+    prior(lognormal(0, 5), type = "maineffect")
+  )
+)
+```
+
+### Check priors
+
+```{r}
+#| label: view-priors
+#| echo: true
+#| code-line-numbers: "|13-17"
+
+new_spec
+```
+
+:::
+
+## Extract priors
+
+```{r}
+#| label: extract-prior
+#| echo: true
+
+measr_extract(ecpe_lcdm, "prior")
+```
+
+## Exercise 4 {.exercise}
+
+Estimate a new LCDM model for the ROAR-PA data with the following priors:
+
+* Intercepts: `normal(-1, 2)`
+  * Except item 3, which should use a `normal(0, 1)` prior
+* Main effects: `lognormal(0, 1)`
+
+Use `backend = "optim"` for a speedier estimation
+
+Extract the prior to see that the specifications were applied
+
+{{< countdown "5:00" bottom="15%" >}}
+
+## {.exercise data-menu-title="Solution 4"}
+
+:::{.panel-tabset}
+
+### Estimate model
+
+```{r}
+#| label: fit-roarpa-new
+#| echo: true
+#| code-line-numbers: "|6-10"
+
+new_roarpa <- dcm_estimate(
+  dcm_spec = dcm_specify(
+    qmatrix = roarpa_qmatrix,
+    identifier = "item",
+    measurement_model = lcdm(),
+    priors = c(
+      prior(normal(-1, 2), type = "intercept"),
+      prior(normal(0, 1), type = "intercept", coefficient = "l3_0"),
+      prior(lognormal(0, 1), type = "maineffect")
+    )
+  ),
+  data = roarpa_data,
+  identifier = "id",
+  method = "optim",
+  backend = "rstan",
+  file = here("materials", "slides", "fits", "roarpa-new-prior")
+)
+```
+
+### Extract priors
+
+```{r}
+#| label: extract-roarpa-new
+#| echo: true
+
+measr_extract(new_roarpa, "prior")
+```
+
+:::
+
+# {.closing data-menu-title="Closing"}
+
+</br>
+
+:::{.end-title color="white" font-size="200%"}
+Estimating diagnostic classification models
+:::
+
+:::{.end-subtitle}
+With Stan and measr
+:::
+
+:::{.center}
+<https://learn.r-dcm.org>
+:::
