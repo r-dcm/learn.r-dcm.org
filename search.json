@@ -1,0 +1,822 @@
+[
+  {
+    "objectID": "schedule.html",
+    "href": "schedule.html",
+    "title": "Schedule",
+    "section": "",
+    "text": "Here’s your roadmap for the workshop!\n\nMaterials (): This page contains the slides for each session.\nExercises (): This Github repository contains all of the exercises for each session.\n\n\nIntroduction to Diagnostic Classification Modeling\n\n\n\n\n\n\n\n\n\n\n\nTITLE\n\n\nMATERIALS\n\n\nEXERCISES\n\n\n\n\n\n\n\nWelcome\n\n\n08:00–08:15\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to diagnostic models\n\n\n08:15–08:30\n\n\n\n\n\n\n\n\n\n\n\n\nEstimating diagnostic models\n\n\n08:30–09:10\n\n\n\n\n\n\n\n\n\n\n\n\nEvaluating diagnostic models\n\n\n09:10–09:50\n\n\n\n\n\n\n\n\n\n\n\n\nWrap-up\n\n\n09:50–10:00\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAdvanced Diagnostic Classification Modeling\n\n\n\n\n\n\n\n\n\n\n\nTITLE\n\n\nMATERIALS\n\n\nEXERCISES\n\n\n\n\n\n\n\nWelcome\n\n\n10:30–10:45\n\n\n\n\n\n\n\n\n\n\n\n\nMeasurement models\n\n\n10:45–11:15\n\n\n\n\n\n\n\n\n\n\n\n\nStructural models\n\n\n11:15–11:45\n\n\n\n\n\n\n\n\n\n\n\n\nDetecting model misspecifications\n\n\n11:45–12:15\n\n\n\n\n\n\n\n\n\n\n\n\nWrap-up\n\n\n12:15–12:30"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#data-for-examples",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#data-for-examples",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Data for examples",
+    "text": "Data for examples\n\nExamination for the certificate of proficiency in English (ECPE; Templin & Hoffman, 2013)\n\n28 items measuring 3 total attributes\n2,922 respondents\n\n3 attributes\n\nMorphosyntactic rules\nCohesive rules\nLexical rules"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#ecpe-data",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#ecpe-data",
+    "title": "Estimating diagnostic  classification models",
+    "section": "ECPE data",
+    "text": "ECPE data\n\nlibrary(dcmdata)\n\necpe_data\n#&gt; # A tibble: 2,922 × 29\n#&gt;    resp_id    E1    E2    E3    E4    E5    E6    E7    E8    E9   E10   E11\n#&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;\n#&gt;  1       1     1     1     1     0     1     1     1     1     1     1     1\n#&gt;  2       2     1     1     1     1     1     1     1     1     1     1     1\n#&gt;  3       3     1     1     1     1     1     1     0     1     1     1     1\n#&gt;  4       4     1     1     1     1     1     1     1     1     1     1     1\n#&gt;  5       5     1     1     1     1     1     1     1     1     1     1     1\n#&gt;  6       6     1     1     1     1     1     1     1     1     1     1     1\n#&gt;  7       7     1     1     1     1     1     1     1     1     1     1     1\n#&gt;  8       8     0     1     1     1     1     1     0     1     1     1     0\n#&gt;  9       9     1     1     1     1     1     1     1     1     1     1     1\n#&gt; 10      10     1     1     1     1     0     0     1     1     1     1     1\n#&gt; # ℹ 2,912 more rows\n#&gt; # ℹ 17 more variables: E12 &lt;int&gt;, E13 &lt;int&gt;, E14 &lt;int&gt;, E15 &lt;int&gt;, E16 &lt;int&gt;,\n#&gt; #   E17 &lt;int&gt;, E18 &lt;int&gt;, E19 &lt;int&gt;, E20 &lt;int&gt;, E21 &lt;int&gt;, E22 &lt;int&gt;,\n#&gt; #   E23 &lt;int&gt;, E24 &lt;int&gt;, E25 &lt;int&gt;, E26 &lt;int&gt;, E27 &lt;int&gt;, E28 &lt;int&gt;"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#ecpe-q-matrix",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#ecpe-q-matrix",
+    "title": "Estimating diagnostic  classification models",
+    "section": "ECPE Q-matrix",
+    "text": "ECPE Q-matrix\n\necpe_qmatrix\n#&gt; # A tibble: 28 × 4\n#&gt;    item_id morphosyntactic cohesive lexical\n#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;\n#&gt;  1 E1                    1        1       0\n#&gt;  2 E2                    0        1       0\n#&gt;  3 E3                    1        0       1\n#&gt;  4 E4                    0        0       1\n#&gt;  5 E5                    0        0       1\n#&gt;  6 E6                    0        0       1\n#&gt;  7 E7                    1        0       1\n#&gt;  8 E8                    0        1       0\n#&gt;  9 E9                    0        0       1\n#&gt; 10 E10                   1        0       0\n#&gt; # ℹ 18 more rows"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#data-for-exercises",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#data-for-exercises",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Data for exercises",
+    "text": "Data for exercises\n\nRapid online assessment of reading and phonological awareness (ROAR-PA; Gijbels et al., 2024)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#exercise-1",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#exercise-1",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\nDownload the exercise files\n\n\nusethis::use_course(\"r-dcm/ncme2026-exercises\")\n\n\nOpen estimation.Rmd\nRun the setup chunk\nExplore the ROAR-PA data and Q-matrix\n\nHow many items are in the data?\nHow many respondents are in the data?\nHow many attributes are measured?"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#section",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#section",
+    "title": "Estimating diagnostic  classification models",
+    "section": "",
+    "text": "ROAR-PA dataROAR-PA Q-matrix\n\n\n\n\n\nroarpa_data\n#&gt; # A tibble: 222 × 58\n#&gt;       id fsm_01 fsm_04 fsm_05 fsm_06 fsm_07 fsm_08 fsm_10 fsm_11 fsm_12 fsm_14\n#&gt;    &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;  &lt;int&gt;\n#&gt;  1   161      0      1      1      1      1      0      0      1      1      1\n#&gt;  2   226      0      1      0      1      0      0      1      0      1      0\n#&gt;  3   103      0      1      0      1      0      0      0      0      0      0\n#&gt;  4     7      1      1      0      0      1      0      0      0      1      1\n#&gt;  5   185      1      1      1      1      1      1      1      1      1      1\n#&gt;  6    36      1      1      1      1      1      1      1      1      1      1\n#&gt;  7   206      1      1      1      1      1      1      1      1      1      1\n#&gt;  8   115      1      1      1      1      1      1      1      1      1      1\n#&gt;  9   106      1      1      1      1      1      1      1      1      1      1\n#&gt; 10   205      1      1      1      1      0      0      1      1      1      1\n#&gt; # ℹ 212 more rows\n#&gt; # ℹ 47 more variables: fsm_15 &lt;int&gt;, fsm_16 &lt;int&gt;, fsm_17 &lt;int&gt;, fsm_18 &lt;int&gt;,\n#&gt; #   fsm_21 &lt;int&gt;, fsm_22 &lt;int&gt;, fsm_23 &lt;int&gt;, fsm_24 &lt;int&gt;, fsm_25 &lt;int&gt;,\n#&gt; #   lsm_01 &lt;int&gt;, lsm_02 &lt;int&gt;, lsm_04 &lt;int&gt;, lsm_05 &lt;int&gt;, lsm_06 &lt;int&gt;,\n#&gt; #   lsm_07 &lt;int&gt;, lsm_08 &lt;int&gt;, lsm_10 &lt;int&gt;, lsm_11 &lt;int&gt;, lsm_13 &lt;int&gt;,\n#&gt; #   lsm_15 &lt;int&gt;, lsm_16 &lt;int&gt;, lsm_17 &lt;int&gt;, lsm_18 &lt;int&gt;, lsm_19 &lt;int&gt;,\n#&gt; #   lsm_20 &lt;int&gt;, lsm_21 &lt;int&gt;, lsm_22 &lt;int&gt;, lsm_24 &lt;int&gt;, del_01 &lt;int&gt;, …\n\n\n\n57 items\n222 respondents\n\n\n\n\n\n\n\nroarpa_qmatrix\n#&gt; # A tibble: 57 × 4\n#&gt;    item     lsm   del   fsm\n#&gt;    &lt;chr&gt;  &lt;int&gt; &lt;int&gt; &lt;int&gt;\n#&gt;  1 fsm_01     0     0     1\n#&gt;  2 fsm_04     0     0     1\n#&gt;  3 fsm_05     0     0     1\n#&gt;  4 fsm_06     0     0     1\n#&gt;  5 fsm_07     0     0     1\n#&gt;  6 fsm_08     0     0     1\n#&gt;  7 fsm_10     0     0     1\n#&gt;  8 fsm_11     0     0     1\n#&gt;  9 fsm_12     0     0     1\n#&gt; 10 fsm_14     0     0     1\n#&gt; # ℹ 47 more rows\n\n\n\n57 items\n3 attributes\n\nFirst sound matching (fsm)\nLast sound matching (lsm)\nDeletion (del)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#existing-software",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#existing-software",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Existing software",
+    "text": "Existing software\n\n\n\n\nSoftware Programs\n\n\nMplus, flexMIRT, mdltm\nLimitations\n\nTedious to implement, expensive, limited licenses, etc.\n\n\n\n\nR Packages\n\n\nCDM, GDINA, mirt, blatant\nLimitations\n\nLimited to constrained DCMs, under-documented\nDifferent packages have different functionality, and don’t talk to each other"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#dcms-with-stan",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#dcms-with-stan",
+    "title": "Estimating diagnostic  classification models",
+    "section": "DCMs with Stan",
+    "text": "DCMs with Stan\n\n\n\nStan is free and open-source\nExisting documentation for implementing DCMs\n\nCase study using the DINA model\nPaper describing LCDM implmentation\n\nAccess to other packages in the Stan ecosystem\n\nloo\ntidybayes\nposterior"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#limitations-of-stan-for-dcms",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#limitations-of-stan-for-dcms",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Limitations of Stan for DCMs",
+    "text": "Limitations of Stan for DCMs\n\nVery tedious—prone to typos\nComplexity increases with the number of attributes and item structure\nStan code must be customized to each particular Q-matrix\nJust need to automate the creation of the Stan scripts…"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#what-is-measr",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#what-is-measr",
+    "title": "Estimating diagnostic  classification models",
+    "section": "What is measr?",
+    "text": "What is measr?\n\nR package that automates the creation of Stan scripts for DCMs\nWraps rstan or cmdstanr to estimate the models\nProvides additional functions to automate the evaluation of DCMs\n\nModel fit\nClassification accuracy and consistency"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#model-specification",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#model-specification",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Model specification",
+    "text": "Model specification\nSpecify a DCM with dcm_specify()\n\necpe_spec &lt;- dcm_specify(\n1  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n2  measurement_model = lcdm(),\n  structural_model = unconstrained()\n)\n\n\n1\n\nSpecify your Q-matrix, and ID column (if present)\n\n2\n\nChoose the measurement and structural model to estimate"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#model-estimation",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#model-estimation",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Model estimation",
+    "text": "Model estimation\nEstimate a DCM with dcm_estimate()\n\necpe_lcdm &lt;- dcm_estimate(\n1  dcm_spec = ecpe_spec,\n2  data = ecpe_data,\n  identifier = \"resp_id\",\n3  method = \"pathfinder\",\n  backend = \"cmdstanr\",\n4  single_path_draws = 1000,\n  num_paths = 10,\n  draws = 2000,\n5  file = here(\"materials\", \"slides\", \"fits\", \"ecpe-lcdm-uncst\")\n)\n\n\n1\n\nDefine your model specification\n\n2\n\nSpecify your data and ID column (if present)\n\n3\n\nChoose your estimation method and backend\n\n4\n\nPass additional arguments to the backend\n\n5\n\nSave the model for future efficiency"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#dcm_estimate-options",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#dcm_estimate-options",
+    "title": "Estimating diagnostic  classification models",
+    "section": "dcm_estimate() options",
+    "text": "dcm_estimate() options\n\nmethod: How to estimate the model\n\nFull posterior sampling with “mcmc”\nQuicker, but more limited “optim”\nPosterior approximation with “variational” (default) or “pathfinder”\n\nVariational inference does not always converge\nPathfinder is only available for the cmdstanr backend\n\n\n...: Additional arguments that are passed to, depending on the method and backend\n\n\n\n\n\nrstan::sampling()\nrstan::optimizing()\nrstan::vb()\n\n\n\n\n\ncmdstanr::sample()\ncmdstanr::optimize()\ncmdstanr::variational()\ncmdstanr::pathfinder()"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#exercise-2",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#exercise-2",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\nEstimate an LCDM on the ROAR-PA data using variational inference.\n\nUse rstan for the backend\nUse seed: 19891213"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#section-2",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#section-2",
+    "title": "Estimating diagnostic  classification models",
+    "section": "",
+    "text": "SpecificationEstimation\n\n\n\nroarpa_spec &lt;- dcm_specify(\n  qmatrix = roarpa_qmatrix,\n  identifier = \"item\",\n  measurement_model = lcdm(),\n  structural_model = unconstrained()\n)\n\n\n\n\nroarpa_lcdm &lt;- dcm_estimate(\n  roarpa_spec,\n  data = roarpa_data,\n  identifier = \"id\",\n  method = \"variational\",\n  backend = \"rstan\",\n  seed = 19891213,\n  file = here(\"materials\", \"slides\", \"fits\", \"roarpa-lcdm-uncst\")\n)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#extracting-item-parameters",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#extracting-item-parameters",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Extracting item parameters",
+    "text": "Extracting item parameters\n\nmeasr_extract() can be used to pull out components of an estimated model.\n\n\nmeasr_extract(ecpe_lcdm, \"item_param\")\n#&gt; # A tibble: 74 × 5\n#&gt;    item_id type        attributes                coefficient       estimate\n#&gt;    &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;                     &lt;chr&gt;           &lt;rvar[1d]&gt;\n#&gt;  1 E1      intercept   &lt;NA&gt;                      l1_0          0.82 ± 0.043\n#&gt;  2 E1      maineffect  morphosyntactic           l1_11         0.71 ± 0.035\n#&gt;  3 E1      maineffect  cohesive                  l1_12         0.65 ± 0.025\n#&gt;  4 E1      interaction morphosyntactic__cohesive l1_212        0.60 ± 0.084\n#&gt;  5 E2      intercept   &lt;NA&gt;                      l2_0          1.05 ± 0.028\n#&gt;  6 E2      maineffect  cohesive                  l2_12         1.24 ± 0.045\n#&gt;  7 E3      intercept   &lt;NA&gt;                      l3_0         -0.51 ± 0.069\n#&gt;  8 E3      maineffect  morphosyntactic           l3_11         0.84 ± 0.092\n#&gt;  9 E3      maineffect  lexical                   l3_13         0.41 ± 0.018\n#&gt; 10 E3      interaction morphosyntactic__lexical  l3_213        0.40 ± 0.108\n#&gt; # ℹ 64 more rows"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#extracting-structural-parameters",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#extracting-structural-parameters",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Extracting structural parameters",
+    "text": "Extracting structural parameters\n\nmeasr_extract(ecpe_lcdm, \"strc_param\")\n#&gt; # A tibble: 8 × 5\n#&gt;   class   morphosyntactic cohesive lexical         estimate\n#&gt;   &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;       &lt;rvar[1d]&gt;\n#&gt; 1 [0,0,0]               0        0       0  0.291 ± 0.00588\n#&gt; 2 [1,0,0]               1        0       0  0.018 ± 0.00198\n#&gt; 3 [0,1,0]               0        1       0  0.020 ± 0.00117\n#&gt; 4 [0,0,1]               0        0       1  0.133 ± 0.00517\n#&gt; 5 [1,1,0]               1        1       0  0.015 ± 0.00253\n#&gt; 6 [1,0,1]               1        0       1  0.020 ± 0.00097\n#&gt; 7 [0,1,1]               0        1       1  0.154 ± 0.00909\n#&gt; 8 [1,1,1]               1        1       1  0.350 ± 0.00487"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#extracting-respondent-probabilities",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#extracting-respondent-probabilities",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Extracting respondent probabilities",
+    "text": "Extracting respondent probabilities\n\nmeasr_extract(ecpe_lcdm, \"attribute_prob\")\n#&gt; # A tibble: 2,922 × 4\n#&gt;    resp_id morphosyntactic cohesive lexical\n#&gt;    &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n#&gt;  1 1               0.997     0.951   1.000 \n#&gt;  2 2               0.995     0.866   1.000 \n#&gt;  3 3               0.976     0.987   1.000 \n#&gt;  4 4               0.998     0.990   1.000 \n#&gt;  5 5               0.990     0.979   0.944 \n#&gt;  6 6               0.993     0.989   1.000 \n#&gt;  7 7               0.993     0.989   1.000 \n#&gt;  8 8               0.00208   0.403   0.973 \n#&gt;  9 9               0.953     0.984   0.998 \n#&gt; 10 10              0.701     0.0932  0.0847\n#&gt; # ℹ 2,912 more rows"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#exercise-3",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#exercise-3",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Exercise 3",
+    "text": "Exercise 3\nWhat proportion of respondents have mastered both first and last sound matching in the ROAR-PA data?\nWhat is the probability that respondent 153 has mastered deletion?"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#section-3",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#section-3",
+    "title": "Estimating diagnostic  classification models",
+    "section": "",
+    "text": "Structural parametersRespondent probabilities\n\n\n\nmeasr_extract(roarpa_lcdm, \"strc_param\")\n#&gt; # A tibble: 8 × 5\n#&gt;   class     lsm   del   fsm        estimate\n#&gt;   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;      &lt;rvar[1d]&gt;\n#&gt; 1 [0,0,0]     0     0     0  0.158 ± 0.0269\n#&gt; 2 [1,0,0]     1     0     0  0.011 ± 0.0083\n#&gt; 3 [0,1,0]     0     1     0  0.047 ± 0.0169\n#&gt; 4 [0,0,1]     0     0     1  0.059 ± 0.0198\n#&gt; 5 [1,1,0]     1     1     0  0.037 ± 0.0151\n#&gt; 6 [1,0,1]     1     0     1  0.042 ± 0.0162\n#&gt; 7 [0,1,1]     0     1     1  0.099 ± 0.0228\n#&gt; 8 [1,1,1]     1     1     1  0.546 ± 0.0400\n\nmeasr_extract(roarpa_lcdm, \"strc_param\") |&gt;\n  filter(fsm == 1, lsm == 1) |&gt;\n  summarize(estimate = rvar_sum(estimate))\n#&gt; # A tibble: 1 × 1\n#&gt;        estimate\n#&gt;      &lt;rvar[1d]&gt;\n#&gt; 1  0.59 ± 0.039\n\n\n\n\nmeasr_extract(roarpa_lcdm, \"attribute_prob\") |&gt;\n  filter(id == 153)\n#&gt; # A tibble: 1 × 4\n#&gt;   id         lsm   del   fsm\n#&gt;   &lt;chr&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n#&gt; 1 153   5.21e-11 0.464 1.000"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#default-priors",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#default-priors",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Default priors",
+    "text": "Default priors\n\ndefault_dcm_priors(\n  measurement_model = lcdm(),\n  structural_model = unconstrained()\n)\n#&gt; # A tibble: 4 × 3\n#&gt;   type        coefficient prior                      \n#&gt;   &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;                      \n#&gt; 1 intercept   &lt;NA&gt;        normal(0, 2)               \n#&gt; 2 maineffect  &lt;NA&gt;        lognormal(0, 1)            \n#&gt; 3 interaction &lt;NA&gt;        normal(0, 2)               \n#&gt; 4 structural  Vc          dirichlet(rep_vector(1, C))"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#weakly-informative-priors",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#weakly-informative-priors",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Weakly informative priors",
+    "text": "Weakly informative priors"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#creating-custom-priors",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#creating-custom-priors",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Creating custom priors",
+    "text": "Creating custom priors\n\nprior(normal(0, 10), type = \"maineffect\")\n#&gt; # A tibble: 1 × 3\n#&gt;   type       coefficient prior        \n#&gt;   &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;        \n#&gt; 1 maineffect &lt;NA&gt;        normal(0, 10)\n\n \n\n\nprior(normal(0, 1), type = \"intercept\", coefficient = \"l3_0\")\n#&gt; # A tibble: 1 × 3\n#&gt;   type      coefficient prior       \n#&gt;   &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;       \n#&gt; 1 intercept l3_0        normal(0, 1)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#specifying-custom-priors",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#specifying-custom-priors",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Specifying custom priors",
+    "text": "Specifying custom priors\n\nDefine separatelyDefine in dcm_specify()Check priors\n\n\n\nmy_prior &lt;- c(\n  prior(normal(-1, 1), type = \"intercept\"),\n  prior(lognormal(0, 5), type = \"maineffect\")\n)\n\nnew_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = lcdm(),\n  structural_model = unconstrained(),\n  priors = my_prior\n)\n\n\n\n\nnew_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = lcdm(),\n  structural_model = unconstrained(),\n  priors = c(\n    prior(normal(-1, 1), type = \"intercept\"),\n    prior(lognormal(0, 5), type = \"maineffect\")\n  )\n)\n\n\n\n\nnew_spec\n#&gt; A loglinear cognitive diagnostic model (LCDM) measuring 3 attributes with 28\n#&gt; items.\n#&gt; \n#&gt; ℹ Attributes:\n#&gt; • \"morphosyntactic\" (13 items)\n#&gt; • \"cohesive\" (6 items)\n#&gt; • \"lexical\" (18 items)\n#&gt; \n#&gt; ℹ Attribute structure:\n#&gt;   Unconstrained\n#&gt; \n#&gt; ℹ Prior distributions:\n#&gt;   intercept ~ normal(-1, 1)\n#&gt;   maineffect ~ lognormal(0, 5)\n#&gt;   interaction ~ normal(0, 2)\n#&gt;   `Vc` ~ dirichlet(1, 1, 1)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#extract-priors",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#extract-priors",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Extract priors",
+    "text": "Extract priors\n\nmeasr_extract(ecpe_lcdm, \"prior\")\n#&gt; # A tibble: 4 × 3\n#&gt;   type        coefficient prior                      \n#&gt;   &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;                      \n#&gt; 1 intercept   &lt;NA&gt;        normal(0, 2)               \n#&gt; 2 maineffect  &lt;NA&gt;        lognormal(0, 1)            \n#&gt; 3 interaction &lt;NA&gt;        normal(0, 2)               \n#&gt; 4 structural  Vc          dirichlet(rep_vector(1, C))"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#exercise-4",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#exercise-4",
+    "title": "Estimating diagnostic  classification models",
+    "section": "Exercise 4",
+    "text": "Exercise 4\nEstimate a new LCDM model for the ROAR-PA data with the following priors:\n\nIntercepts: normal(-1, 2)\n\nExcept item 3, which should use a normal(0, 1) prior\n\nMain effects: lognormal(0, 1)\n\nUse backend = \"optim\" for a speedier estimation\nExtract the prior to see that the specifications were applied"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#section-4",
+    "href": "materials/slides/01-introdcm-03-estimation-slides.html#section-4",
+    "title": "Estimating diagnostic  classification models",
+    "section": "",
+    "text": "Estimate modelExtract priors\n\n\n\nnew_roarpa &lt;- dcm_estimate(\n  dcm_spec = dcm_specify(\n    qmatrix = roarpa_qmatrix,\n    identifier = \"item\",\n    measurement_model = lcdm(),\n    priors = c(\n      prior(normal(-1, 2), type = \"intercept\"),\n      prior(normal(0, 1), type = \"intercept\", coefficient = \"l3_0\"),\n      prior(lognormal(0, 1), type = \"maineffect\")\n    )\n  ),\n  data = roarpa_data,\n  identifier = \"id\",\n  method = \"optim\",\n  backend = \"rstan\",\n  file = here(\"materials\", \"slides\", \"fits\", \"roarpa-new-prior\")\n)\n\n\n\n\nmeasr_extract(new_roarpa, \"prior\")\n#&gt; # A tibble: 4 × 3\n#&gt;   type       coefficient prior                      \n#&gt;   &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;                      \n#&gt; 1 intercept  &lt;NA&gt;        normal(-1, 2)              \n#&gt; 2 intercept  l3_0        normal(0, 1)               \n#&gt; 3 maineffect &lt;NA&gt;        lognormal(0, 1)            \n#&gt; 4 structural Vc          dirichlet(rep_vector(1, C))"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-01-intro-slides.html#who-am-i",
+    "href": "materials/slides/01-introdcm-01-intro-slides.html#who-am-i",
+    "title": "Introduction to diagnostic  classification modeling",
+    "section": "Who am I?",
+    "text": "Who am I?\n\n\nW. Jake Thompson, Ph.D.\n\nAssistant Director of Psychometrics\n\n\nATLAS | University of Kansas\n\n\nResearch: Applications of diagnostic psychometric models\n\nLead psychometrician and Co-PI for the Dynamic Learnings Maps assessments\nPI for an IES-funded project to develop software for diagnostic models\n\n\n\n\n\n\n\n   @wjakethompson   @wjakethompson.com"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-01-intro-slides.html#acknowledgements",
+    "href": "materials/slides/01-introdcm-01-intro-slides.html#acknowledgements",
+    "title": "Introduction to diagnostic  classification modeling",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nThe research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grants R305D210045 and R305D240032 to the University of Kansas Center for Research, Inc., ATLAS. The opinions expressed are those of the authors and do not represent the views of the the Institute or the U.S. Department of Education."
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-01-intro-slides.html#schedule",
+    "href": "materials/slides/01-introdcm-01-intro-slides.html#schedule",
+    "title": "Introduction to diagnostic  classification modeling",
+    "section": "Schedule",
+    "text": "Schedule\n\n\nPart 1: Foundations\nBrief introduction to DCMs\nTheoretical underpinnings\n\nPart 2: Applications\nModel estimation and evaluation"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-01-intro-slides.html#materials",
+    "href": "materials/slides/01-introdcm-01-intro-slides.html#materials",
+    "title": "Introduction to diagnostic  classification modeling",
+    "section": "Materials",
+    "text": "Materials\nAll materials are available on the workshop website:\nhttps://learn.r-dcm.org"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-01-intro-slides.html#installation",
+    "href": "materials/slides/01-introdcm-01-intro-slides.html#installation",
+    "title": "Introduction to diagnostic  classification modeling",
+    "section": "Installation",
+    "text": "Installation\n\nRequired\n\nR (≥ 4.5.0)\nrstan (≥ 2.32.7)\nmeasr (≥ 2.0.1)\n\n\nRecommended\n\nRStudio (≥ 2026.01.1-403)\ncmdstanr (≥ 0.9.0)\nCmdStan (≥ 2.38.0)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-01-intro-slides.html#copy-and-run",
+    "href": "materials/slides/01-introdcm-01-intro-slides.html#copy-and-run",
+    "title": "Introduction to diagnostic  classification modeling",
+    "section": "Copy and run",
+    "text": "Copy and run\n\ninstall.packages(c(\"measr\", \"tidyverse\", \"fs\", \"usethis\"))\n\n\n# Optional\ninstall.packages(\n  c(\"rstan\", \"StanHeaders\", \"cmdstanr\"),\n  repos = c(\"https://stan-dev.r-universe.dev\", getOption(\"repos\"))\n)\n\n## check toolchain\ncmdstanr::check_cmdstan_toolchain()\ncmdstanr::install_cmdstan(cores = 2)\n\nFor help installing RStan, CmdStanR, or configuring the toolchain, see the prework page."
+  },
+  {
+    "objectID": "materials/index.html",
+    "href": "materials/index.html",
+    "title": "Materials",
+    "section": "",
+    "text": "Each session includes slides and exercises. The slides for each session can be accessed using the links in the sidebar. You can download the exercises as an R project by running:\nusethis::use_course(\"r-dcm/ncme2026-exercises\")\nTo make sure you can run the exercises, following the installation instructions on the prework page.",
+    "crumbs": [
+      "Materials",
+      "Overview",
+      "Materials"
+    ]
+  },
+  {
+    "objectID": "materials/02-advdcm-04-misspecifications.html",
+    "href": "materials/02-advdcm-04-misspecifications.html",
+    "title": "Evaluating Diagnostic Classification Models",
+    "section": "",
+    "text": "This session how to evaluate diagnostic classification models with Stan using the R package measr. We cover absolute and relative model fit, item-level fit, and reliability indices.\n Open slides in new window"
+  },
+  {
+    "objectID": "materials/02-advdcm-02-measurement-models.html",
+    "href": "materials/02-advdcm-02-measurement-models.html",
+    "title": "Introduction to Diagnostic Classification Models",
+    "section": "",
+    "text": "This session provides a brief introduction to diagnostic classification models, including conceptual and statistical foundations.\n Open slides in new window"
+  },
+  {
+    "objectID": "materials/01-introdcm-05-closing.html",
+    "href": "materials/01-introdcm-05-closing.html",
+    "title": "Wrap-Up",
+    "section": "",
+    "text": "This session wraps up the workshop, including resources for further learning. Please take our post-workshop survey!\n Open slides in new window"
+  },
+  {
+    "objectID": "materials/01-introdcm-03-estimation.html",
+    "href": "materials/01-introdcm-03-estimation.html",
+    "title": "Estimating Diagnostic Classification Models",
+    "section": "",
+    "text": "This session provides a tutorial for estimation diagnostic classification models with Stan using the R package measr.\n Open slides in new window"
+  },
+  {
+    "objectID": "materials/01-introdcm-01-intro.html",
+    "href": "materials/01-introdcm-01-intro.html",
+    "title": "Welcome!",
+    "section": "",
+    "text": "This session provides a brief introduction to the workshop and describes the required software for following along with the example code.\n Open slides in new window"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "\n            Diagnostic Classification Modeling\n        ",
+    "section": "",
+    "text": "Use R and Stan to estimate and evaluate diagnostic psychometric models\n        \n        \n            NCME 2026\n        \n    \n    \n      \n        \n        \n        \n      \n    \n\n\n\n\n\n\nInstructor\n\n   W. Jake Thompson, Ph.D.\n   ATLAS, University of Kansas\n   wjakethompson@ku.edu\n   in/wjakethompson\n   @wjakethompson.com\n\n\n\nNext course\n\n   National Council on Measurement in Education\n   April 8, 2026\n   8:00am–10:00am (intro)\n   10:30am-12:30pm (advanced)\n   Los Angeles, CA"
+  },
+  {
+    "objectID": "materials/01-introdcm-02-dcm-intro.html",
+    "href": "materials/01-introdcm-02-dcm-intro.html",
+    "title": "Introduction to Diagnostic Classification Models",
+    "section": "",
+    "text": "This session provides a brief introduction to diagnostic classification models, including conceptual and statistical foundations.\n Open slides in new window"
+  },
+  {
+    "objectID": "materials/01-introdcm-04-evaluation.html",
+    "href": "materials/01-introdcm-04-evaluation.html",
+    "title": "Evaluating Diagnostic Classification Models",
+    "section": "",
+    "text": "This session how to evaluate diagnostic classification models with Stan using the R package measr. We cover absolute and relative model fit, item-level fit, and reliability indices.\n Open slides in new window"
+  },
+  {
+    "objectID": "materials/02-advdcm-01-intro.html",
+    "href": "materials/02-advdcm-01-intro.html",
+    "title": "Welcome!",
+    "section": "",
+    "text": "This session provides a brief introduction to the workshop and describes the required software for following along with the example code.\n Open slides in new window"
+  },
+  {
+    "objectID": "materials/02-advdcm-03-structural-models.html",
+    "href": "materials/02-advdcm-03-structural-models.html",
+    "title": "Estimating Diagnostic Classification Models",
+    "section": "",
+    "text": "This session provides a tutorial for estimation diagnostic classification models with Stan using the R package measr.\n Open slides in new window"
+  },
+  {
+    "objectID": "materials/02-advdcm-05-closing.html",
+    "href": "materials/02-advdcm-05-closing.html",
+    "title": "Wrap-Up",
+    "section": "",
+    "text": "This session wraps up the workshop, including resources for further learning. Please take our post-workshop survey!\n Open slides in new window"
+  },
+  {
+    "objectID": "materials/prework.html",
+    "href": "materials/prework.html",
+    "title": "Prework",
+    "section": "",
+    "text": "Thank you participating in our workshop, Diagnostic Classification Modeling With R and Stan. To prepare for the workshop, please install the following:",
+    "crumbs": [
+      "Materials",
+      "Overview",
+      "Prework"
+    ]
+  },
+  {
+    "objectID": "materials/prework.html#optional",
+    "href": "materials/prework.html#optional",
+    "title": "Prework",
+    "section": "Optional",
+    "text": "Optional\nBy default, measr uses rstan as a backend for estimating models. However, the version of rstan on CRAN is outdated. Therefore, I recommend using an updated version of rstan from the stan-dev/r-packages repository, or using the cmdstanr interface to CmdStan.\n\nUpdated rstan\nYou can download an updated version of rstan by running the following code:\ninstall.packages(\n  c(\"StanHeaders\", \"rstan\"),\n  repos = c(\"https://stan-dev.r-universe.dev\", getOption(\"repos\"))\n)\nTo verify that rstan is installed correctly, run the following code. If it works, then things are set up properly! For additional help installing rstan, see the RStan Getting Started help page.\nexample(stan_model, package = \"rstan\", run.dontrun = TRUE)\n\n\ncmdstanr\nFor cmdstanr, I recommend installing the development version directly from Github:\ninstall.packages(\"remotes\")\nremotes::install_github(\"stan-dev/cmdstanr\")\nAfter installing cmdstanr, you will also need to install CmdStan, which can be by running:\ncmdstanr::install_cmdstan()\nTo ensure that cmdstanr and CmdStan are installed properly, try running the following code. If it works, then you are good to go! For help with install cmdstanr, see the Getting Started with CmdStanR vignette.\nfile &lt;- file.path(cmdstan_path(), \"examples\", \"bernoulli\", \"bernoulli.stan\")\nmod &lt;- cmdstan_model(file)",
+    "crumbs": [
+      "Materials",
+      "Overview",
+      "Prework"
+    ]
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#section-2",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#section-2",
+    "title": "Diagnostic classification  models",
+    "section": "",
+    "text": "Traditional assessments and psychometric models measure an overall skill or ability\nAssume a continuous latent trait"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#section-3",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#section-3",
+    "title": "Diagnostic classification  models",
+    "section": "",
+    "text": "The output is a weak ordering due to error in estimates\n\nConfident Taylor Swift (debut) is the worst\nNot confident on ordering toward the middle of the distribution"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#section-4",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#section-4",
+    "title": "Diagnostic classification  models",
+    "section": "",
+    "text": "Limited in the types of questions that can be answered.\n\nWhy is Taylor Swift (debut) so low?\nWhat aspects do each era demonstrate proficiency or competency of?\nHow much skill is “enough” to be competent?"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#diagnostic-measurement",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#diagnostic-measurement",
+    "title": "Diagnostic classification  models",
+    "section": "Diagnostic measurement",
+    "text": "Diagnostic measurement\n\nDesigned to be multidimensional\nNo continuum of student achievement\nCategorical constructs\n\nUsually binary (e.g., master/nonmaster, proficient/not proficient)\n\n\nSeveral different names in the literature\n\nDiagnostic classification models (DCMs)\nCognitive diagnostic models (CDMs)\nSkills assessment models\nLatent response models\nRestricted latent class models"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#diagnostic-music-assessment",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#diagnostic-music-assessment",
+    "title": "Diagnostic classification  models",
+    "section": "Diagnostic music assessment",
+    "text": "Diagnostic music assessment\n\n\n\nRather than measuring overall musical knowledge, we can break music down into set of skills or attributes\n\nSongwriting\nProduction\nVocals\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAttributes are categorical, often dichotomous (e.g., proficient vs. non-proficient)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#diagnostic-classification-models",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#diagnostic-classification-models",
+    "title": "Diagnostic classification  models",
+    "section": "Diagnostic classification models",
+    "text": "Diagnostic classification models\n\n\n\nDCMs place individuals into groups according to proficiency of multiple attributes\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsongwriting\nproduction\nvocals\n\n\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\n\n\n\nXmark\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nXmark\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\nCheck"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#benefits-of-dcms",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#benefits-of-dcms",
+    "title": "Diagnostic classification  models",
+    "section": "Benefits of DCMs",
+    "text": "Benefits of DCMs\n\n\n\nFine-grained, multidimensional results. Answer more questions:\n\nWhy is Taylor Swift (debut) so low?\n\nSubpar songwriting, production, and vocals\n\n\nWhat aspects are albums competent/proficient in?\n\nDCMs provide classifications directly\n\n\n\n\nHigh reliability with fewer items\n\nLess information need to classify than to place precisely along a scale\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsongwriting\nproduction\nvocals\n\n\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\n\n\n\nXmark\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nXmark\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\nCheck"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#results-from-dcm-based-assessments",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#results-from-dcm-based-assessments",
+    "title": "Diagnostic classification  models",
+    "section": "Results from DCM-based assessments",
+    "text": "Results from DCM-based assessments\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsongwriting\nproduction\nvocals\n\n\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\n\n\n\nCheck\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\n\n\n\nCheck\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\n\n\n\nXmark\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nXmark\n\n\n\n\nCheck\n\n\n\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nXmark\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\n\n\n\nXmark\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nXmark\n\n\n\n\nCheck\n\n\n\n\n\n\n\n\n\n\nNo scale, no overall “ability”\nStudents are probabilistically placed into classes\n\nClasses are represented by skill profiles\n\n\nFeedback on specific skills as defined by the cognitive theory and test design"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#fine-grained-feedback",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#fine-grained-feedback",
+    "title": "Diagnostic classification  models",
+    "section": "Fine-grained feedback",
+    "text": "Fine-grained feedback\n\nDistinguish between respondents who may have similar scale scores\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsongwriting\nproduction\nvocals\n\n\n\n\n\n\nCheck\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\n\n\n\nCheck\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nXmark\n\n\n\n\nCheck\n\n\n\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nXmark\n\n\n\n\nXmark\n\n\n\n\n\n\n\nXmark\n\n\n\n\nCheck\n\n\n\n\nCheck"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#item-structures-for-dcms",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#item-structures-for-dcms",
+    "title": "Diagnostic classification  models",
+    "section": "Item structures for DCMs",
+    "text": "Item structures for DCMs\n\n\n\n\nItem structure: Which skills are measured by each item?\n\nSimple structure: Item measures a single skill\nComplex structure: Item measures 2+ skills\n\n\nDefined by Q-matrix\n\nInteractions between attributes when an item measures multiple skills driven by cognitive theory and/or empirical evidence\n\nCan proficiency of one skill compensate for non-proficiency of another?\nAre skill acquired in a particular order (e.g., hierarchy)?\n\n\n\n\n\n\n\n\n\n\nitem\nsongwriting\nproduction\nvocals\n\n\n\n1\n1\n0\n0\n\n\n2\n0\n0\n1\n\n\n3\n0\n1\n0\n\n\n4\n1\n1\n0\n\n\n5\n1\n0\n1\n\n\n6\n0\n1\n0\n\n\n7\n0\n1\n0\n\n\n8\n1\n0\n1\n\n\n9\n0\n0\n1\n\n\n10\n1\n0\n1\n\n\n11\n1\n1\n0\n\n\n12\n0\n1\n1\n\n\n13\n0\n0\n1\n\n\n14\n1\n0\n1\n\n\n15\n1\n1\n0\n\n\n16\n0\n1\n0\n\n\n17\n1\n0\n0\n\n\n18\n1\n1\n0\n\n\n19\n1\n0\n0\n\n\n20\n1\n0\n1\n\n\n21\n0\n0\n1"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#classification-reliability",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#classification-reliability",
+    "title": "Diagnostic classification  models",
+    "section": "Classification reliability",
+    "text": "Classification reliability\n\n\n\nEasier to categorize than place along a continuum\n\n\n\nCan set a proficiency threshold to optimize Type 1 or Type 2 errors"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#when-are-dcms-appropriate",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#when-are-dcms-appropriate",
+    "title": "Diagnostic classification  models",
+    "section": "When are DCMs appropriate?",
+    "text": "When are DCMs appropriate?\nSuccess depends on:\n\nDomain definitions\n\nWhat are the attributes we’re trying to measure?\nAre the attributes measurable (e.g., with assessment items)?\n\n\nAlignment of purpose between assessment and model\n\nIs classification the purpose?"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#example-applications",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#example-applications",
+    "title": "Diagnostic classification  models",
+    "section": "Example applications",
+    "text": "Example applications\n\n\nEducational measurement: The competencies that student is or is not proficient in\n\nLatent knowledge, skills, or understandings\nUsed for tailored instruction and remediation\n\n\n\nPsychiatric assessment: The DSM criteria that an individual meets\n\nBroader diagnosis of a disorder"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#when-are-dcms-not-appropriate",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#when-are-dcms-not-appropriate",
+    "title": "Diagnostic classification  models",
+    "section": "When are DCMs not appropriate?",
+    "text": "When are DCMs not appropriate?\n\nWhen the goal is to place individuals on a scale\nDCMs do not distinguish within classes\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsongwriting\nproduction\nvocals\n\n\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\n\n\n\nCheck\n\n\n\n\nCheck\n\n\n\n\nCheck"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#conceptual-foundation-summary",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#conceptual-foundation-summary",
+    "title": "Diagnostic classification  models",
+    "section": "Conceptual foundation summary",
+    "text": "Conceptual foundation summary\n\n\n\nDCMs are psychometric models designed to classify\n\nWe can define our attributes in any way that we choose\nItems depend on the attribute definitions\nClassifications are probabilistic\n\n\n\n\n\nDCMs provide valuable information with more feasible data demands than other psychometric models\n\nHigher reliability than IRT/MIRT models\nComplex item structures possible\nCriterion-referenced interpretations\nAlignment of assessment goals and psychometric model"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#statistical-foundation",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#statistical-foundation",
+    "title": "Diagnostic classification  models",
+    "section": "Statistical foundation",
+    "text": "Statistical foundation\n\nLatent class models use responses to probabilistically place individuals into latent classes\n\nDCMs are confirmatory latent class models\n\nLatent classes specified a priori as attribute profiles\nQ-matrix specifies item-attribute structure\nPerson parameters are attribute proficiency probabilities"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#terminology",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#terminology",
+    "title": "Diagnostic classification  models",
+    "section": "Terminology",
+    "text": "Terminology\n\n\nRespondents (r): The individuals from whom behavioral data are collected\n\nFor today, this is dichotomous assessment item responses\nNot limited to only item responses in practice\n\n\nItems (i): Assessment questions used to classify/diagnose respondents\n\nAttributes (a): Unobserved latent categorical characteristics underlying the behaviors (i.e., diagnostic status)\n\nLatent variables"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#attribute-profiles",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#attribute-profiles",
+    "title": "Diagnostic classification  models",
+    "section": "Attribute profiles",
+    "text": "Attribute profiles\n\nWith binary attributes, there are 2A possible profiles\nExample 3-attribute assessment:\n\n\n[0, 0, 0]\n[1, 0, 0]\n[0, 1, 0]\n[0, 0, 1]\n[1, 1, 0]\n[1, 0, 1]\n[0, 1, 1]\n[1, 1, 1]"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#dcms-as-latent-class-models",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#dcms-as-latent-class-models",
+    "title": "Diagnostic classification  models",
+    "section": "DCMs as latent class models",
+    "text": "DCMs as latent class models\n\\[\n\\color{#D55E00}{P(X_r=x_r)} = \\sum_{c=1}^C\\color{#009E73}{\\nu_c} \\prod_{i=1}^I\\color{#56B4E9}{\\pi_{ic}^{x_{ir}}(1-\\pi_{ic})^{1 - x_{ir}}}\n\\]\n\nObserved data: Probability of observing examinee r's item reponses\n\n\nStructural component: Proportion of examinees in each class\n\n\nMeasurement component: Product of item response probabilities"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#structural-models",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#structural-models",
+    "title": "Diagnostic classification  models",
+    "section": "Structural models",
+    "text": "Structural models\n\\[\n\\color{#D55E00}{P(X_r=x_r)} = \\sum_{c=1}^C\\color{#009E73}{\\nu_c} \\prod_{i=1}^I\\color{#56B4E9}{\\pi_{ic}^{x_{ir}}(1-\\pi_{ic})^{1 - x_{ir}}}\n\\]\nStructural component: Proportion of examinees in each class\n\nPrevalence of each class in the population\n\nν1 + ν2 + … + νc = 1\n\n\nTypically unconstrained\n\nIndependent attributes (Lee, 2017)\nLog-linear structural models (Rupp et al., 2010)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#measurement-models",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#measurement-models",
+    "title": "Diagnostic classification  models",
+    "section": "Measurement models",
+    "text": "Measurement models\n\\[\n\\color{#D55E00}{P(X_r=x_r)} = \\sum_{c=1}^C\\color{#009E73}{\\nu_c} \\prod_{i=1}^I\\color{#56B4E9}{\\pi_{ic}^{x_{ir}}(1-\\pi_{ic})^{1 - x_{ir}}}\n\\]\nMeasurement component: Product of item response probabilities\n\nTraditional psychometrics: Item response theory, classical test theory\n\nA single, unidimensional construct\nStudent results estimated on a continuum\nPerformance on individual items determined by an “item characteristic curve”\n\n\nDCMs: Many different options"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#diagnostic-assessment-items",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#diagnostic-assessment-items",
+    "title": "Diagnostic classification  models",
+    "section": "Diagnostic assessment items",
+    "text": "Diagnostic assessment items\n\nCan be multidimensional\nNo continuum of student achievement\n\nCategorical constructs\n\nUsually binary (e.g., master/nonmaster, proficient/not proficient)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#dcm-measurement-models",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#dcm-measurement-models",
+    "title": "Diagnostic classification  models",
+    "section": "DCM measurement models",
+    "text": "DCM measurement models\n\nItems can measure one or both attributes\n\nDifferent DCMs define πic in different ways\n\nEach DCM makes different assumptions about how attributes proficiencies combine/interact to produce an item response\n\n\nItem characteristic bar charts"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#loglinear-cognitive-diagnostic-model-lcdm",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#loglinear-cognitive-diagnostic-model-lcdm",
+    "title": "Diagnostic classification  models",
+    "section": "Loglinear cognitive diagnostic model (LCDM)",
+    "text": "Loglinear cognitive diagnostic model (LCDM)\n\n\n\nHenson et al. (2009)\nDifferent response probabilities for each class (partially compensatory)\nThis will be our focus"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#simple-structure-lcdm",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#simple-structure-lcdm",
+    "title": "Diagnostic classification  models",
+    "section": "Simple structure LCDM",
+    "text": "Simple structure LCDM\nItem measures only 1 attribute\n\\[\n\\text{logit}(X_i = 1) = \\color{#D7263D}{\\lambda_{i,0}} + \\color{#219EBC}{\\lambda_{i,1(1)}}\\color{#009E73}{\\alpha}\n\\]\n\nλi,0: Log-odds when not proficient\n\n\nλi,1(1): Increase in log-odds when proficient\n\n\nα: Attribute proficiency status (either 0 or 1)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#subscript-notation",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#subscript-notation",
+    "title": "Diagnostic classification  models",
+    "section": "Subscript notation",
+    "text": "Subscript notation\n\n\n\nλi,e(α1)\n\n\n\n\ni = The item to which the parameter belongs\n\n\n\n\n\ne = The level of the effect\n\n0 = intercept\n1 = main effect\n2 = two-way interaction\n3 = three-way interaction\nEtc.\n\n\n\n\n\n\n(α1,…) = The attributes to which the effect applies\n\nThe same number of attributes as listed in subscript 2"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#complex-structure-lcdm",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#complex-structure-lcdm",
+    "title": "Diagnostic classification  models",
+    "section": "Complex structure LCDM",
+    "text": "Complex structure LCDM\nItem measures multiple attributes\n\\[\n\\text{logit}(X_i = 1) = \\color{#D7263D}{\\lambda_{i,0}} + \\color{#4B3F72}{\\lambda_{i,1(1)}\\alpha_1} + \\color{#9589BE}{\\lambda_{i,1(2)}\\alpha_2} +\n\\color{#219EBC}{\\lambda_{i,2(1,2)}\\alpha_1\\alpha_2}\n\\]\n\nLog-odds when proficient in neither attribute\n\n\nIncrease in log-odds when proficient in attribute 1\n\n\nIncrease in log-odds when proficient in attribute 2\n\n\nChange in log-odds when proficient in both attributes"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#defining-dcm-structures",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#defining-dcm-structures",
+    "title": "Diagnostic classification  models",
+    "section": "Defining DCM structures",
+    "text": "Defining DCM structures\n\nAttribute and item relationships are defined in the Q-matrix\n\nQ-matrix\n\n\nI \\(\\times\\) A matrix\n0 = Attribute is not measured by the item\n1 = Attribute is measured by the item"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#the-lcdm-as-a-general-dcm",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#the-lcdm-as-a-general-dcm",
+    "title": "Diagnostic classification  models",
+    "section": "The LCDM as a general DCM",
+    "text": "The LCDM as a general DCM\n\nSo called “general” DCM because the LCDM subsumes other DCMs\nConstraints on item parameters make LCDM equivalent to other DCMs (e.g., DINA and DINO)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#from-model-parameters-to-respondents",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#from-model-parameters-to-respondents",
+    "title": "Diagnostic classification  models",
+    "section": "From model parameters to respondents",
+    "text": "From model parameters to respondents\n\nRespondent estimates come from combining the estimated model parameters with the response data\nFor DCMs, a similar process to that for IRT"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#irt-respondent-estimates",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#irt-respondent-estimates",
+    "title": "Diagnostic classification  models",
+    "section": "IRT respondent estimates",
+    "text": "IRT respondent estimates\n\n\n\n\nMultiply the ICCs together\n\nMultiply the response probabilities together for each value of the trait\n\n\nStudent estimate is the peak of the curve\nSpread of the curve represents uncertainty in estimate"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#dcm-respondent-estimates",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#dcm-respondent-estimates",
+    "title": "Diagnostic classification  models",
+    "section": "DCM respondent estimates",
+    "text": "DCM respondent estimates\n\n\n\n\nMultiply the response probabilities together for each class\n\n\n\n\nMultiply the item response likelihoods by structural parameters\n\n\n\n\nClass probabilities are the class likelihoods divided by the total likelihood"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#from-class-to-attribute-probabilities",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#from-class-to-attribute-probabilities",
+    "title": "Diagnostic classification  models",
+    "section": "From class to attribute probabilities",
+    "text": "From class to attribute probabilities\n\n\n\nFor each attribute, sum the class probabilities where that attribute is present\n\n\nSongwriting: 84.2%\n\n\nProduction: 45.4%\n\n\nVocals: 88.4%\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsongwriting\nproduction\nvocals\nprobability\n\n\n\n0\n0\n0\n0.012\n\n\n1\n0\n0\n0.055\n\n\n0\n1\n0\n0.007\n\n\n0\n0\n1\n0.062\n\n\n1\n1\n0\n0.042\n\n\n1\n0\n1\n0.416\n\n\n0\n1\n1\n0.077\n\n\n1\n1\n1\n0.328\n\n\n\n\n\n0.842\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsongwriting\nproduction\nvocals\nprobability\n\n\n\n0\n0\n0\n0.012\n\n\n1\n0\n0\n0.055\n\n\n0\n1\n0\n0.007\n\n\n0\n0\n1\n0.062\n\n\n1\n1\n0\n0.042\n\n\n1\n0\n1\n0.416\n\n\n0\n1\n1\n0.077\n\n\n1\n1\n1\n0.328\n\n\n\n\n\n0.454\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nsongwriting\nproduction\nvocals\nprobability\n\n\n\n0\n0\n0\n0.012\n\n\n1\n0\n0\n0.055\n\n\n0\n1\n0\n0.007\n\n\n0\n0\n1\n0.062\n\n\n1\n1\n0\n0.042\n\n\n1\n0\n1\n0.416\n\n\n0\n1\n1\n0.077\n\n\n1\n1\n1\n0.328\n\n\n\n\n\n0.884"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-02-dcm-intro-slides.html#the-rest-of-today",
+    "href": "materials/slides/01-introdcm-02-dcm-intro-slides.html#the-rest-of-today",
+    "title": "Diagnostic classification  models",
+    "section": "The rest of today",
+    "text": "The rest of today\n\nEstimating DCMs with Stan and measr\nEvaluating DCMs with measr"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#model-evaluation",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#model-evaluation",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Model evaluation",
+    "text": "Model evaluation\n\nAbsolute fit: How well does the model represent the observed data?\n\nModel-level\nItem-level\n\nRelative fit: How do multiple models compare to each other?\nReliability: How consistent and accurate are the classifications?"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#model-level-absolute-fit",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#model-level-absolute-fit",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Model-level absolute fit",
+    "text": "Model-level absolute fit\n\nLimited information indices based on parameter point estimates\n\nM2 statistic (Liu et al., 2016)\n\nPosterior predictive model checks (PPMCs)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#calculating-limited-information-indices",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#calculating-limited-information-indices",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Calculating limited information indices",
+    "text": "Calculating limited information indices\n\nEstimates model fit using univariate and bivariate item relationships\np-values less than .05 indicate poor fit\n\n\nfit_m2(ecpe_lcdm)\n#&gt; # A tibble: 1 × 8\n#&gt;      m2    df     pval  rmsea ci_lower ci_upper `90% CI`          srmsr\n#&gt;   &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;\n#&gt; 1  513.   325 1.18e-10 0.0141   0.0117   0.0164 [0.0117, 0.0164] 0.0312\n\n\nAlso includes the root mean square error of approximation (RMSEA) and the standardized root mean square residual (SRMSR)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#exercise-1",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#exercise-1",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\nOpen evaluation.Rmd and run the setup chunk.\nCalculate the M2 statistic for the ROAR-PA LCDM model\nDoes the model fit the data?"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#section",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#section",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "",
+    "text": "fit_m2(roarpa_lcdm)\n#&gt; # A tibble: 1 × 8\n#&gt;      m2    df  pval rmsea ci_lower ci_upper `90% CI` srmsr\n#&gt;   &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;\n#&gt; 1 1405.  1532 0.991     0        0        0 [0, 0]   0.107\n\n\nThe null hypothesis is that our model fits the data\n\np-values &gt; .05 indicate acceptable model fit"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#ppmc-raw-score-distribution",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#ppmc-raw-score-distribution",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "PPMC: Raw score distribution",
+    "text": "PPMC: Raw score distribution\n\n\n\nFor each iteration, calculate the total number of respondents at each score point\n\n\n\nCalculate the expected number of respondents at each score point\n\n\n\n\nCalculate the observed number of respondents at each score point"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#ppmc-chi2",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#ppmc-chi2",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "PPMC: \\(\\chi^2\\)",
+    "text": "PPMC: \\(\\chi^2\\)\n\n\n\nCalculate a \\(\\chi^2\\)-like statistic comparing the number of respondents at each score point in each iteration to the expectation\n\n\n\nCalculate the \\(\\chi^2\\) value comparing the observed data to the expectation"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#ppmc-ppp",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#ppmc-ppp",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "PPMC: ppp",
+    "text": "PPMC: ppp\n\nCalculate the proportion of iterations where the \\(\\chi^2\\)-like statistic from replicated data set exceeds the observed data statistic\n\nPosterior predictive p-value (ppp)\n\nVery high values (e.g., &gt;.975) or very low values (e.g., &lt;.025) indicate our observed value is far in the tails of what the model would predict\n\nPoor model fit\n\nIdeally, we’d like ppp values close to .5"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#ppmcs-with-measr",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#ppmcs-with-measr",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "PPMCs with measr",
+    "text": "PPMCs with measr\n\nfit_ppmc(ecpe_lcdm, model_fit = \"raw_score\")\n#&gt; $ppmc_raw_score\n#&gt; # A tibble: 1 × 5\n#&gt;   obs_chisq ppmc_mean `2.5%` `97.5%`    ppp\n#&gt;       &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;\n#&gt; 1      792.      25.7   10.7    48.8 0.0005"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#exercise-2",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#exercise-2",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\nCalculate the raw score PPMC for the ROAR-PA LCDM\nDoes the model fit the observed data?"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#section-1",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#section-1",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "",
+    "text": "fit_ppmc(roarpa_lcdm, model_fit = \"raw_score\")\n#&gt; $ppmc_raw_score\n#&gt; # A tibble: 1 × 5\n#&gt;   obs_chisq ppmc_mean `2.5%` `97.5%`   ppp\n#&gt;       &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;\n#&gt; 1    31865.      45.3   22.0    99.6     0\n\n\nThe ppp value is &lt;.001\nModel fit appears to be poor.\nWhy the difference from the M2 conclusion?"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#roar-pa-raw-score-distribution",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#roar-pa-raw-score-distribution",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "ROAR-PA raw score distribution",
+    "text": "ROAR-PA raw score distribution\n\n\n\nModel is underestimating the number of students with the highest scores\nM2 is limited information—we may miss aspects of the data that come from higher order interactions between items"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#item-level-fit",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#item-level-fit",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Item-level fit",
+    "text": "Item-level fit\n\nDiagnose problems with model-level\nIdentify particular items that may not be performing as expected\nIdentify potential dimensionality issues"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#item-level-fit-with-measr",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#item-level-fit-with-measr",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Item-level fit with measr",
+    "text": "Item-level fit with measr\n\nCurrently support three measures of item-level fit using PPMCs:\n\nOverall item p-values\nConditional probability of each class providing a correct response (\\(\\pi\\) matrix)\nItem pair odds ratios"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#calculating-item-level-fit",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#calculating-item-level-fit",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Calculating item-level fit",
+    "text": "Calculating item-level fit\n\nfit_ppmc(ecpe_lcdm, item_fit = \"odds_ratio\")\n#&gt; $ppmc_odds_ratio\n#&gt; # A tibble: 378 × 7\n#&gt;    item_1 item_2 obs_or ppmc_mean `2.5%` `97.5%`   ppp\n#&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;\n#&gt;  1 E1     E2       1.61      1.42   1.11    1.78 0.140\n#&gt;  2 E1     E3       1.42      1.56   1.27    1.86 0.810\n#&gt;  3 E1     E4       1.58      1.40   1.15    1.70 0.114\n#&gt;  4 E1     E5       1.68      1.47   1.10    1.89 0.159\n#&gt;  5 E1     E6       1.64      1.38   1.07    1.77 0.085\n#&gt;  6 E1     E7       1.99      1.89   1.55    2.30 0.286\n#&gt;  7 E1     E8       1.54      1.59   1.18    2.06 0.574\n#&gt;  8 E1     E9       1.18      1.32   1.08    1.60 0.871\n#&gt;  9 E1     E10      1.82      1.69   1.37    2.04 0.220\n#&gt; 10 E1     E11      1.61      1.73   1.40    2.08 0.736\n#&gt; # ℹ 368 more rows"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#extracting-item-level-fit",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#extracting-item-level-fit",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Extracting item-level fit",
+    "text": "Extracting item-level fit\n\nmeasr_extract(ecpe_lcdm, \"ppmc_pvalue\")\n#&gt; # A tibble: 28 × 7\n#&gt;    item_id obs_pvalue ppmc_mean `2.5%` `97.5%` samples          ppp\n#&gt;    &lt;fct&gt;        &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;named list&gt;   &lt;dbl&gt;\n#&gt;  1 E1           0.803     0.810  0.786   0.827 &lt;dbl [2,000]&gt; 0.798 \n#&gt;  2 E2           0.830     0.831  0.815   0.846 &lt;dbl [2,000]&gt; 0.554 \n#&gt;  3 E3           0.579     0.553  0.531   0.591 &lt;dbl [2,000]&gt; 0.0885\n#&gt;  4 E4           0.706     0.697  0.680   0.716 &lt;dbl [2,000]&gt; 0.167 \n#&gt;  5 E5           0.887     0.886  0.873   0.900 &lt;dbl [2,000]&gt; 0.419 \n#&gt;  6 E6           0.854     0.854  0.839   0.868 &lt;dbl [2,000]&gt; 0.512 \n#&gt;  7 E7           0.721     0.708  0.690   0.733 &lt;dbl [2,000]&gt; 0.118 \n#&gt;  8 E8           0.898     0.900  0.888   0.912 &lt;dbl [2,000]&gt; 0.626 \n#&gt;  9 E9           0.702     0.695  0.675   0.719 &lt;dbl [2,000]&gt; 0.239 \n#&gt; 10 E10          0.658     0.670  0.640   0.690 &lt;dbl [2,000]&gt; 0.844 \n#&gt; # ℹ 18 more rows"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#flagging-item-level-fit",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#flagging-item-level-fit",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Flagging item-level fit",
+    "text": "Flagging item-level fit\n\np-valuesConditional probabilitiesOdds ratios\n\n\n\nmeasr_extract(ecpe_lcdm, \"ppmc_pvalue_flags\")\n#&gt; # A tibble: 0 × 7\n#&gt; # ℹ 7 variables: item_id &lt;fct&gt;, obs_pvalue &lt;dbl&gt;, ppmc_mean &lt;dbl&gt;, 2.5% &lt;dbl&gt;,\n#&gt; #   97.5% &lt;dbl&gt;, samples &lt;named list&gt;, ppp &lt;dbl&gt;\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"ppmc_conditional_prob_flags\")\n#&gt; # A tibble: 142 × 8\n#&gt;    item_id class   obs_cond_pval ppmc_mean `2.5%` `97.5%` samples          ppp\n#&gt;    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;named list&gt;   &lt;dbl&gt;\n#&gt;  1 E1      [0,0,0]         0.701     0.695  0.672   0.699 &lt;dbl [2,000]&gt; 0.0055\n#&gt;  2 E1      [1,0,0]         0.664     0.822  0.795   0.827 &lt;dbl [2,000]&gt; 1     \n#&gt;  3 E1      [0,0,1]         0.582     0.695  0.672   0.699 &lt;dbl [2,000]&gt; 1     \n#&gt;  4 E1      [1,1,0]         1         0.941  0.930   0.942 &lt;dbl [2,000]&gt; 0     \n#&gt;  5 E1      [1,0,1]         0.617     0.822  0.795   0.827 &lt;dbl [2,000]&gt; 1     \n#&gt;  6 E1      [0,1,1]         0.854     0.813  0.791   0.819 &lt;dbl [2,000]&gt; 0     \n#&gt;  7 E1      [1,1,1]         0.928     0.941  0.930   0.942 &lt;dbl [2,000]&gt; 0.98  \n#&gt;  8 E2      [1,0,0]         0.803     0.741  0.730   0.744 &lt;dbl [2,000]&gt; 0     \n#&gt;  9 E2      [0,0,1]         0.712     0.741  0.730   0.744 &lt;dbl [2,000]&gt; 0.991 \n#&gt; 10 E2      [1,1,0]         1         0.908  0.907   0.913 &lt;dbl [2,000]&gt; 0     \n#&gt; # ℹ 132 more rows\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"ppmc_odds_ratio_flags\")\n#&gt; # A tibble: 78 × 8\n#&gt;    item_1 item_2 obs_or ppmc_mean `2.5%` `97.5%` samples          ppp\n#&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;named list&gt;   &lt;dbl&gt;\n#&gt;  1 E1     E17      2.02      1.50   1.13    1.94 &lt;dbl [2,000]&gt; 0.0155\n#&gt;  2 E1     E26      1.61      1.29   1.05    1.57 &lt;dbl [2,000]&gt; 0.014 \n#&gt;  3 E1     E28      1.86      1.43   1.13    1.77 &lt;dbl [2,000]&gt; 0.0075\n#&gt;  4 E2     E4       1.73      1.35   1.09    1.65 &lt;dbl [2,000]&gt; 0.0055\n#&gt;  5 E2     E5       1.84      1.40   1.03    1.83 &lt;dbl [2,000]&gt; 0.024 \n#&gt;  6 E2     E6       1.72      1.33   1.00    1.72 &lt;dbl [2,000]&gt; 0.024 \n#&gt;  7 E2     E14      1.64      1.24   1.01    1.51 &lt;dbl [2,000]&gt; 0.002 \n#&gt;  8 E2     E15      1.92      1.45   1.07    1.90 &lt;dbl [2,000]&gt; 0.02  \n#&gt;  9 E4     E5       2.81      2.06   1.63    2.58 &lt;dbl [2,000]&gt; 0.0065\n#&gt; 10 E4     E8       2.14      1.48   1.13    1.90 &lt;dbl [2,000]&gt; 0.0005\n#&gt; # ℹ 68 more rows"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#patterns-of-item-level-misfit",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#patterns-of-item-level-misfit",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Patterns of item-level misfit",
+    "text": "Patterns of item-level misfit\n\nmeasr_extract(ecpe_lcdm, \"ppmc_conditional_prob_flags\") |&gt;\n  count(class, name = \"flags\") |&gt;\n  left_join(measr_extract(ecpe_lcdm, \"strc_param\"), by = join_by(class)) |&gt;\n  arrange(desc(flags))\n#&gt; # A tibble: 7 × 6\n#&gt;   class   flags morphosyntactic cohesive lexical         estimate\n#&gt;   &lt;chr&gt;   &lt;int&gt;           &lt;int&gt;    &lt;int&gt;   &lt;int&gt;       &lt;rvar[1d]&gt;\n#&gt; 1 [1,0,1]    27               1        0       1  0.020 ± 0.00097\n#&gt; 2 [1,0,0]    26               1        0       0  0.018 ± 0.00198\n#&gt; 3 [0,0,1]    25               0        0       1  0.133 ± 0.00517\n#&gt; 4 [1,1,0]    23               1        1       0  0.015 ± 0.00253\n#&gt; 5 [0,1,1]    21               0        1       1  0.154 ± 0.00909\n#&gt; 6 [0,0,0]    12               0        0       0  0.291 ± 0.00588\n#&gt; 7 [1,1,1]     8               1        1       1  0.350 ± 0.00487"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#exercise-3",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#exercise-3",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Exercise 3",
+    "text": "Exercise 3\n\nCalculate PPMCs for the conditional probabilities and odds ratios for the ROAR-PA model\nWhat do the results tell us about the model?"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#section-2",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#section-2",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "",
+    "text": "Conditional probabilitiesOdds ratios\n\n\n\nmeasr_extract(roarpa_lcdm, \"ppmc_conditional_prob_flags\") |&gt;\n  count(class, name = \"flags\") |&gt;\n  left_join(measr_extract(roarpa_lcdm, \"strc_param\"), by = join_by(class)) |&gt;\n  arrange(desc(flags))\n#&gt; # A tibble: 8 × 6\n#&gt;   class   flags   lsm   del   fsm        estimate\n#&gt;   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;      &lt;rvar[1d]&gt;\n#&gt; 1 [1,0,0]    54     1     0     0  0.011 ± 0.0083\n#&gt; 2 [1,0,1]    42     1     0     1  0.042 ± 0.0162\n#&gt; 3 [1,1,0]    39     1     1     0  0.037 ± 0.0151\n#&gt; 4 [0,0,1]    38     0     0     1  0.059 ± 0.0198\n#&gt; 5 [0,1,0]    31     0     1     0  0.047 ± 0.0169\n#&gt; 6 [0,1,1]    24     0     1     1  0.099 ± 0.0228\n#&gt; 7 [0,0,0]    11     0     0     0  0.158 ± 0.0269\n#&gt; 8 [1,1,1]     2     1     1     1  0.546 ± 0.0400\n\n\n\n\nmeasr_extract(roarpa_lcdm, \"ppmc_odds_ratio_flags\")\n#&gt; # A tibble: 164 × 8\n#&gt;    item_1 item_2 obs_or ppmc_mean `2.5%` `97.5%` samples          ppp\n#&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;named list&gt;   &lt;dbl&gt;\n#&gt;  1 fsm_01 lsm_07  7.20       2.84  0.956    6.59 &lt;dbl [2,000]&gt; 0.016 \n#&gt;  2 fsm_01 lsm_08  5.84       2.47  0.839    5.72 &lt;dbl [2,000]&gt; 0.023 \n#&gt;  3 fsm_01 lsm_19  0.349      2.44  0.378    6.30 &lt;dbl [2,000]&gt; 0.978 \n#&gt;  4 fsm_01 del_09 12.3        3.21  0.731    8.22 &lt;dbl [2,000]&gt; 0.003 \n#&gt;  5 fsm_01 del_15  7.81       2.57  0.520    6.49 &lt;dbl [2,000]&gt; 0.0115\n#&gt;  6 fsm_04 fsm_11 13.6        4.38  0       13.1  &lt;dbl [2,000]&gt; 0.019 \n#&gt;  7 fsm_04 del_01 11          2.31  0        8.20 &lt;dbl [2,000]&gt; 0.012 \n#&gt;  8 fsm_04 del_07  7.75     Inf     0        6.44 &lt;dbl [2,000]&gt; 0.0105\n#&gt;  9 fsm_04 del_09 14.0      Inf     0        8.99 &lt;dbl [2,000]&gt; 0.0045\n#&gt; 10 fsm_04 del_16  5.08       1.80  0        5.00 &lt;dbl [2,000]&gt; 0.0235\n#&gt; # ℹ 154 more rows"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#model-comparisons",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#model-comparisons",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Model comparisons",
+    "text": "Model comparisons\n\nDoesn’t give us information whether or not a model fits the data, only compares competing models to each other\n\nShould be evaluated in conjunction with absolute model fit\n\nImplemented with the loo package\n\nPSIS-LOO (Vehtari, 2017)\nWAIC (Watanabe, 2010)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#relative-fit-with-measr",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#relative-fit-with-measr",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Relative fit with measr",
+    "text": "Relative fit with measr\n\nloo(ecpe_lcdm)\n#&gt; \n#&gt; Computed from 2000 by 2922 log-likelihood matrix.\n#&gt; \n#&gt;          Estimate    SE\n#&gt; elpd_loo -42794.9 226.8\n#&gt; p_loo        23.4   0.4\n#&gt; looic     85589.7 453.7\n#&gt; ------\n#&gt; MCSE of elpd_loo is NA.\n#&gt; MCSE and ESS estimates assume independent draws (r_eff=1).\n#&gt; \n#&gt; Pareto k diagnostic values:\n#&gt;                          Count Pct.    Min. ESS\n#&gt; (-Inf, 0.7]   (good)      749  25.6%   1897    \n#&gt;    (0.7, 1]   (bad)        13   0.4%   &lt;NA&gt;    \n#&gt;    (1, Inf)   (very bad) 2160  73.9%   &lt;NA&gt;    \n#&gt; See help('pareto-k-diagnostic') for details.\n\nwaic(ecpe_lcdm)\n#&gt; \n#&gt; Computed from 2000 by 2922 log-likelihood matrix.\n#&gt; \n#&gt;           Estimate    SE\n#&gt; elpd_waic -42794.8 226.8\n#&gt; p_waic        23.3   0.4\n#&gt; waic       85589.5 453.7"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#comparing-models",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#comparing-models",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Comparing models",
+    "text": "Comparing models\nFirst, we need another model to compare\n\necpe_dina_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = dina(),\n  structural_model = unconstrained()\n)\n\necpe_dina &lt;- dcm_estimate(\n  ecpe_dina_spec,\n  data = ecpe_data,\n  identifier = \"resp_id\",\n  method = \"pathfinder\",\n  backend = \"cmdstanr\",\n  single_path_draws = 1000,\n  num_paths = 10,\n  draws = 2000,\n  file = here(\"materials\", \"slides\", \"fits\", \"ecpe-dina-uncst\")\n)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#loo_compare",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#loo_compare",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "loo_compare()",
+    "text": "loo_compare()\n\nloo_compare(ecpe_lcdm, ecpe_dina)\n#&gt;           elpd_diff se_diff\n#&gt; ecpe_lcdm    0.0       0.0 \n#&gt; ecpe_dina -128.7      21.6\n\n\nLCDM is the preferred model\n\nPreferred does not imply “good”\nRemember, the LCDM showed poor absolute fit\n\nDifference is much larger than the standard error of the difference\n\nApproximate threshold: Absolute difference is greater than 2.5 × standard error of the difference (Bengio & Grandvalet, 2004)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#exercise-4",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#exercise-4",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Exercise 4",
+    "text": "Exercise 4\n\nEstimate a DINA model for the ROAR-PA data\nUse loo_compare() to compare the LCDM and DINA models\n\nWhat do the findings tell us?\nCan you explain the results?"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#section-3",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#section-3",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "",
+    "text": "Estimate DINA modelCompare models\n\n\n\nroarpa_dina_spec &lt;- dcm_specify(\n  qmatrix = roarpa_qmatrix,\n  identifier = \"item\",\n  measurement_model = dina(),\n  structural_model = unconstrained()\n)\n\nroarpa_dina &lt;- dcm_estimate(\n  roarpa_dina_spec,\n  data = roarpa_data,\n  identifier = \"id\",\n  method = \"variational\",\n  backend = \"rstan\",\n  seed = 19891213,\n  file = here(\"materials\", \"slides\", \"fits\", \"roarpa-dina-uncst\")\n)\n\n\n\n\nloo_compare(roarpa_lcdm, roarpa_dina, criterion = \"loo\")\n#&gt;             elpd_diff se_diff\n#&gt; roarpa_lcdm    0.0       0.0 \n#&gt; roarpa_dina -104.2      42.9\n\nloo_compare(roarpa_lcdm, roarpa_dina, criterion = \"waic\")\n#&gt;             elpd_diff se_diff\n#&gt; roarpa_lcdm    0.0       0.0 \n#&gt; roarpa_dina -104.5      42.9"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#reliability-methods",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#reliability-methods",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Reliability methods",
+    "text": "Reliability methods\n\nReporting reliability depends on how results are estimated and reported\nReliability for:\n\nProfile-level classification\nAttribute-level classification\nAttribute-level probability of proficiency"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#reliability-with-measr",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#reliability-with-measr",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Reliability with measr",
+    "text": "Reliability with measr\n\nreliability(ecpe_lcdm)\n#&gt; $pattern_reliability\n#&gt;       p_a       p_c \n#&gt; 0.7357164 0.6525172 \n#&gt; \n#&gt; $map_reliability\n#&gt; $map_reliability$accuracy\n#&gt; # A tibble: 3 × 8\n#&gt;   attribute         acc lambda_a kappa_a youden_a tetra_a  tp_a  tn_a\n#&gt;   &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n#&gt; 1 morphosyntactic 0.896    0.734   0.789    0.780   0.943 0.864 0.916\n#&gt; 2 cohesive        0.851    0.678   0.700    0.699   0.891 0.870 0.829\n#&gt; 3 lexical         0.916    0.752   0.603    0.805   0.959 0.945 0.859\n#&gt; \n#&gt; $map_reliability$consistency\n#&gt; # A tibble: 3 × 10\n#&gt;   attribute       consist lambda_c kappa_c youden_c tetra_c  tp_c  tn_c gammak\n#&gt;   &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n#&gt; 1 morphosyntactic   0.818    0.534   0.710    0.618   0.828 0.767 0.850  0.852\n#&gt; 2 cohesive          0.800    0.560   0.688    0.597   0.807 0.817 0.780  0.788\n#&gt; 3 lexical           0.864    0.583   0.635    0.690   0.890 0.899 0.791  0.880\n#&gt; # ℹ 1 more variable: pc_prime &lt;dbl&gt;\n#&gt; \n#&gt; \n#&gt; $eap_reliability\n#&gt; # A tibble: 3 × 5\n#&gt;   attribute       rho_pf rho_bs rho_i rho_tb\n#&gt;   &lt;chr&gt;            &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n#&gt; 1 morphosyntactic  0.706  0.689 0.577  0.885\n#&gt; 2 cohesive         0.707  0.574 0.506  0.785\n#&gt; 3 lexical          0.776  0.731 0.588  0.916"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#profile-level-classification",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#profile-level-classification",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Profile-level classification",
+    "text": "Profile-level classification\n\nProfile-level probabilitiesProfile-level classificationsProfile reliability\n\n\n\nmeasr_extract(ecpe_lcdm, \"class_prob\")\n#&gt; # A tibble: 2,922 × 9\n#&gt;    resp_id `[0,0,0]` `[1,0,0]` `[0,1,0]` `[0,0,1]` `[1,1,0]` `[1,0,1]` `[0,1,1]`\n#&gt;    &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;\n#&gt;  1 1         5.21e-6   1.27e-4   4.15e-7  0.00127  0.000118   0.0472     0.00171\n#&gt;  2 2         5.10e-6   1.25e-4   2.20e-7  0.00352  0.0000636  0.130      0.00156\n#&gt;  3 3         5.59e-6   1.87e-5   2.23e-6  0.00315  0.0000902  0.00959    0.0211 \n#&gt;  4 4         2.02e-7   4.94e-6   8.07e-8  0.000264 0.0000230  0.00981    0.00178\n#&gt;  5 5         6.73e-4   9.61e-3   2.69e-4  0.00112  0.0450     0.00920    0.00752\n#&gt;  6 6         1.93e-6   1.70e-5   7.70e-7  0.000840 0.0000795  0.00977    0.00566\n#&gt;  7 7         1.93e-6   1.70e-5   7.70e-7  0.000840 0.0000795  0.00977    0.00566\n#&gt;  8 8         2.62e-2   7.33e-5   1.09e-3  0.571    0.0000203  0.000295   0.400  \n#&gt;  9 9         4.77e-5   3.05e-4   1.91e-5  0.00606  0.00147    0.00935    0.0408 \n#&gt; 10 10        2.60e-1   5.98e-1   2.02e-3  0.0331   0.0556     0.0161     0.00432\n#&gt; # ℹ 2,912 more rows\n#&gt; # ℹ 1 more variable: `[1,1,1]` &lt;dbl&gt;\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"class_prob\") |&gt;\n  pivot_longer(-resp_id, names_to = \"profile\", values_to = \"prob\") |&gt;\n  slice_max(order_by = prob, by = resp_id)\n#&gt; # A tibble: 2,922 × 3\n#&gt;    resp_id profile  prob\n#&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;\n#&gt;  1 1       [1,1,1] 0.950\n#&gt;  2 2       [1,1,1] 0.864\n#&gt;  3 3       [1,1,1] 0.966\n#&gt;  4 4       [1,1,1] 0.988\n#&gt;  5 5       [1,1,1] 0.927\n#&gt;  6 6       [1,1,1] 0.984\n#&gt;  7 7       [1,1,1] 0.984\n#&gt;  8 8       [0,0,1] 0.571\n#&gt;  9 9       [1,1,1] 0.942\n#&gt; 10 10      [1,0,0] 0.598\n#&gt; # ℹ 2,912 more rows\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"pattern_reliability\")\n#&gt; # A tibble: 1 × 2\n#&gt;   accuracy consistency\n#&gt;      &lt;dbl&gt;       &lt;dbl&gt;\n#&gt; 1    0.736       0.653\n\n\nEstimating classification consistency and accuracy for cognitive diagnostic assessment (Cui et al., 2012)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#attribute-level-classification",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#attribute-level-classification",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Attribute-level classification",
+    "text": "Attribute-level classification\n\nAttribute-level probabilitiesAttribute-level classificationsClassification reliability\n\n\n\nmeasr_extract(ecpe_lcdm, \"attribute_prob\")\n#&gt; # A tibble: 2,922 × 4\n#&gt;    resp_id morphosyntactic cohesive lexical\n#&gt;    &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n#&gt;  1 1               0.997     0.951   1.000 \n#&gt;  2 2               0.995     0.866   1.000 \n#&gt;  3 3               0.976     0.987   1.000 \n#&gt;  4 4               0.998     0.990   1.000 \n#&gt;  5 5               0.990     0.979   0.944 \n#&gt;  6 6               0.993     0.989   1.000 \n#&gt;  7 7               0.993     0.989   1.000 \n#&gt;  8 8               0.00208   0.403   0.973 \n#&gt;  9 9               0.953     0.984   0.998 \n#&gt; 10 10              0.701     0.0932  0.0847\n#&gt; # ℹ 2,912 more rows\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"attribute_prob\") |&gt;\n  mutate(across(where(is.double), \\(x) as.integer(x &gt; 0.5)))\n#&gt; # A tibble: 2,922 × 4\n#&gt;    resp_id morphosyntactic cohesive lexical\n#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;\n#&gt;  1 1                     1        1       1\n#&gt;  2 2                     1        1       1\n#&gt;  3 3                     1        1       1\n#&gt;  4 4                     1        1       1\n#&gt;  5 5                     1        1       1\n#&gt;  6 6                     1        1       1\n#&gt;  7 7                     1        1       1\n#&gt;  8 8                     0        0       1\n#&gt;  9 9                     1        1       1\n#&gt; 10 10                    1        0       0\n#&gt; # ℹ 2,912 more rows\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"classification_reliability\")\n#&gt; # A tibble: 3 × 3\n#&gt;   attribute       accuracy consistency\n#&gt;   &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;\n#&gt; 1 morphosyntactic    0.896       0.818\n#&gt; 2 cohesive           0.851       0.800\n#&gt; 3 lexical            0.916       0.864\n\n\nMeasures of agreement to assess attribute-level classification accuracy and consistency for cognitive diagnostic assessments (Johnson & Sinharay, 2018)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#attribute-level-probabilities-1",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#attribute-level-probabilities-1",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Attribute-level probabilities",
+    "text": "Attribute-level probabilities\n\nAttribute-level probabilitiesProbability reliability\n\n\n\nmeasr_extract(ecpe_lcdm, \"attribute_prob\")\n#&gt; # A tibble: 2,922 × 4\n#&gt;    resp_id morphosyntactic cohesive lexical\n#&gt;    &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n#&gt;  1 1               0.997     0.951   1.000 \n#&gt;  2 2               0.995     0.866   1.000 \n#&gt;  3 3               0.976     0.987   1.000 \n#&gt;  4 4               0.998     0.990   1.000 \n#&gt;  5 5               0.990     0.979   0.944 \n#&gt;  6 6               0.993     0.989   1.000 \n#&gt;  7 7               0.993     0.989   1.000 \n#&gt;  8 8               0.00208   0.403   0.973 \n#&gt;  9 9               0.953     0.984   0.998 \n#&gt; 10 10              0.701     0.0932  0.0847\n#&gt; # ℹ 2,912 more rows\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"probability_reliability\")\n#&gt; # A tibble: 3 × 2\n#&gt;   attribute       informational\n#&gt;   &lt;chr&gt;                   &lt;dbl&gt;\n#&gt; 1 morphosyntactic         0.577\n#&gt; 2 cohesive                0.506\n#&gt; 3 lexical                 0.588\n\n\nThe reliability of the posterior probability of skill attainment in diagnostic classification models (Johnson & Sinharay, 2020)"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#exercise-5",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#exercise-5",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "Exercise 5",
+    "text": "Exercise 5\n\nExamine the attribute classification indices for the ROAR-PA LCDM.\nWhich attributes are the most and least reliable?"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#section-4",
+    "href": "materials/slides/01-introdcm-04-evaluation-slides.html#section-4",
+    "title": "Evaluating diagnostic  classification models",
+    "section": "",
+    "text": "measr_extract(roarpa_lcdm, \"classification_reliability\")\n#&gt; # A tibble: 3 × 3\n#&gt;   attribute accuracy consistency\n#&gt;   &lt;chr&gt;        &lt;dbl&gt;       &lt;dbl&gt;\n#&gt; 1 lsm          0.982       0.994\n#&gt; 2 del          0.963       0.958\n#&gt; 3 fsm          0.982       0.994"
+  }
+]
