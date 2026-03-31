@@ -42,30 +42,30 @@ website:
           contents: 
             - materials/index.qmd
             - materials/prework.qmd
-        - section: "Introduction to DCMs"
-          contents: 
-            - text: "Welcome!"
-              file: materials/01-introdcm-01-intro.qmd
-            - text: "Intro to DCMs"
-              file: materials/01-introdcm-02-dcm-intro.qmd
-            - text: "Estimating DCMs"
-              file: materials/01-introdcm-03-estimation.qmd
-            - text: "Evaluating DCMs"
-              file: materials/01-introdcm-04-evaluation.qmd
-            - text: "Wrap-Up"
-              file: materials/01-introdcm-05-closing.qmd
-        - section: "Advanced DCMs"
-          contents:
-            - text: "Welcome!"
-              file: materials/02-advdcm-01-intro.qmd
-            - text: "Measurement Models"
-              file: materials/02-advdcm-02-measurement-models.qmd
-            - text: "Structural Models"
-              file: materials/02-advdcm-03-structural-models.qmd
-            - text: "Model Misspecifications"
-              file: materials/02-advdcm-04-misspecifications.qmd
-            - text: "Wrap-Up"
-              file: materials/02-advdcm-05-closing.qmd
+        # - section: "Introduction to DCMs"
+        #   contents: 
+        #     - text: "Welcome!"
+        #       file: materials/01-introdcm-01-intro.qmd
+        #     - text: "Intro to DCMs"
+        #       file: materials/01-introdcm-02-dcm-intro.qmd
+        #     - text: "Estimating DCMs"
+        #       file: materials/01-introdcm-03-estimation.qmd
+        #     - text: "Evaluating DCMs"
+        #       file: materials/01-introdcm-04-evaluation.qmd
+        #     - text: "Wrap-Up"
+        #       file: materials/01-introdcm-05-closing.qmd
+        # - section: "Advanced DCMs"
+        #   contents:
+        #     - text: "Welcome!"
+        #       file: materials/02-advdcm-01-intro.qmd
+        #     - text: "Measurement Models"
+        #       file: materials/02-advdcm-02-measurement-models.qmd
+        #     - text: "Structural Models"
+        #       file: materials/02-advdcm-03-structural-models.qmd
+        #     - text: "Model Misspecifications"
+        #       file: materials/02-advdcm-04-misspecifications.qmd
+        #     - text: "Wrap-Up"
+        #       file: materials/02-advdcm-05-closing.qmd
 
   
   page-footer:
