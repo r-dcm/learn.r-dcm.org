@@ -3,6 +3,7 @@ title: "Schedule"
 sidebar: false
 toc: false
 page-layout: full
+freeze: false
 format:
   html:
     anchor-sections: false
