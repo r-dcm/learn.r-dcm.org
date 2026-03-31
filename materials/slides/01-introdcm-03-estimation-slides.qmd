@@ -96,6 +96,13 @@ usethis::use_course("r-dcm/ncme2026-exercises")
 
 ## {.exercise data-menu-title="Solution 1"}
 
+```{r}
+#| label: modify-roarpa
+
+roarpa_data <- roarpa_data |>
+  filter(complete.cases(roarpa_data))
+```
+
 ::: {.panel-tabset}
 
 ### ROAR-PA data
@@ -115,7 +122,7 @@ roarpa_data
 :::{.column width="40%"}
 
 * 57 items
-* 272 respondents
+* 222 respondents
 
 :::
 
@@ -304,9 +311,9 @@ ecpe_lcdm <- dcm_estimate(
 
 ## Exercise 2 {.exercise}
 
-* Estimate an LCDM on the ROAR-PA data using Stan's variational algorithm.
-  * Use `{rstan}` for the backend
-  * Use seed: 19891213
+* Estimate an LCDM on the ROAR-PA data using variational inference.
+  * Use rstan for the backend
+  * Use seed: `19891213`
 
 {{< countdown "15:00" bottom="15%" >}}
 
@@ -340,7 +347,7 @@ roarpa_lcdm <- dcm_estimate(
   identifier = "id",
   method = "variational",
   backend = "rstan",
-  seed = "19891213",
+  seed = 19891213,
   file = here("materials", "slides", "fits", "roarpa-lcdm-uncst")
 )
 ```
@@ -652,7 +659,7 @@ measr_extract(new_roarpa, "prior")
 
 :::
 
-# {.closing data-menu-title="Closing"}
+# {.closing data-menu-title="Closing" style="top: 0px;"}
 
 </br>
 
