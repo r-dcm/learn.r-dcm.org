@@ -285,6 +285,12 @@ div.thank-you .slide-background-content {
   max-height: inherit;
 }
 
+div.tab-content {
+  code.sourceCode {
+    max-height: 460px;
+  }
+}
+
 code a:any-link {
   color: var(--r-link-color);
 }
