@@ -4,7 +4,10 @@ subtitle: With Stan and measr
 author: W. Jake Thompson, Ph.D.
 ---
 
-```{r setup, include = FALSE}
+```{r}
+#| label: setup
+#| include: false
+
 library(tidyverse)
 library(ggmeasr)
 library(ggdist)
@@ -15,15 +18,9 @@ library(measr)
 library(here)
 library(fs)
 library(downlit)
-library(countdown)
 library(cmdstanr)
+library(countdown)
 library(posterior)
-
-opts_chunk$set(
-  fig.width = 7,
-  fig.asp = 0.618,
-  fig.align = "center"
-)
 
 set_theme(plot_margin = margin(5, 0, 0, 0))
 
@@ -38,7 +35,7 @@ dir_copy(
 )
 ```
 
-## Model evaluation {background-image="figure/backgrounds/default.png" background-size="contain"}
+## Model evaluation
 
 * **Absolute fit**: How well does the model represent the observed data?
   * Model-level
@@ -48,191 +45,120 @@ dir_copy(
 
 * **Reliability**: How consistent and accurate are the classifications?
 
-# Absolute model fit {background-image="figure/backgrounds/section.png" background-size="contain"}
+# Absolute model fit
 
-## Model-level absolute fit {background-image="figure/backgrounds/default.png" background-size="contain"}
+## Model-level absolute fit
 
 * Limited information indices based on parameter point estimates
   * M~2~ statistic ([Liu et al., 2016](https://doi.org/10.3102/1076998615621293))
   
 * Posterior predictive model checks (PPMCs)
 
-## Calculating limited information indices {background-image="figure/backgrounds/default.png" background-size="contain"}
+## Calculating limited information indices
 
-```{r read-ecpe}
-ecpe <- measr_dcm(
-  data = ecpe_data,
-  qmatrix = ecpe_qmatrix,
-  resp_id = "resp_id",
-  item_id = "item_id",
-  type = "lcdm",
-  method = "mcmc",
-  backend = "cmdstanr",
-  iter_warmup = 1000,
-  iter_sampling = 500,
-  chains = 4,
-  parallel_chains = 4,
-  file = "fits/ecpe-lcdm"
+```{r}
+#| label: read-ecpe
+
+library(dcmdata)
+
+ecpe_spec <- dcm_specify(
+  qmatrix = ecpe_qmatrix, # <1>
+  identifier = "item_id", # <1>
+  measurement_model = lcdm(), # <2>
+  structural_model = unconstrained() # <2>
 )
+
+ecpe_lcdm <- dcm_estimate(
+  dcm_spec = ecpe_spec, # <1>
+  data = ecpe_data, # <2>
+  identifier = "resp_id", # <2>
+  method = "pathfinder", # <3>
+  backend = "cmdstanr", # <3>
+  single_path_draws = 1000, # <4>
+  num_paths = 10, # <4>
+  draws = 2000, # <4>
+  file = here("materials", "slides", "fits", "ecpe-lcdm-uncst") # <5>
+)
+
+ecpe_lcdm <- add_fit(
+  ecpe_lcdm,
+  method = c("m2", "ppmc"),
+  model_fit = "raw_score",
+  item_fit = c("pvalue", "conditional_prob", "odds_ratio")
+)
+ecpe_lcdm <- add_criterion(ecpe_lcdm, criterion = c("waic", "loo"))
+ecpe_lcdm <- add_reliability(ecpe_lcdm)
 ```
 
-:::{.panel-tabset}
+* Estimates model fit using univariate and bivariate item relationships
 
-### One-time calculation
+* *p*-values less than .05 indicate poor fit
 
-`fit_*` functions are used for calculating absolute fit indices.
-
-```{r ecpe-m2}
+```{r}
+#| label: ecpe-m2
 #| echo: true
-fit_m2(ecpe)
+
+fit_m2(ecpe_lcdm)
 ```
 
-### Save for future
+* Also includes the root mean square error of approximation (RMSEA) and the standardized root mean square residual (SRMSR)
 
-`add_fit()` will add the fit index to the model object (and resave) to prevent unnecessary calculations in the future.
-
-```{r ecpe-add-m2}
-#| echo: true
-
-ecpe <- add_fit(ecpe, method = "m2")
-measr_extract(ecpe, "m2")
-```
-
-:::
-
-## Exercise 1 {.exercise background-image="figure/backgrounds/exercises.png" background-size="contain"}
+## Exercise 1 {.exercise}
 
 * Open `evaluation.Rmd` and run the `setup` chunk.
 
-* Calculate the M~2~ statistic for the Taylor LCDM model using `add_fit()`.
+* Calculate the M~2~ statistic for the ROAR-PA LCDM model
 
-* Extract the M~2~ statistic. Does the model fit the data?
+* Does the model fit the data?
 
-```{r countdown-1}
-countdown(
-  minutes = 3,
-  seconds = 0,
-  bottom = "10%",
-  color_border = "#023047",
-  color_background = "#023047",
-  color_text = "#8ECAE6",
-  color_running_background = "#023047",
-  color_running_text = "#8ECAE6",
-  color_finished_background = "#D7263D",
-  color_finished_text = "#FFFFFF"
+{{< countdown "3:00" bottom="15%" >}}
+
+## {.exercise data-menu-title="Solution 1"}
+
+```{r}
+#| label: read-roarpa
+
+roarpa_data <- roarpa_data |>
+  filter(complete.cases(roarpa_data))
+
+roarpa_spec <- dcm_specify(
+  qmatrix = roarpa_qmatrix,
+  identifier = "item",
+  measurement_model = lcdm(),
+  structural_model = unconstrained()
 )
-```
 
-## {.exercise data-menu-title="Solution 1" background-image="figure/backgrounds/exercises.png" background-size="contain"}
-
-```{r read-taylor}
-taylor_data <- read_rds(here("materials", "slides", "data", "taylor-data.rds"))
-taylor_qmatrix <- read_rds(here(
-  "materials",
-  "slides",
-  "data",
-  "taylor-qmatrix.rds"
-))
-
-taylor_lcdm <- measr_dcm(
-  data = taylor_data,
-  qmatrix = taylor_qmatrix,
-  resp_id = "album",
-  type = "lcdm",
-  method = "mcmc",
+roarpa_lcdm <- dcm_estimate(
+  roarpa_spec,
+  data = roarpa_data,
+  identifier = "id",
+  method = "variational",
   backend = "rstan",
-  warmup = 1000,
-  iter = 1500,
-  chains = 2,
-  cores = 2,
-  file = "fits/taylor-lcdm"
+  seed = 19891213,
+  file = here("materials", "slides", "fits", "roarpa-lcdm-uncst")
 )
+
+roarpa_lcdm <- add_fit(
+  roarpa_lcdm,
+  method = c("m2", "ppmc"),
+  model_fit = "raw_score",
+  item_fit = c("pvalue", "conditional_prob", "odds_ratio")
+)
+roarpa_lcdm <- add_criterion(roarpa_lcdm, criterion = c("waic", "loo"))
+roarpa_lcdm <- add_reliability(roarpa_lcdm)
 ```
 
-```{r taylor-m2, echo = TRUE}
-taylor_lcdm <- add_fit(taylor_lcdm, method = "m2")
-measr_extract(taylor_lcdm, "m2")
+```{r}
+#| label: roarpa-m2
+#| echo: true
+
+fit_m2(roarpa_lcdm)
 ```
 
 * The null hypothesis is that our model fits the data
   * *p*-values > .05 indicate acceptable model fit
 
-## PPMC: Raw score distribution {background-image="figure/backgrounds/default.png" background-size="contain"}
-
-```{r calc-raw-score, eval = !file.exists(here("materials", "slides", "data", "ecpe-raw-scores.rds"))}
-retain <- 500
-keep_draws <- sample(seq_len(ndraws(as_draws(ecpe))), size = retain)
-ecpe_results <- predict(ecpe, summary = FALSE)
-
-pi <- as_draws_df(ecpe) |>
-  merge_chains() |>
-  subset_draws(variable = "pi", draw = keep_draws) |>
-  as_tibble() |>
-  pivot_longer(starts_with("pi")) |>
-  separate_wider_regex(
-    name,
-    patterns = c("pi\\[", item = "[0-9]*", ",", class = "[0-9]*", "\\]")
-  ) |>
-  select(.draw, item, class, prob = value)
-
-format_draws <- function(x, keep) {
-  ret <- as_draws_df(x) |>
-    merge_chains() |>
-    subset_draws(draw = keep) |>
-    as_tibble() |>
-    select(.draw, starts_with("x")) |>
-    pivot_longer(cols = -.draw, names_to = "resp_id", values_to = "prob")
-
-  return(ret)
-}
-
-all_draws <- vector(
-  mode = "list",
-  length = ncol(ecpe_results$class_probabilities) - 1
-)
-for (i in seq_len(ncol(ecpe_results$class_probabilities))[-1]) {
-  cur_name <- colnames(ecpe_results$class_probabilities)[i]
-  ret <- format_draws(
-    ecpe_results$class_probabilities[[i]],
-    keep = keep_draws
-  ) |>
-    mutate(
-      resp_id = str_replace(resp_id, "x\\[([0-9]*)\\]", "\\1"),
-      resp_id = as.integer(resp_id)
-    ) |>
-    rename(!!cur_name := prob)
-
-  all_draws[[i - 1]] <- ret
-}
-
-raw_scores <- all_draws |>
-  reduce(full_join, join_by(.draw, resp_id)) |>
-  pivot_longer(starts_with("[")) |>
-  group_by(.draw, resp_id) |>
-  mutate(class = 1:n()) |>
-  slice_sample(n = 1, weight_by = value) |>
-  ungroup() |>
-  select(.draw, resp_id, class) |>
-  mutate(.draw = as.integer(factor(.draw)), class = as.character(class)) |>
-  left_join(pi, join_by(.draw, class), relationship = "many-to-many") |>
-  mutate(rand = runif(n()), score = as.integer(rand <= prob)) |>
-  summarize(score = sum(score), .by = c(.draw, resp_id)) |>
-  count(.draw, score)
-
-write_rds(
-  raw_scores,
-  here("materials", "slides", "data", "ecpe-raw-scores.rds")
-)
-```
-
-```{r}
-raw_scores <- read_rds(here(
-  "materials",
-  "slides",
-  "data",
-  "ecpe-raw-scores.rds"
-))
-```
+## PPMC: Raw score distribution
 
 :::{.columns}
 
@@ -259,15 +185,23 @@ raw_scores <- read_rds(here(
 
 :::{.fragment fragment-index=1}
 
-```{r score-dist}
+```{r}
+#| label: score-dist
 #| out-width: 100%
 #| out-height: 50%
-#| fig-alt: "Scatter plot showing the number of respondents at each score point in each iteration."
+#| fig-alt: |
+#|   Scatter plot showing the number of respondents at each score point in each
+#|   iteration.
 
-p <- ggplot() +
+draws <- fit_ppmc(ecpe_lcdm, model_fit = "raw_score", return_draws = 2000)
+
+p <- draws$ppmc_raw_score$rawscore_samples |>
+  pluck("rawscores") |>
+  unnest(raw_scores) |>
+  slice_sample(n = 500, by = raw_score) |>
+  ggplot() +
   geom_point(
-    data = raw_scores,
-    aes(x = factor(score), y = n),
+    aes(x = factor(raw_score), y = n),
     position = position_jitter(height = 0, seed = 1213),
     alpha = 0.2,
     color = palette_measr[4]
@@ -282,24 +216,30 @@ p
 
 :::{.fragment fragment-index=2}
 
-```{r exp-score}
+```{r}
+#| label: exp-score
 #| out-width: 100%
 #| out-height: 50%
-#| fig-alt: "Scatter plot showing the number of respondents at each score point in each iteration with the average number of respondents overlayed."
+#| fig-alt: |
+#|   Scatter plot showing the number of respondents at each score point in each
+#|   iteration with the average number of respondents overlayed.
 
-exp_scores <- summarize(raw_scores, n = mean(n), .by = score)
+exp_scores <- draws$ppmc_raw_score$rawscore_samples |>
+  pluck("rawscores") |>
+  unnest(raw_scores) |>
+  summarize(n = mean(n), .by = raw_score)
 
 p <- p +
   geom_point(
     data = exp_scores,
-    aes(x = factor(score), y = n),
+    aes(x = factor(raw_score), y = n),
     color = palette_measr[1],
     shape = 18,
     size = 5
   ) +
   geom_line(
     data = exp_scores,
-    aes(x = factor(score), y = n),
+    aes(x = factor(raw_score), y = n),
     group = 1,
     color = palette_measr[1]
   )
@@ -311,10 +251,13 @@ p
 
 :::{.fragment fragment-index=3}
 
-```{r obs-score}
+```{r}
+#| label: obs-score
 #| out-width: 100%
 #| out-height: 50%
-#| fig-alt: "Scatter plot showing the number of respondents at each score point in each iteration with the average and observed number of respondents overlayed."
+#| fig-alt: |
+#|   Scatter plot showing the number of respondents at each score point in each
+#|   iteration with the average and observed number of respondents overlayed.
 
 obs_scores <- ecpe_data |>
   pivot_longer(-resp_id) |>
@@ -347,7 +290,7 @@ p
 
 :::
 
-## PPMC: $\chi^2$ {background-image="figure/backgrounds/default.png" background-size="contain"}
+## PPMC: $\chi^2$
 
 :::{.columns}
 
@@ -368,27 +311,24 @@ p
 
 :::{.fragment fragment-index=1}
 
-```{r chisq-dist}
+```{r}
+#| label: chisq-dist
+#| warning: false
 #| out-width: 100%
 #| out-height: 50%
 #| fig-alt: "Histogram of the chi-square values from each iteration."
 
-ppmc_chisq <- raw_scores |>
-  complete(.draw, score, fill = list(n = 0L)) |>
-  full_join(rename(exp_scores, exp = n), join_by(score)) |>
-  arrange(.draw, score) |>
-  mutate(piece = ((n - exp)^2) / exp) |>
-  summarize(chisq = sum(piece), .by = .draw)
+chisq <- draws$ppmc_raw_score$chisq_samples$chisqs
 
 p <- ggplot() +
   geom_histogram(
-    data = ppmc_chisq,
     aes(x = chisq),
     binwidth = 2,
     boundary = 0,
     fill = palette_measr[1],
     color = palette_measr[4]
   ) +
+  scale_x_continuous(limits = c(0, 75)) +
   labs(x = "&chi;<sup>2</sup><sub>rep</sub>", y = "Replications") +
   theme(axis.title.x = ggtext::element_markdown(family = "sans"))
 
@@ -399,24 +339,24 @@ p
 
 :::{.fragment fragment-index=2}
 
-```{r chisq-obs}
+```{r}
+#| label: chisq-obs
+#| warning: false
 #| out-width: 100%
 #| out-height: 50%
-#| fig-alt: "Histogram of the chi-square values from each iteration with a dashed vertical line indicating the value from the observed data."
+#| fig-alt: |
+#|   Histogram of the chi-square values from each iteration with a dashed
+#|   vertical line indicating the value from the observed data.
 
-obs_chisq <- obs_scores |>
-  full_join(rename(exp_scores, exp = n), join_by(score)) |>
-  replace_na(list(n = 0L)) |>
-  arrange(score) |>
-  mutate(piece = ((n - exp)^2) / exp) |>
-  summarize(chisq = sum(piece))
+obs_chisq <- draws$ppmc_raw_score$obs_chisq
 
 p <- p +
   geom_vline(
-    xintercept = obs_chisq$chisq,
+    xintercept = obs_chisq,
     linetype = "dashed",
     color = palette_measr[2]
-  )
+  ) +
+  scale_x_continuous(limits = c(0, 1000))
 
 p
 ```
@@ -429,7 +369,7 @@ p
 
 :::
 
-## PPMC: *ppp* {background-image="figure/backgrounds/default.png" background-size="contain"}
+## PPMC: *ppp*
 
 * Calculate the proportion of iterations where the $\chi^2$-like statistic from replicated data set exceeds the observed data statistic
   * Posterior predictive *p*-value (*ppp*)
@@ -439,49 +379,119 @@ p
 
 * Ideally, we'd like *ppp* values close to .5
 
-## PPMCs with measr {background-image="figure/backgrounds/default.png" background-size="contain"}
+## PPMCs with measr
 
-:::{.panel-tabset}
-
-### One-time calculation
-
-```{r ecpe-raw-score}
-#| echo: true
-fit_ppmc(ecpe, model_fit = "raw_score", item_fit = NULL)
-```
-
-### Save for future
-
-```{r ecpe-save-raw-score}
+```{r}
+#| label: ecpe-raw-score
 #| echo: true
 
-ecpe <- add_fit(ecpe, method = "ppmc", model_fit = "raw_score", item_fit = NULL)
-measr_extract(ecpe, "ppmc_raw_score")
+fit_ppmc(ecpe_lcdm, model_fit = "raw_score")
 ```
 
-:::
+## Exercise 2 {.exercise}
 
-## Exercise 2 {.exercise background-image="figure/backgrounds/exercises.png" background-size="contain"}
-
-* Calculate the raw score PPMC for the Taylor LCDM
+* Calculate the raw score PPMC for the ROAR-PA LCDM
 
 * Does the model fit the observed data?
 
-```{r countdown-2}
-countdown(minutes = 4, bottom = "10%")
+{{< countdown "4:00" bottom="15%" >}}
+
+## {.exercise data-menu-title="Solution 2"}
+
+```{r}
+#| label: roarpa-raw-score
+#| echo: true
+
+fit_ppmc(roarpa_lcdm, model_fit = "raw_score")
 ```
 
-## {.exercise data-menu-title="Solution 2" background-image="figure/backgrounds/exercises.png" background-size="contain"}
+* The *ppp* value is <.001
+* Model fit appears to be poor.
+* Why the difference from the M~2~ conclusion?
 
-```{r taylor-raw-score, echo = TRUE}
-taylor_lcdm <- add_fit(taylor_lcdm, method = "ppmc", item_fit = NULL)
-measr_extract(taylor_lcdm, "ppmc_raw_score")
+## ROAR-PA raw score distribution {.exercise}
+
+:::{.columns}
+
+:::{.column width="30%"}
+* Model is underestimating the number of students with the highest scores
+* M~2~ is *limited* information---we may miss aspects of the data that come from higher order interactions between items
+
+:::
+
+:::{.column width="70%"}
+```{r}
+#| label: roarpa-raw-score-plot
+#| warning: false
+#| out-width: 100%
+#| out-height: 50%
+#| fig-alt: |
+#|   Scatter plot showing the number of respondents at each score point in each
+#|   iteration with the average and observed number of respondents overlayed.
+
+draws <- fit_ppmc(roarpa_lcdm, model_fit = "raw_score", return_draws = 2000)
+
+exp_scores <- draws$ppmc_raw_score$rawscore_samples |>
+  pluck("rawscores") |>
+  unnest(raw_scores) |>
+  summarize(n = mean(n), .by = raw_score)
+
+obs_scores <- roarpa_data |>
+  filter(complete.cases(roarpa_data)) |>
+  pivot_longer(-id) |>
+  summarize(score = sum(value), .by = id) |>
+  count(score)
+
+draws$ppmc_raw_score$rawscore_samples |>
+  pluck("rawscores") |>
+  unnest(raw_scores) |>
+  slice_sample(n = 500, by = raw_score) |>
+  ggplot() +
+  geom_point(
+    aes(x = factor(raw_score), y = n),
+    position = position_jitter(height = 0, seed = 1213),
+    alpha = 0.2,
+    color = palette_measr[4]
+  ) +
+  geom_point(
+    data = exp_scores,
+    aes(x = factor(raw_score), y = n),
+    color = palette_measr[1],
+    shape = 18,
+    size = 5
+  ) +
+  geom_line(
+    data = exp_scores,
+    aes(x = factor(raw_score), y = n),
+    group = 1,
+    color = palette_measr[1]
+  ) +
+  geom_point(
+    data = obs_scores,
+    aes(x = factor(score), y = n),
+    color = palette_measr[2],
+    shape = 16,
+    size = 5
+  ) +
+  geom_line(
+    data = obs_scores,
+    aes(x = factor(score), y = n),
+    color = palette_measr[2],
+    group = 1
+  ) +
+  scale_y_comma() +
+  scale_x_discrete(
+    limits = factor(13:57),
+    breaks = factor(seq(13, 57, by = 2))
+  ) +
+  labs(x = "Correct Responses", y = "Respondents")
 ```
 
-* The *ppp* value is between .025 and .975
-* Model fit appears to be adequate.
+:::
+:::
 
-## Item-level fit {background-image="figure/backgrounds/default.png" background-size="contain"}
+
+## Item-level fit
 
 * Diagnose problems with model-level
 
@@ -489,128 +499,116 @@ measr_extract(taylor_lcdm, "ppmc_raw_score")
 
 * Identify potential dimensionality issues
 
-## Item-level fit with measr {background-image="figure/backgrounds/default.png" background-size="contain"}
+## Item-level fit with measr
 
-* Currently support two-measures of item-level fit using PPMCs:
+* Currently support three measures of item-level fit using PPMCs:
+  * Overall item *p*-values
   * Conditional probability of each class providing a correct response ($\pi$ matrix)
   * Item pair odds ratios
 
-## Calculating item-level fit {background-image="figure/backgrounds/default.png" background-size="contain"}
+## Calculating item-level fit
+
+```{r}
+#| label: ecpe-odds-ratio
+#| echo: true
+
+fit_ppmc(ecpe_lcdm, item_fit = "odds_ratio")
+```
+
+
+## Extracting item-level fit
+
+```{r}
+#| label: ecpe-pvalue
+#| echo: true
+
+measr_extract(ecpe_lcdm, "ppmc_pvalue")
+```
+
+## Flagging item-level fit
 
 :::{.panel-tabset}
 
-### One-time calculation
+### *p*-values
 
-```{r ecpe-odds-ratio}
-#| echo: true
-fit_ppmc(ecpe, model_fit = NULL, item_fit = "odds_ratio")
-```
-
-### Save for future
-
-```{r ecpe-save-ppmc-item}
+```{r}
+#| label: ecpe-pvalue-flags
 #| echo: true
 
-ecpe <- add_fit(
-  ecpe,
-  method = "ppmc",
-  model_fit = NULL,
-  item_fit = c("conditional_prob", "odds_ratio")
-)
+measr_extract(ecpe_lcdm, "ppmc_pvalue_flags")
 ```
-
-:::
-
-
-## Extracting item-level fit {background-image="figure/backgrounds/default.png" background-size="contain"}
-
-:::{.panel-tabset}
 
 ### Conditional probabilities
 
-```{r ecpe-cond-prob, echo = TRUE}
-measr_extract(ecpe, "ppmc_conditional_prob")
+```{r}
+#| label: ecpe-cond-prob-flags
+#| echo: true
+
+measr_extract(ecpe_lcdm, "ppmc_conditional_prob_flags")
 ```
 
 ### Odds ratios
 
-```{r ecpe-odd-ratio, echo = TRUE}
-measr_extract(ecpe, "ppmc_odds_ratio")
+```{r}
+#| label: ecpe-odds-ratio-flags
+#| echo: true
+
+measr_extract(ecpe_lcdm, "ppmc_odds_ratio_flags")
 ```
 
 :::
 
-## Flagging item-level fit {background-image="figure/backgrounds/default.png" background-size="contain"}
+## Patterns of item-level misfit
 
-:::{.panel-tabset}
+```{r}
+#| label: flag-patterns
+#| echo: true
+#| code-line-numbers: "|8-9,11"
 
-### Conditional probabilities
-
-```{r ecpe-cond-prob-flags, echo = TRUE}
-measr_extract(ecpe, "ppmc_conditional_prob_flags")
-```
-
-### Odds ratios
-
-```{r ecpe-odd-ratio-flags, echo = TRUE}
-measr_extract(ecpe, "ppmc_odds_ratio_flags")
-```
-
-:::
-
-## Patterns of item-level misfit {background-image="figure/backgrounds/default.png" background-size="contain"}
-
-```{r flag-patterns, echo = TRUE}
-#| class-output: highlight
-#| output-line-numbers: "|4-7"
-
-measr_extract(ecpe, "ppmc_conditional_prob_flags") |>
+measr_extract(ecpe_lcdm, "ppmc_conditional_prob_flags") |>
   count(class, name = "flags") |>
-  left_join(measr_extract(ecpe, "strc_param"), by = join_by(class)) |>
+  left_join(measr_extract(ecpe_lcdm, "strc_param"), by = join_by(class)) |>
   arrange(desc(flags))
 ```
 
-## Exercise 3 {.exercise background-image="figure/backgrounds/exercises.png" background-size="contain"}
+## Exercise 3 {.exercise}
 
-* Calculate PPMCs for the conditional probabilities and odds ratios for the Taylor model
+* Calculate PPMCs for the conditional probabilities and odds ratios for the ROAR-PA model
 
 * What do the results tell us about the model?
 
-```{r countdown-3}
-countdown(minutes = 5, bottom = "10%")
-```
+{{< countdown "5:00" bottom="15%" >}}
 
-## {.exercise data-menu-title="Solution 3" background-image="figure/backgrounds/exercises.png" background-size="contain"}
-
-```{r taylor-item-fit, echo = TRUE}
-taylor_lcdm <- add_fit(
-  taylor_lcdm,
-  method = "ppmc",
-  item_fit = c("conditional_prob", "odds_ratio")
-)
-```
-
-</br>
+## {.exercise data-menu-title="Solution 3"}
 
 :::{.panel-tabset}
 
 ### Conditional probabilities
 
-```{r taylor-cond-prob, echo = TRUE}
-measr_extract(taylor_lcdm, "ppmc_conditional_prob_flags")
+```{r}
+#| label: roarpa-cond-prob
+#| echo: true
+
+measr_extract(roarpa_lcdm, "ppmc_conditional_prob_flags") |>
+  count(class, name = "flags") |>
+  left_join(measr_extract(roarpa_lcdm, "strc_param"), by = join_by(class)) |>
+  arrange(desc(flags))
 ```
 
 ### Odds ratios
 
-```{r taylor-odd-ratio, echo = TRUE}
-measr_extract(taylor_lcdm, "ppmc_odds_ratio_flags")
+```{r}
+#| label: roarpa-odds-ratio
+#| echo: true
+
+measr_extract(roarpa_lcdm, "ppmc_odds_ratio_flags")
 ```
 
 :::
 
-# Relative model fit {background-image="figure/backgrounds/section.png" background-size="contain"}
+# Relative model fit
 
-## Model comparisons  {background-image="figure/backgrounds/default.png" background-size="contain"}
+## Model comparisons 
 
 * Doesn't give us information whether or not a model fits the data, only compares competing models to each other
   * Should be evaluated in conjunction with absolute model fit
@@ -619,51 +617,60 @@ measr_extract(taylor_lcdm, "ppmc_odds_ratio_flags")
   * PSIS-LOO ([Vehtari, 2017](https://doi.org/10.1007/s11222-016-9696-4))
   * WAIC ([Watanabe, 2010](https://jmlr.org/papers/v11/watanabe10a.html))
 
-## Relative fit with measr {background-image="figure/backgrounds/default.png" background-size="contain"}
+## Relative fit with measr
 
-```{r ecpe-rel-fit, echo = TRUE}
-ecpe <- add_criterion(ecpe, criterion = c("loo", "waic"))
+```{r}
+#| label: ecpe-loo
+#| echo: true
+
+loo(ecpe_lcdm)
+
+waic(ecpe_lcdm)
 ```
 
-</br>
-
-:::{.fragment}
-
-```{r ecpe-loo, echo = TRUE}
-measr_extract(ecpe, "loo")
-```
-
-:::
-
-## Comparing models {background-image="figure/backgrounds/default.png" background-size="contain"}
+## Comparing models
 
 First, we need another model to compare
 
-```{r ecpe-dina, echo = TRUE}
-#| code-line-numbers: "|4|11"
+```{r}
+#| label: ecpe-dina
+#| echo: true
+#| code-line-numbers: "|4,9"
 
-ecpe_dina <- measr_dcm(
-  data = ecpe_data,
+ecpe_dina_spec <- dcm_specify(
   qmatrix = ecpe_qmatrix,
-  resp_id = "resp_id",
-  item_id = "item_id",
-  type = "dina",
-  method = "mcmc",
-  backend = "cmdstanr",
-  iter_warmup = 1000,
-  iter_sampling = 500,
-  chains = 4,
-  parallel_chains = 4,
-  file = "fits/ecpe-dina"
+  identifier = "item_id",
+  measurement_model = dina(),
+  structural_model = unconstrained()
 )
 
-ecpe_dina <- add_criterion(ecpe_dina, criterion = "loo")
+ecpe_dina <- dcm_estimate(
+  ecpe_dina_spec,
+  data = ecpe_data,
+  identifier = "resp_id",
+  method = "pathfinder",
+  backend = "cmdstanr",
+  single_path_draws = 1000,
+  num_paths = 10,
+  draws = 2000,
+  file = here("materials", "slides", "fits", "ecpe-dina-uncst")
+)
 ```
 
-## `loo_compare()` {background-image="figure/backgrounds/default.png" background-size="contain"}
+## `loo_compare()`
 
-```{r compare-loo, echo = TRUE}
-loo_compare(ecpe, ecpe_dina, criterion = "loo", model_names = c("lcdm", "dina"))
+```{r}
+#| label: ecpe-dina-loo
+#| include: false
+
+ecpe_dina <- add_criterion(ecpe_dina, criterion = c("loo", "waic"))
+```
+
+```{r}
+#| label: ecpe-compare-loo
+#| echo: true
+
+loo_compare(ecpe_lcdm, ecpe_dina)
 ```
 
 * LCDM is the preferred model
@@ -673,67 +680,67 @@ loo_compare(ecpe, ecpe_dina, criterion = "loo", model_names = c("lcdm", "dina"))
 * Difference is much larger than the standard error of the difference
   * Approximate threshold: Absolute difference is greater than 2.5 &times; standard error of the difference ([Bengio & Grandvalet, 2004](https://www.jmlr.org/papers/v5/grandvalet04a.html))
 
-## Exercise 4 {.exercise background-image="figure/backgrounds/exercises.png" background-size="contain"}
+## Exercise 4 {.exercise}
 
-* Estimate a DINA model for the Taylor data
-
-* Add PSIS-LOO and WAIC criteria to both the LCDM and DINA models for the Taylor data
+* Estimate a DINA model for the ROAR-PA data
 
 * Use `loo_compare()` to compare the LCDM and DINA models
   * What do the findings tell us?
   * Can you explain the results?
 
-```{r countdown-4}
-countdown(minutes = 15, bottom = "10%")
-```
+{{< countdown "15:00" bottom="15%" >}}
 
-## {.exercise data-menu-title="Solution 4" background-image="figure/backgrounds/exercises.png" background-size="contain"}
+## {.exercise data-menu-title="Solution 4"}
 
 :::{.panel-tabset}
 
 ### Estimate DINA model
 
-```{r taylor-dina, echo = TRUE}
-taylor_dina <- measr_dcm(
-  data = taylor_data,
-  qmatrix = taylor_qmatrix,
-  resp_id = "album",
-  type = "dina",
-  method = "mcmc",
-  backend = "rstan",
-  warmup = 1000,
-  iter = 1500,
-  chains = 2,
-  cores = 2,
-  file = "fits/taylor-dina"
+```{r}
+#| label: roarpa-dina
+#| echo: true
+
+roarpa_dina_spec <- dcm_specify(
+  qmatrix = roarpa_qmatrix,
+  identifier = "item",
+  measurement_model = dina(),
+  structural_model = unconstrained()
 )
-```
 
-### Add criterion
-
-```{r taylor-rel-fit, echo = TRUE}
-taylor_lcdm <- add_criterion(taylor_lcdm, criterion = c("loo", "waic"))
-taylor_dina <- add_criterion(taylor_dina, criterion = c("loo", "waic"))
+roarpa_dina <- dcm_estimate(
+  roarpa_dina_spec,
+  data = roarpa_data,
+  identifier = "id",
+  method = "variational",
+  backend = "rstan",
+  seed = 19891213,
+  file = here("materials", "slides", "fits", "roarpa-dina-uncst")
+)
 ```
 
 ### Compare models
 
+```{r}
+#| label: roarpa-dina-criteria
+#| incldue: false
 
-```{r taylor-compare-loo, echo = TRUE}
-loo_compare(taylor_lcdm, taylor_dina, criterion = "loo")
+roarpa_dina <- add_criterion(roarpa_dina, criterion = c("loo", "waic"))
 ```
 
-</br>
+```{r}
+#| label: roarpa-compare-loo
+#| echo: true
 
-```{r taylor-compare-waic, echo = TRUE}
-loo_compare(taylor_lcdm, taylor_dina, criterion = "waic")
+loo_compare(roarpa_lcdm, roarpa_dina, criterion = "loo")
+
+loo_compare(roarpa_lcdm, roarpa_dina, criterion = "waic")
 ```
 
 :::
 
-# Reliability {background-image="figure/backgrounds/section.png" background-size="contain"}
+# Reliability
 
-## Reliability methods {background-image="figure/backgrounds/default.png" background-size="contain"}
+## Reliability methods
 
 * Reporting reliability depends on how results are estimated and reported
 
@@ -742,183 +749,129 @@ loo_compare(taylor_lcdm, taylor_dina, criterion = "waic")
   * Attribute-level classification
   * Attribute-level probability of proficiency
 
-## Reliability with measr {background-image="figure/backgrounds/default.png" background-size="contain"}
+## Reliability with measr
 
-:::{.panel-tabset}
-
-### One-time calculation
-
-```{r ecpe-reli, cache = TRUE}
-#| echo: true
-reliability(ecpe)
-```
-
-### Save for future
-
-```{r ecpe-add-reli}
+```{r}
+#| label: ecpe-reli
 #| echo: true
 
-ecpe <- add_reliability(ecpe)
+reliability(ecpe_lcdm)
 ```
 
-:::
-
-## Profile-level classification {background-image="figure/backgrounds/default.png" background-size="contain"}
+## Profile-level classification
 
 :::{.panel-tabset}
 
 ### Profile-level probabilities
 
-```{r ecpe-class-prob, echo = TRUE}
-measr_extract(ecpe, "class_prob")
+```{r}
+#| label: ecpe-class-prob
+#| echo: true
+
+measr_extract(ecpe_lcdm, "class_prob")
 ```
 
 ### Profile-level classifications
 
-:::{.columns}
+```{r}
+#| label: ecpe-class
+#| echo: true
 
-:::{.column width="60%"}
-
-```{r ecpe-class-show, echo = TRUE, eval = FALSE}
-measr_extract(ecpe, "class_prob") |>
+measr_extract(ecpe_lcdm, "class_prob") |>
   pivot_longer(-resp_id, names_to = "profile", values_to = "prob") |>
   slice_max(order_by = prob, by = resp_id)
 ```
-
-:::
-
-:::{.column width="40%"}
-
-```{r ecpe-class-eval, echo = FALSE, eval = TRUE}
-measr_extract(ecpe, "class_prob") |>
-  pivot_longer(-resp_id, names_to = "profile", values_to = "prob") |>
-  slice_max(order_by = prob, by = resp_id)
-```
-
-:::
-
-:::
 
 ### Profile reliability
 
-```{r ecpe-class-reli, echo = TRUE}
-measr_extract(ecpe, "pattern_reliability")
+```{r}
+#| label: ecpe-class-reli
+#| echo: true
+
+measr_extract(ecpe_lcdm, "pattern_reliability")
 ```
 
 * Estimating classification consistency and accuracy for cognitive diagnostic assessment ([Cui et al., 2012](https://doi.org/10.1111/j.1745-3984.2011.00158.x))
 
 :::
 
-## Attribute-level classification {background-image="figure/backgrounds/default.png" background-size="contain"}
+## Attribute-level classification
 
 :::{.panel-tabset}
 
 ### Attribute-level probabilities
 
-```{r ecpe-att-prob, echo = TRUE}
-measr_extract(ecpe, "attribute_prob")
+```{r}
+#| label: ecpe-att-prob
+#| echo: true
+
+measr_extract(ecpe_lcdm, "attribute_prob")
 ```
 
 ### Attribute-level classifications
 
-:::{.columns}
+```{r}
+#| label: ecpe-att-class
+#| echo: true
 
-:::{.column width="45%"}
-
-```{r ecpe-att-show, echo = TRUE, eval = FALSE}
-measr_extract(ecpe, "attribute_prob") |>
-  mutate(
-    across(
-      where(is.double),
-      ~ case_when(.x > 0.5 ~ 1L, TRUE ~ 0L)
-    )
-  )
+measr_extract(ecpe_lcdm, "attribute_prob") |>
+  mutate(across(where(is.double), \(x) as.integer(x > 0.5)))
 ```
-
-:::
-
-:::{.column width="55%"}
-
-```{r ecpe-att-eval, echo = FALSE, eval = TRUE}
-measr_extract(ecpe, "attribute_prob") |>
-  mutate(
-    across(
-      where(is.double),
-      ~ case_when(.x > 0.5 ~ 1L, TRUE ~ 0L)
-    )
-  )
-```
-
-:::
-
-:::
 
 ### Classification reliability
 
-```{r ecpe-att-reli, echo = TRUE}
-measr_extract(ecpe, "classification_reliability")
+```{r}
+#| label: ecpe-att-reli
+#| echo: true
+
+measr_extract(ecpe_lcdm, "classification_reliability")
 ```
 
 * Measures of agreement to assess attribute-level classification accuracy and consistency for cognitive diagnostic assessments ([Johnson & Sinharay, 2018](https://doi.org/10.1111/jedm.12196))
 
 :::
 
-## Attribute-level probabilities {background-image="figure/backgrounds/default.png" background-size="contain"}
+## Attribute-level probabilities
 
 :::{.panel-tabset}
 
 ### Attribute-level probabilities
 
-```{r ecpe-att-prob-2, echo = TRUE}
-measr_extract(ecpe, "attribute_prob")
+```{r}
+#| label: ecpe-att-prob
+#| echo: true
 ```
 
 ### Probability reliability
 
-```{r ecpe-prob-reli, echo = TRUE}
-measr_extract(ecpe, "probability_reliability")
+```{r}
+#| label: ecpe-prob-reli
+#| echo: true
+
+measr_extract(ecpe_lcdm, "probability_reliability")
 ```
 
 * The reliability of the posterior probability of skill attainment in diagnostic classification models ([Johnson & Sinharay, 2020](https://doi.org/10.3102/1076998619864550))
 
 :::
 
-## Exercise 5 {.exercise background-image="figure/backgrounds/exercises.png" background-size="contain"}
+## Exercise 5 {.exercise}
 
-* Add reliability information to the Taylor LCDM and DINA models
+* Examine the attribute classification indices for the ROAR-PA LCDM.
+* Which attributes are the most and least reliable?
 
-* Examine the attribute classification indices for both models
+{{< countdown "4:00" bottom="15%" >}}
 
-```{r countdown-5}
-countdown(minutes = 4, bottom = "10%")
+## {.exercise data-menu-title="Solution 5"}
+
+```{r}
+#| label: roarpa-lcdm-reli
+#| echo: true
+
+measr_extract(roarpa_lcdm, "classification_reliability")
 ```
 
-## {.exercise data-menu-title="Solution 5" background-image="figure/backgrounds/exercises.png" background-size="contain"}
-
-:::{.panel-tabset}
-
-### Calculate reliability
-
-```{r taylor-calc-reli, echo = TRUE}
-taylor_lcdm <- add_reliability(taylor_lcdm)
-taylor_dina <- add_reliability(taylor_dina)
-```
-
-### Compare reliability
-
-```{r taylor-lcdm-reli, echo = TRUE}
-measr_extract(taylor_lcdm, "classification_reliability")
-```
-
-</br>
-
-```{r taylor-dina-reli, echo = TRUE}
-measr_extract(taylor_dina, "classification_reliability")
-```
-
-:::
-
-# {.closing data-menu-title="Closing" background-image="figure/backgrounds/plain-title.png" background-size="contain" style="top: 0px;"}
+# {.closing data-menu-title="Closing" style="top: 0px;"}
 
 </br>
 
@@ -931,5 +884,5 @@ With Stan and measr
 :::
 
 :::{.center}
-<https://ncme2024.measr.info>
+<https://learn.r-dcm.org>
 :::
