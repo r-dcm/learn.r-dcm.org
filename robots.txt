@@ -1,1 +1,1 @@
-Sitemap: https://r-dcm.github.io/learn.r-dcm.org/sitemap.xml
+Sitemap: https://learn.r-dcm.org/sitemap.xml
