@@ -1,5 +1,5 @@
 ---
-title: Introduction to diagnostic </br> classification modeling
+title: Introduction to diagnostic <br> classification modeling
 subtitle: With R and Stan
 author: W. Jake Thompson, Ph.D.
 ---

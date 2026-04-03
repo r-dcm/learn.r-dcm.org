@@ -1,5 +1,5 @@
 ---
-title: Evaluating diagnostic </br> classification models
+title: Evaluating diagnostic <br> classification models
 subtitle: With Stan and measr
 author: W. Jake Thompson, Ph.D.
 ---
@@ -873,7 +873,7 @@ measr_extract(roarpa_lcdm, "classification_reliability")
 
 # {.closing data-menu-title="Closing" style="top: 0px;"}
 
-</br>
+<br>
 
 :::{.end-title color="white" font-size="200%"}
 Evaluating diagnostic classification models

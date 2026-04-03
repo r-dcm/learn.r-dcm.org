@@ -2,7 +2,7 @@
 title: "Estimating Diagnostic Classification Models"
 ---
 
-This session provides a tutorial for estimation diagnostic classification models with [Stan](https://mc-stan.org) using the R package [measr](https://measr.info).
+This session provides a tutorial for estimation diagnostic classification models with [Stan](https://mc-stan.org) using the R package [measr](https://measr.r-dcm.org).
 
 ```{=html}
 <p class="buttons"><a class="btn btn-danger" target="_blank" href="slides/03-estimation-slides.html"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open slides in new window</a>

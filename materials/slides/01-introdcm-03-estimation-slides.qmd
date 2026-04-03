@@ -1,5 +1,5 @@
 ---
-title: Estimating diagnostic </br> classification models
+title: Estimating diagnostic <br> classification models
 subtitle: With Stan and measr
 author: W. Jake Thompson, Ph.D.
 ---
@@ -160,7 +160,7 @@ roarpa_qmatrix
 
 ## Existing software
 
-</br>
+<br>
 
 :::{.columns}
 :::{.column width="50%"}
@@ -235,7 +235,7 @@ include_graphics(here("materials", "slides", "figure", "measr.png"))
 
 ## Model specification
 
-Specify a DCM with `dcm_specify()`</br></br>
+Specify a DCM with `dcm_specify()`<br><br>
 
 ```{r}
 #| label: specify-ecpe
@@ -254,7 +254,7 @@ ecpe_spec <- dcm_specify(
 
 ## Model estimation
 
-Estimate a DCM with `dcm_estimate()`</br></br>
+Estimate a DCM with `dcm_estimate()`<br><br>
 
 ```{r}
 #| label: estimate-ecpe
@@ -527,7 +527,7 @@ ggplot(draws, aes(x = value, y = class)) +
 prior(normal(0, 10), type = "maineffect")
 ```
 
-</br> </br>
+<br> <br>
 
 :::{.fragment}
 ```{r}
@@ -661,7 +661,7 @@ measr_extract(new_roarpa, "prior")
 
 # {.closing data-menu-title="Closing" style="top: 0px;"}
 
-</br>
+<br>
 
 :::{.end-title color="white" font-size="200%"}
 Estimating diagnostic classification models

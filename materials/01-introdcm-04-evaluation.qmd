@@ -2,7 +2,7 @@
 title: "Evaluating Diagnostic Classification Models"
 ---
 
-This session how to evaluate diagnostic classification models with [Stan](https://mc-stan.org) using the R package [measr](https://measr.info).
+This session how to evaluate diagnostic classification models with [Stan](https://mc-stan.org) using the R package [measr](https://measr.r-dcm.org).
 We cover absolute and relative model fit, item-level fit, and reliability indices.
 
 ```{=html}

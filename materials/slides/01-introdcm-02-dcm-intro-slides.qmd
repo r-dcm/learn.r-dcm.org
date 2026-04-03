@@ -1,5 +1,5 @@
 ---
-title: Diagnostic classification </br> models
+title: Diagnostic classification <br> models
 subtitle: A brief introduction
 author: W. Jake Thompson, Ph.D.
 ---
@@ -1575,13 +1575,13 @@ att_probs |>
 
 ## The rest of today
 
-* Estimating DCMs with [Stan](https://mc-stan.org) and [measr](https://measr.info)
+* Estimating DCMs with [Stan](https://mc-stan.org) and [measr](https://measr.r-dcm.org)
 
-* Evaluating DCMs with [measr](https://measr.info)
+* Evaluating DCMs with [measr](https://measr.r-dcm.org)
 
 # {.closing data-menu-title="Closing"}
 
-</br>
+<br>
 
 :::{.end-title color="white" font-size="200%"}
 Diagnostic classification models

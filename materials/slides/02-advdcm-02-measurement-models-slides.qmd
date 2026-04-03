@@ -1,0 +1,206 @@
+---
+title: Diagnostic measurement models
+author: W. Jake Thompson, Ph.D.
+---
+
+## Diagnostic assessment items
+
+* Can be multidimensional
+
+* No continuum of student achievement
+
+* Categorical constructs
+  * Usually binary (e.g., master/nonmaster, proficient/not proficient)
+  
+## DCM measurement models {background-image="figure/backgrounds/default.png" background-size="contain"}
+
+* Items can measure one or both attributes
+
+* Different DCMs define &pi;<sub>ic</sub> in different ways
+  * Each DCM makes different assumptions about how attributes proficiencies combine/interact to produce an item response
+
+* Item characteristic bar charts
+
+## Single-attribute DCM item {background-image="figure/backgrounds/default.png" background-size="contain"}
+
+:::{.columns}
+:::{.column width="30%"}
+* Item measures just attribute 1
+
+* Respondents who are proficient on attribute 1 have high probability of correct response, regardless of other attributes
+:::
+
+:::{.column width="70%"}
+```{r dcm-single-att-item}
+#| out-width: 100%
+#| out-height: 50%
+#| fig-alt: "Bar graph showing a high probability of providing a correct response when proficient on attribute 1."
+
+icb <- tribble(
+  ~profile,    ~single, ~comp, ~noncomp, ~partial, ~lcdm,
+  "[0, 0, 0]",    0.15,  0.15,     0.15,     0.15,  0.15,
+  "[1, 0, 0]",    0.90,  0.90,     0.15,     0.50,  0.60,
+  "[0, 1, 0]",    0.15,  0.90,     0.15,     0.35,  0.40,
+  "[0, 0, 1]",    0.15,  0.15,     0.15,     0.15,  0.15,
+  "[1, 1, 0]",    0.90,  0.90,     0.90,     0.75,  0.90,
+  "[1, 0, 1]",    0.90,  0.90,     0.15,     0.50,  0.60,
+  "[0, 1, 1]",    0.15,  0.90,     0.15,     0.35,  0.40,
+  "[1, 1, 1]",    0.90,  0.90,     0.90,     0.75,  0.90
+) |> 
+  mutate(profile = fct_inorder(profile))
+
+icb |> 
+  ggplot(aes(x = profile, y = single, fill = single > 0.5)) +
+  geom_col(show.legend = FALSE) +
+  expand_limits(y = c(0, 1)) +
+  scale_y_percent(breaks = seq(0, 1, by = 0.2)) +
+  scale_fill_manual(values = c(`TRUE` = palette_measr[4],
+                               `FALSE` = palette_measr[2])) +
+  labs(x = "Profile", y = "Probability of Correct Response")
+```
+:::
+:::
+
+## Multi-attribute items {background-image="figure/backgrounds/default.png" background-size="contain"}
+
+* When items measure multiple attributes, what level of mastery is needed in order to provide a correct response?
+
+* Many different types of DCMs that define this probability differently
+  * Compensatory (e.g., DINO)
+  * Noncompensatory (e.g., DINA)
+  * Partially compensatory (e.g., C-RUM)
+
+* General diagnostic models (e.g., LCDM)
+
+* Each DCM makes different assumptions about how attributes proficiencies combine/interact to produce an item response
+
+## Compensatory DCMs {background-image="figure/backgrounds/default.png" background-size="contain"}
+
+:::{.columns}
+:::{.column width="30%"}
+* Item measures attributes 1 and 2
+
+* Must be proficient in at least 1 attribute measured by the item to provide a correct response
+
+* Deterministic inputs, noisy "or" gate (DINO; [Templin & Henson, 2006](https://doi.org/10.1037/1082-989X.11.3.287))
+:::
+
+:::{.column width="70%"}
+```{r}
+#| out-width: 100%
+#| out-height: 50%
+#| fig-alt: "Bar graph showing a high probability of providing a correct response when proficient on either attribute 1 or attribute 2."
+
+icb |> 
+  ggplot(aes(x = profile, y = comp, fill = comp > 0.5)) +
+  geom_col(show.legend = FALSE) +
+  expand_limits(y = c(0, 1)) +
+  scale_y_percent(breaks = seq(0, 1, by = 0.2)) +
+  scale_fill_manual(values = c(`TRUE` = palette_measr[4],
+                               `FALSE` = palette_measr[2])) +
+  labs(x = "Profile", y = "Probability of Correct Response")
+```
+:::
+:::
+
+## Non-compensatory DCMs {background-image="figure/backgrounds/default.png" background-size="contain"}
+
+:::{.columns}
+:::{.column width="30%"}
+* Item measures attributes 1 and 2
+
+* Must be proficient in all attributes measured by the item to provide a correct response
+
+* Deterministic inputs, noisy "and" gate (DINA; [de la Torre & Douglas, 2004](https://doi.org/10.1007/BF02295640))
+:::
+
+:::{.column width="70%"}
+```{r}
+#| out-width: 100%
+#| out-height: 50%
+#| fig-alt: "Bar graph showing a high probability of providing a correct response when proficient on both attribute 1 and attribute 2."
+
+icb |> 
+  ggplot(aes(x = profile, y = noncomp, fill = noncomp > 0.5)) +
+  geom_col(show.legend = FALSE) +
+  expand_limits(y = c(0, 1)) +
+  scale_y_percent(breaks = seq(0, 1, by = 0.2)) +
+  scale_fill_manual(values = c(`TRUE` = palette_measr[4],
+                               `FALSE` = palette_measr[2])) +
+  labs(x = "Profile", y = "Probability of Correct Response")
+```
+:::
+:::
+
+## Partially Compensatory DCMs {background-image="figure/backgrounds/default.png" background-size="contain"}
+
+:::{.columns}
+:::{.column width="30%"}
+* Separate increases for each acquired attribute
+
+* Compensatory reparameterized unified model (C-RUM; [Hartz, 2002](https://www.proquest.com/openview/f2b96e40dc1c5aded37b703d860f7c21/1))
+:::
+
+:::{.column width="70%"}
+```{r}
+#| out-width: 100%
+#| out-height: 50%
+#| fig-alt: "Bar graph showing a high probability of providing a correct response when proficient on both attribute 1 and attribute 2 and a moderate probability when only proficient on one of the attributes."
+
+icb |> 
+  mutate(prof = case_when(partial < 0.2 ~ "FALSE",
+                          partial > 0.5 ~ "TRUE",
+                          TRUE ~ "Partial")) |> 
+  ggplot(aes(x = profile, y = partial, fill = prof)) +
+  geom_col(show.legend = FALSE) +
+  expand_limits(y = c(0, 1)) +
+  scale_y_percent(breaks = seq(0, 1, by = 0.2)) +
+  scale_fill_manual(values = c("TRUE" = palette_measr[4],
+                               "FALSE" = palette_measr[2],
+                               "Partial" = "#4B3F72")) +
+  labs(x = "Profile", y = "Probability of Correct Response")
+```
+:::
+:::
+
+## Which DCM to use? {background-image="figure/backgrounds/default.png" background-size="contain"}
+
+* DINO, DINA, and C-RUM are just 3 of the MANY models that are available
+* Each model comes with its own set of restrictions, and we typically have to specify a single model that is used for all items (software constraint)
+
+* General form diagnostic models  
+  * Flexible; can subsume other more restrictive models
+  * Again, several possibilities (e.g., G-DINA, GDM, LCDM)
+  
+## General DCMs {background-image="figure/backgrounds/default.png" background-size="contain"}
+
+:::{.columns}
+:::{.column width="30%"}
+* Different response probabilities for each class (partially compensatory)
+
+* Log-linear cognitive diagnostic model (LCDM; [Henson et al., 2009](https://doi.org/10.1007/s11336-008-9089-5))
+
+* This will be our focus
+:::
+
+:::{.column width="70%"}
+```{r}
+#| out-width: 100%
+#| out-height: 50%
+#| fig-alt: "Bar graph showing a high probability of providing a correct response when proficient on both attribute 1 and attribute 2 and a moderate probability when only proficient on one of the attributes."
+
+icb |> 
+  mutate(prof = case_when(lcdm < 0.2 ~ "FALSE",
+                          lcdm > 0.8 ~ "TRUE",
+                          TRUE ~ "Partial")) |> 
+  ggplot(aes(x = profile, y = lcdm, fill = prof)) +
+  geom_col(show.legend = FALSE) +
+  expand_limits(y = c(0, 1)) +
+  scale_y_percent(breaks = seq(0, 1, by = 0.2)) +
+  scale_fill_manual(values = c("TRUE" = palette_measr[4],
+                               "FALSE" = palette_measr[2],
+                               "Partial" = "#4B3F72")) +
+  labs(x = "Profile", y = "Probability of Correct Response")
+```
+:::
+:::
