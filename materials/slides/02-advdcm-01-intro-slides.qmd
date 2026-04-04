@@ -11,6 +11,7 @@ author: W. Jake Thompson, Ph.D.
 #| include: false
 
 library(knitr)
+library(here)
 ```
 
 ## Who am I?
@@ -75,7 +76,7 @@ include_graphics("figure/IES_InstituteOfEducationSciences_RGB.png")
 
 Measurement and structural models
 
-![](figure/dcmstan.png){fig-align="center"}
+![](figure/dcmstan.png){fig-align="center" width=50%}
 
 :::
 
@@ -84,7 +85,7 @@ Measurement and structural models
 
 Model misspecifications
 
-![](figure/measr.png){fig-align="center"}
+![](figure/measr.png){fig-align="center" width=50%}
 :::
 :::
 
@@ -243,6 +244,83 @@ $$
   * Student results estimated on a continuum
   * Performance on individual items determined by an "item characteristic curve"
 * DCMs: Many different options
+
+# Estimation options
+
+## Existing software
+
+<br>
+
+:::{.columns}
+:::{.column width="50%"}
+:::{.center}
+**Software Programs**
+:::
+
+* Mplus, flexMIRT, mdltm
+* Limitations
+  * Tedious to implement, expensive, limited licenses, etc.
+:::
+
+:::{.column width="50%"}
+:::{.center}
+**R Packages**
+:::
+
+* CDM, GDINA, mirt, blatant
+* Limitations
+  * Limited to constrained DCMs, under-documented
+  * Different packages have different functionality, and don't talk to each other
+:::
+:::
+
+## DCMs with Stan
+
+:::{.columns}
+:::{.column width="60%"}
+* Stan is free and open-source
+* Existing documentation for implementing DCMs
+  * [Case study using the DINA model](https://mc-stan.org/learn-stan/case-studies/dina_independent.html)
+  * [Paper describing LCDM implmentation](https://doi.org/10.3758/s13428-018-1069-9)
+* Access to other packages in the Stan ecosystem
+  * [loo](https://mc-stan.org/loo/)
+  * [tidybayes](http://mjskay.github.io/tidybayes/)
+  * [posterior](https://mc-stan.org/posterior/)
+:::
+
+:::{.column width="40%"}
+:::{.center}
+![](figure/stan.png){fig-alt="Stan logo."}
+:::
+:::
+:::
+
+## Limitations of Stan for DCMs
+
+* Very tedious---prone to typos
+* Complexity increases with the number of attributes and item structure
+* Stan code must be customized to each particular Q-matrix
+
+* Just need to automate the creation of the Stan scripts...
+
+
+# {.empty data-menu-title="measr" background-color="#023047" background-iframe="grid-worms/index.html"}
+
+```{r}
+#| label: big-image
+#| out-width: 100%
+#| fig-alt: "Hex logo for the measr R package."
+
+include_graphics(here("materials", "slides", "figure", "measr.png"))
+```
+
+## What is measr?
+
+* R package that automates the creation of Stan scripts for DCMs
+* Wraps [rstan](https://mc-stan.org/rstan) or [cmdstanr](https://mc-stan.org/cmdstanr) to estimate the models
+* Provides additional functions to automate the evaluation of DCMs
+  * Model fit
+  * Classification accuracy and consistency
 
 ## The rest of today
 

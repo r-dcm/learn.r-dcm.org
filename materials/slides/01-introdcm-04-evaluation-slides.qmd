@@ -540,6 +540,7 @@ measr_extract(ecpe_lcdm, "ppmc_pvalue_flags")
 
 ### Conditional probabilities
 
+:::{.new-height style="--code-height: 460px;"}
 ```{r}
 #| label: ecpe-cond-prob-flags
 #| echo: true
@@ -547,8 +548,11 @@ measr_extract(ecpe_lcdm, "ppmc_pvalue_flags")
 measr_extract(ecpe_lcdm, "ppmc_conditional_prob_flags")
 ```
 
+:::
+
 ### Odds ratios
 
+:::{.new-height style="--code-height: 460px;"}
 ```{r}
 #| label: ecpe-odds-ratio-flags
 #| echo: true
@@ -556,6 +560,7 @@ measr_extract(ecpe_lcdm, "ppmc_conditional_prob_flags")
 measr_extract(ecpe_lcdm, "ppmc_odds_ratio_flags")
 ```
 
+:::
 :::
 
 ## Patterns of item-level misfit
@@ -632,6 +637,7 @@ waic(ecpe_lcdm)
 
 First, we need another model to compare
 
+:::{.new-height style="--code-height: 480px;"}
 ```{r}
 #| label: ecpe-dina
 #| echo: true
@@ -656,6 +662,8 @@ ecpe_dina <- dcm_estimate(
   file = here("materials", "slides", "fits", "ecpe-dina-uncst")
 )
 ```
+
+:::
 
 ## `loo_compare()`
 
@@ -764,6 +772,7 @@ reliability(ecpe_lcdm)
 
 ### Profile-level probabilities
 
+:::{.new-height style="--code-height: 460px;"}
 ```{r}
 #| label: ecpe-class-prob
 #| echo: true
@@ -771,8 +780,11 @@ reliability(ecpe_lcdm)
 measr_extract(ecpe_lcdm, "class_prob")
 ```
 
+:::
+
 ### Profile-level classifications
 
+:::{.new-height style="--code-height: 460px;"}
 ```{r}
 #| label: ecpe-class
 #| echo: true
@@ -781,6 +793,8 @@ measr_extract(ecpe_lcdm, "class_prob") |>
   pivot_longer(-resp_id, names_to = "profile", values_to = "prob") |>
   slice_max(order_by = prob, by = resp_id)
 ```
+
+:::
 
 ### Profile reliability
 
@@ -801,6 +815,7 @@ measr_extract(ecpe_lcdm, "pattern_reliability")
 
 ### Attribute-level probabilities
 
+:::{.new-height style="--code-height: 460px;"}
 ```{r}
 #| label: ecpe-att-prob
 #| echo: true
@@ -808,8 +823,11 @@ measr_extract(ecpe_lcdm, "pattern_reliability")
 measr_extract(ecpe_lcdm, "attribute_prob")
 ```
 
+:::
+
 ### Attribute-level classifications
 
+:::{.new-height style="--code-height: 460px;"}
 ```{r}
 #| label: ecpe-att-class
 #| echo: true
@@ -817,6 +835,8 @@ measr_extract(ecpe_lcdm, "attribute_prob")
 measr_extract(ecpe_lcdm, "attribute_prob") |>
   mutate(across(where(is.double), \(x) as.integer(x > 0.5)))
 ```
+
+:::
 
 ### Classification reliability
 
@@ -837,10 +857,13 @@ measr_extract(ecpe_lcdm, "classification_reliability")
 
 ### Attribute-level probabilities
 
+:::{.new-height style="--code-height: 460px;"}
 ```{r}
 #| label: ecpe-att-prob
 #| echo: true
 ```
+
+:::
 
 ### Probability reliability
 
