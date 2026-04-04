@@ -285,9 +285,9 @@ div.thank-you .slide-background-content {
   max-height: inherit;
 }
 
-div.tab-content {
+div.new-height {
   code.sourceCode {
-    max-height: 460px;
+    max-height: var(--code-height);
   }
 }
 
