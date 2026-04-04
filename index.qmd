@@ -2,7 +2,8 @@
 title: "Diagnostic Classification Modeling"
 subtitle: "Use R and Stan to estimate and evaluate diagnostic psychometric models"
 details: |
-  NCME 2026
+  Workshop materials for learning about diagnostic models and using the r-dcm
+  suite of packages to apply them to your work.
 sidebar: false
 toc: false
 page-layout: full
