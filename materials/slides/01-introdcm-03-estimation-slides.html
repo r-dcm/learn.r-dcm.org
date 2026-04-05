@@ -13,7 +13,7 @@
   <meta name="generator" content="quarto-1.9.24">
 
   <meta name="author" content="W. Jake Thompson, Ph.D.">
-  <title>r-dcm workshop – Estimating diagnostic  classification models</title>
+  <title>r-dcm workshop – Estimating diagnostic   classification models</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -101,7 +101,7 @@
     code span.vs { color: #008000; } /* VerbatimString */
     code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-4209699b89763cf2075e6bc1ef6f0663.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-82c20f9c8944053afc8751807f627ee3.css">
   <link rel="stylesheet" href="../../site_libs/quarto-contrib/quarto-project/r-dcm/measr-slides/backgrounds.css">
   <link rel="stylesheet" href="../../site_libs/quarto-contrib/quarto-project/r-dcm/measr-slides/lists.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -320,7 +320,7 @@ W. Jake Thompson, Ph.D.
 <li>How many attributes are measured?</li>
 </ul></li>
 </ol>
-<countdown-timer id="timer_e73d7d17900ecf9f821181f26c52c95d68146cc1" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
+<countdown-timer id="timer_c78564edc00e7c9f2d561e62145258e230a14e6a" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
  </countdown-timer>
 </section>
 <section id="section" class="slide level2 exercise" data-menu-title="Solution 1">
@@ -589,7 +589,7 @@ W. Jake Thompson, Ph.D.
 <li>Use seed: <code>19891213</code></li>
 </ul></li>
 </ul>
-<countdown-timer id="timer_e73d7d17900ecf9f821181f26c52c95d68146cc1" minutes="15" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
+<countdown-timer id="timer_c78564edc00e7c9f2d561e62145258e230a14e6a" minutes="15" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
  </countdown-timer>
 </section>
 <section id="section-2" class="slide level2 exercise" data-menu-title="Solution 2">
@@ -687,7 +687,7 @@ W. Jake Thompson, Ph.D.
 <h2>Exercise 3</h2>
 <p>What proportion of respondents have mastered both first and last sound matching in the ROAR-PA data?</p>
 <p>What is the probability that respondent 153 has mastered deletion?</p>
-<countdown-timer id="timer_e73d7d17900ecf9f821181f26c52c95d68146cc1" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
+<countdown-timer id="timer_c78564edc00e7c9f2d561e62145258e230a14e6a" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
  </countdown-timer>
 </section>
 <section id="section-3" class="slide level2 exercise" data-menu-title="Solution 3">
@@ -821,6 +821,7 @@ W. Jake Thompson, Ph.D.
 </div>
 </div>
 <div id="tabset-4-3">
+<div class="new-height" style="--code-height: 460px;">
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18" data-code-line-numbers="|13-17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>new_spec</span>
 <span id="cb18-2"><a></a><span class="co">#&gt; A loglinear cognitive diagnostic model (LCDM) measuring 3 attributes with 28</span></span>
@@ -839,6 +840,7 @@ W. Jake Thompson, Ph.D.
 <span id="cb18-15"><a></a><span class="co">#&gt;   maineffect ~ lognormal(0, 5)</span></span>
 <span id="cb18-16"><a></a><span class="co">#&gt;   interaction ~ normal(0, 2)</span></span>
 <span id="cb18-17"><a></a><span class="co">#&gt;   `Vc` ~ dirichlet(1, 1, 1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div>
 </div>
 </div>
@@ -869,7 +871,7 @@ W. Jake Thompson, Ph.D.
 </ul>
 <p>Use <code>backend = "optim"</code> for a speedier estimation</p>
 <p>Extract the prior to see that the specifications were applied</p>
-<countdown-timer id="timer_e73d7d17900ecf9f821181f26c52c95d68146cc1" minutes="05" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
+<countdown-timer id="timer_c78564edc00e7c9f2d561e62145258e230a14e6a" minutes="05" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
  </countdown-timer>
 </section>
 <section id="section-4" class="slide level2 exercise" data-menu-title="Solution 4">

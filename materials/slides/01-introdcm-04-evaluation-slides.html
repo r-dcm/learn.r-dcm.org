@@ -13,7 +13,7 @@
   <meta name="generator" content="quarto-1.9.24">
 
   <meta name="author" content="W. Jake Thompson, Ph.D.">
-  <title>r-dcm workshop – Evaluating diagnostic  classification models</title>
+  <title>r-dcm workshop – Evaluating diagnostic   classification models</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -101,7 +101,7 @@
     code span.vs { color: #008000; } /* VerbatimString */
     code span.wa { color: #696969; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-4209699b89763cf2075e6bc1ef6f0663.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-82c20f9c8944053afc8751807f627ee3.css">
   <link rel="stylesheet" href="../../site_libs/quarto-contrib/quarto-project/r-dcm/measr-slides/backgrounds.css">
   <link rel="stylesheet" href="../../site_libs/quarto-contrib/quarto-project/r-dcm/measr-slides/lists.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -281,7 +281,7 @@ W. Jake Thompson, Ph.D.
 <li><p>Calculate the M<sub>2</sub> statistic for the ROAR-PA LCDM model</p></li>
 <li><p>Does the model fit the data?</p></li>
 </ul>
-<countdown-timer id="timer_68f53822dc94c256ef33605662a030836d59fe30" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
+<countdown-timer id="timer_5a7f28f9535958b33b481d682385f06708bc0a1d" minutes="03" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
  </countdown-timer>
 </section>
 <section id="section" class="slide level2 exercise" data-menu-title="Solution 1">
@@ -425,7 +425,7 @@ W. Jake Thompson, Ph.D.
 <li><p>Calculate the raw score PPMC for the ROAR-PA LCDM</p></li>
 <li><p>Does the model fit the observed data?</p></li>
 </ul>
-<countdown-timer id="timer_68f53822dc94c256ef33605662a030836d59fe30" minutes="04" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
+<countdown-timer id="timer_5a7f28f9535958b33b481d682385f06708bc0a1d" minutes="04" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
  </countdown-timer>
 </section>
 <section id="section-1" class="slide level2 exercise" data-menu-title="Solution 2">
@@ -538,6 +538,7 @@ W. Jake Thompson, Ph.D.
 </div>
 </div>
 <div id="tabset-1-2">
+<div class="new-height" style="--code-height: 460px;">
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">measr_extract</span>(ecpe_lcdm, <span class="st">"ppmc_conditional_prob_flags"</span>)</span>
 <span id="cb8-2"><a></a><span class="co">#&gt; # A tibble: 142 × 8</span></span>
@@ -556,7 +557,9 @@ W. Jake Thompson, Ph.D.
 <span id="cb8-15"><a></a><span class="co">#&gt; # ℹ 132 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
+</div>
 <div id="tabset-1-3">
+<div class="new-height" style="--code-height: 460px;">
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">measr_extract</span>(ecpe_lcdm, <span class="st">"ppmc_odds_ratio_flags"</span>)</span>
 <span id="cb9-2"><a></a><span class="co">#&gt; # A tibble: 78 × 8</span></span>
@@ -573,6 +576,7 @@ W. Jake Thompson, Ph.D.
 <span id="cb9-13"><a></a><span class="co">#&gt;  9 E4     E5       2.81      2.06   1.63    2.58 &lt;dbl [2,000]&gt; 0.0065</span></span>
 <span id="cb9-14"><a></a><span class="co">#&gt; 10 E4     E8       2.14      1.48   1.13    1.90 &lt;dbl [2,000]&gt; 0.0005</span></span>
 <span id="cb9-15"><a></a><span class="co">#&gt; # ℹ 68 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div>
 </div>
 </div>
@@ -603,7 +607,7 @@ W. Jake Thompson, Ph.D.
 <li><p>Calculate PPMCs for the conditional probabilities and odds ratios for the ROAR-PA model</p></li>
 <li><p>What do the results tell us about the model?</p></li>
 </ul>
-<countdown-timer id="timer_68f53822dc94c256ef33605662a030836d59fe30" minutes="05" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
+<countdown-timer id="timer_5a7f28f9535958b33b481d682385f06708bc0a1d" minutes="05" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
  </countdown-timer>
 </section>
 <section id="section-2" class="slide level2 exercise" data-menu-title="Solution 3">
@@ -706,6 +710,7 @@ W. Jake Thompson, Ph.D.
 <section id="comparing-models" class="slide level2">
 <h2>Comparing models</h2>
 <p>First, we need another model to compare</p>
+<div class="new-height" style="--code-height: 480px;">
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14" data-code-line-numbers="|4,9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>ecpe_dina_spec <span class="ot">&lt;-</span> <span class="fu">dcm_specify</span>(</span>
 <span id="cb14-2"><a></a>  <span class="at">qmatrix =</span> ecpe_qmatrix,</span>
@@ -725,6 +730,7 @@ W. Jake Thompson, Ph.D.
 <span id="cb14-16"><a></a>  <span class="at">draws =</span> <span class="dv">2000</span>,</span>
 <span id="cb14-17"><a></a>  <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"materials"</span>, <span class="st">"slides"</span>, <span class="st">"fits"</span>, <span class="st">"ecpe-dina-uncst"</span>)</span>
 <span id="cb14-18"><a></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div>
 </section>
 <section id="loo_compare" class="slide level2">
@@ -757,7 +763,7 @@ W. Jake Thompson, Ph.D.
 <li>Can you explain the results?</li>
 </ul></li>
 </ul>
-<countdown-timer id="timer_68f53822dc94c256ef33605662a030836d59fe30" minutes="15" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
+<countdown-timer id="timer_5a7f28f9535958b33b481d682385f06708bc0a1d" minutes="15" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
  </countdown-timer>
 </section>
 <section id="section-3" class="slide level2 exercise" data-menu-title="Solution 4">
@@ -860,6 +866,7 @@ W. Jake Thompson, Ph.D.
 <ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Profile-level probabilities</a></li><li><a href="#tabset-4-2">Profile-level classifications</a></li><li><a href="#tabset-4-3">Profile reliability</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1">
+<div class="new-height" style="--code-height: 460px;">
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">measr_extract</span>(ecpe_lcdm, <span class="st">"class_prob"</span>)</span>
 <span id="cb19-2"><a></a><span class="co">#&gt; # A tibble: 2,922 × 9</span></span>
@@ -879,7 +886,9 @@ W. Jake Thompson, Ph.D.
 <span id="cb19-16"><a></a><span class="co">#&gt; # ℹ 1 more variable: `[1,1,1]` &lt;dbl&gt;</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
+</div>
 <div id="tabset-4-2">
+<div class="new-height" style="--code-height: 460px;">
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">measr_extract</span>(ecpe_lcdm, <span class="st">"class_prob"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb20-2"><a></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>resp_id, <span class="at">names_to =</span> <span class="st">"profile"</span>, <span class="at">values_to =</span> <span class="st">"prob"</span>) <span class="sc">|&gt;</span></span>
@@ -898,6 +907,7 @@ W. Jake Thompson, Ph.D.
 <span id="cb20-15"><a></a><span class="co">#&gt;  9 9       [1,1,1] 0.942</span></span>
 <span id="cb20-16"><a></a><span class="co">#&gt; 10 10      [1,0,0] 0.598</span></span>
 <span id="cb20-17"><a></a><span class="co">#&gt; # ℹ 2,912 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div>
 </div>
 <div id="tabset-4-3">
@@ -921,6 +931,7 @@ W. Jake Thompson, Ph.D.
 <ul id="tabset-5" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-5-1">Attribute-level probabilities</a></li><li><a href="#tabset-5-2">Attribute-level classifications</a></li><li><a href="#tabset-5-3">Classification reliability</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1">
+<div class="new-height" style="--code-height: 460px;">
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">measr_extract</span>(ecpe_lcdm, <span class="st">"attribute_prob"</span>)</span>
 <span id="cb22-2"><a></a><span class="co">#&gt; # A tibble: 2,922 × 4</span></span>
@@ -939,7 +950,9 @@ W. Jake Thompson, Ph.D.
 <span id="cb22-15"><a></a><span class="co">#&gt; # ℹ 2,912 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
+</div>
 <div id="tabset-5-2">
+<div class="new-height" style="--code-height: 460px;">
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">measr_extract</span>(ecpe_lcdm, <span class="st">"attribute_prob"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb23-2"><a></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.double), \(x) <span class="fu">as.integer</span>(x <span class="sc">&gt;</span> <span class="fl">0.5</span>)))</span>
@@ -957,6 +970,7 @@ W. Jake Thompson, Ph.D.
 <span id="cb23-14"><a></a><span class="co">#&gt;  9 9                     1        1       1</span></span>
 <span id="cb23-15"><a></a><span class="co">#&gt; 10 10                    1        0       0</span></span>
 <span id="cb23-16"><a></a><span class="co">#&gt; # ℹ 2,912 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div>
 </div>
 <div id="tabset-5-3">
@@ -982,6 +996,7 @@ W. Jake Thompson, Ph.D.
 <ul id="tabset-6" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-6-1">Attribute-level probabilities</a></li><li><a href="#tabset-6-2">Probability reliability</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1">
+<div class="new-height" style="--code-height: 460px;">
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">measr_extract</span>(ecpe_lcdm, <span class="st">"attribute_prob"</span>)</span>
 <span id="cb25-2"><a></a><span class="co">#&gt; # A tibble: 2,922 × 4</span></span>
@@ -998,6 +1013,7 @@ W. Jake Thompson, Ph.D.
 <span id="cb25-13"><a></a><span class="co">#&gt;  9 9               0.953     0.984   0.998 </span></span>
 <span id="cb25-14"><a></a><span class="co">#&gt; 10 10              0.701     0.0932  0.0847</span></span>
 <span id="cb25-15"><a></a><span class="co">#&gt; # ℹ 2,912 more rows</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
 </div>
 </div>
 <div id="tabset-6-2">
@@ -1020,10 +1036,10 @@ W. Jake Thompson, Ph.D.
 <section id="exercise-5" class="slide level2 exercise">
 <h2>Exercise 5</h2>
 <ul>
-<li>Examine the attribute classification indices for the ROAR-PA LCDM.</li>
-<li>Which attributes are the most and least reliable?</li>
+<li><p>Examine the attribute classification indices for the ROAR-PA LCDM.</p></li>
+<li><p>Which attributes are the most and least reliable?</p></li>
 </ul>
-<countdown-timer id="timer_68f53822dc94c256ef33605662a030836d59fe30" minutes="04" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
+<countdown-timer id="timer_5a7f28f9535958b33b481d682385f06708bc0a1d" minutes="04" seconds="00" class="countdown" warn-when="0" update-every="1" play-sound="false" blink-colon="false" start-immediately="false" tabindex="0" style="right: 0;bottom: 15%;">
  </countdown-timer>
 </section>
 <section id="section-4" class="slide level2 exercise" data-menu-title="Solution 5">

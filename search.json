@@ -7,6 +7,391 @@
     "text": "Here’s your roadmap for the workshop!\n\nMaterials (): This page contains the slides for each session.\nExercises (): This Github repository contains all of the exercises for each session.\n\n\nIntroduction to Diagnostic Classification Modeling\n\n\n\n\n\n\n\n\n\n\n\nTITLE\n\n\nMATERIALS\n\n\nEXERCISES\n\n\n\n\n\n\n\nWelcome\n\n\n08:00–08:15\n\n\n\n\n\n\n\n\n\n\n\n\nIntroduction to diagnostic models\n\n\n08:15–08:30\n\n\n\n\n\n\n\n\n\n\n\n\nEstimating diagnostic models\n\n\n08:30–09:10\n\n\n\n\n\n\n\n\n\n\n\n\nEvaluating diagnostic models\n\n\n09:10–09:50\n\n\n\n\n\n\n\n\n\n\n\n\nWrap-up\n\n\n09:50–10:00\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nAdvanced Diagnostic Classification Modeling\n\n\n\n\n\n\n\n\n\n\n\nTITLE\n\n\nMATERIALS\n\n\nEXERCISES\n\n\n\n\n\n\n\nWelcome\n\n\n10:30–10:45\n\n\n\n\n\n\n\n\n\n\n\n\nMeasurement models\n\n\n10:45–11:15\n\n\n\n\n\n\n\n\n\n\n\n\nStructural models\n\n\n11:15–11:45\n\n\n\n\n\n\n\n\n\n\n\n\nDetecting model misspecifications\n\n\n11:45–12:15\n\n\n\n\n\n\n\n\n\n\n\n\nWrap-up\n\n\n12:15–12:30"
   },
   {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#types-of-misspecifications",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#types-of-misspecifications",
+    "title": "Identifying model  misspecifications",
+    "section": "Types of misspecifications",
+    "text": "Types of misspecifications\n\nAttributes\n\nHow many, and which ones?\n\n\nItems\n\nAlignment to attributes\nMeasurement model"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#attribute-identification",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#attribute-identification",
+    "title": "Identifying model  misspecifications",
+    "section": "Attribute identification",
+    "text": "Attribute identification\n\nHave we identified the correct number of attributes?\n\nIdeally, this is a content-driven process from the beginning\n\nIdentify the skills or constructs we want to measure\nDevelop items specifically for those skills using principles of evidence centered design\n\n\nBut often we’re handed data, or are attempting to retrofit a DCM to a previously developed assessment"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#too-many-attributes",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#too-many-attributes",
+    "title": "Identifying model  misspecifications",
+    "section": "Too many attributes",
+    "text": "Too many attributes\n\nWhat might some indicators be that we have included too many attributes in our model?\n\n\n\nSome we’ll examine today:\n\nStructural parameters: Are there classes that aren’t observed and aren’t explained by a hierarchy?\nAttribute correlations: If attributes are very highly correlated, are they really measuring distinct skills?"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#structural-parameters",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#structural-parameters",
+    "title": "Identifying model  misspecifications",
+    "section": "Structural parameters",
+    "text": "Structural parameters\n\nmeasr_extract(ecpe_lcdm, \"strc_param\")\n#&gt; # A tibble: 8 × 5\n#&gt;   class   morphosyntactic cohesive lexical         estimate\n#&gt;   &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;       &lt;rvar[1d]&gt;\n#&gt; 1 [0,0,0]               0        0       0  0.291 ± 0.00588\n#&gt; 2 [1,0,0]               1        0       0  0.018 ± 0.00198\n#&gt; 3 [0,1,0]               0        1       0  0.020 ± 0.00117\n#&gt; 4 [0,0,1]               0        0       1  0.133 ± 0.00517\n#&gt; 5 [1,1,0]               1        1       0  0.015 ± 0.00253\n#&gt; 6 [1,0,1]               1        0       1  0.020 ± 0.00097\n#&gt; 7 [0,1,1]               0        1       1  0.154 ± 0.00909\n#&gt; 8 [1,1,1]               1        1       1  0.350 ± 0.00487\n\n\nWe see respondents in all of the expected classes"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#attribute-correlations",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#attribute-correlations",
+    "title": "Identifying model  misspecifications",
+    "section": "Attribute correlations",
+    "text": "Attribute correlations\n\nattribute_corr(ecpe_lcdm)\n#&gt;                 morphosyntactic  cohesive   lexical\n#&gt; morphosyntactic       1.0000000 0.8978362 0.7808127\n#&gt; cohesive              0.8978362 1.0000000 0.9297594\n#&gt; lexical               0.7808127 0.9297594 1.0000000\n\n\nWe expect to see somewhat high correlations (but not perfect) due to the attribute dependencies"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#exercise-1",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#exercise-1",
+    "title": "Identifying model  misspecifications",
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\nOpen misspecifications.Rmd and run the setup chunk.\nExamine the base rates and attribute correlations for the PIE HDCM model.\nWhat do the findings indicate?"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#section",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#section",
+    "title": "Identifying model  misspecifications",
+    "section": "",
+    "text": "Structural parameters\nCorrelations\n\n\n\n\nmeasr_extract(pie_hdcm, \"strc_param\")\n#&gt; # A tibble: 4 × 5\n#&gt;   class      L1    L2    L3       estimate\n#&gt;   &lt;chr&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;rvar[1d]&gt;\n#&gt; 1 [0,0,0]     0     0     0  0.047 ± 0.036\n#&gt; 2 [1,0,0]     1     0     0  0.055 ± 0.056\n#&gt; 3 [1,1,0]     1     1     0  0.551 ± 0.080\n#&gt; 4 [1,1,1]     1     1     1  0.347 ± 0.051\n\n\nVery few students are proficient on only Level 1 skills\n\n\n\n\nattribute_corr(pie_hdcm)\n#&gt;                 L1        L2              L3\n#&gt; L1  1.000000000000 0.8703714 -0.000002912461\n#&gt; L2  0.870371441323 1.0000000  0.251065826627\n#&gt; L3 -0.000002912461 0.2510658  1.000000000000\n\n\nCorrelation between Levels 1 and 2 is much higher than between Levels 2 and 3"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#too-few-attributes",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#too-few-attributes",
+    "title": "Identifying model  misspecifications",
+    "section": "Too few attributes",
+    "text": "Too few attributes\n\nWhat might some indicators be that we have included too few attributes in our model?\n\n\n\nSome we’ll examine today:\n\nLocal independence: Item responses should be independent conditional on the respondent’s profile of proficiency"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#residual-correlations-with-yens-q3",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#residual-correlations-with-yens-q3",
+    "title": "Identifying model  misspecifications",
+    "section": "Residual correlations with Yen’s Q3\n",
+    "text": "Residual correlations with Yen’s Q3\n\n\nResidual correlations should all be relatively small (e.g., &lt;.2)\n\n\n\nyens_q3(ecpe_lcdm)\n#&gt; # A tibble: 378 × 4\n#&gt;    item_1 item_2 resid_corr flag \n#&gt;    &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt; &lt;lgl&gt;\n#&gt;  1 E1     E2       0.00496  FALSE\n#&gt;  2 E1     E3      -0.0332   FALSE\n#&gt;  3 E1     E4       0.0125   FALSE\n#&gt;  4 E1     E5       0.0213   FALSE\n#&gt;  5 E1     E6       0.0181   FALSE\n#&gt;  6 E1     E7       0.000101 FALSE\n#&gt;  7 E1     E8      -0.0240   FALSE\n#&gt;  8 E1     E9      -0.0341   FALSE\n#&gt;  9 E1     E10     -0.00660  FALSE\n#&gt; 10 E1     E11     -0.0262   FALSE\n#&gt; # ℹ 368 more rows"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#visualizing-yens-q3",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#visualizing-yens-q3",
+    "title": "Identifying model  misspecifications",
+    "section": "Visualizing Yen’s Q3\n",
+    "text": "Visualizing Yen’s Q3"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#exercise-2",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#exercise-2",
+    "title": "Identifying model  misspecifications",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\nCalculate Yen’s Q3 (residual correlations) for the PIE HDCM\nWhat do the findings indicate?"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#section-1",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#section-1",
+    "title": "Identifying model  misspecifications",
+    "section": "",
+    "text": "Q3 distribution\nFlagged pairs\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nyens_q3(pie_hdcm) |&gt;\n  filter(flag)\n#&gt; # A tibble: 11 × 4\n#&gt;    item_1 item_2 resid_corr flag \n#&gt;    &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt; &lt;lgl&gt;\n#&gt;  1 00592  14415       0.209 TRUE \n#&gt;  2 00592  06238       0.402 TRUE \n#&gt;  3 00592  97634      -0.241 TRUE \n#&gt;  4 14415  64967       0.208 TRUE \n#&gt;  5 06238  97634      -0.215 TRUE \n#&gt;  6 06238  27971      -0.238 TRUE \n#&gt;  7 10231  97634       0.450 TRUE \n#&gt;  8 54596  27971       0.213 TRUE \n#&gt;  9 54596  63088      -0.246 TRUE \n#&gt; 10 96748  56741       0.211 TRUE \n#&gt; 11 13080  56741       0.257 TRUE"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#diagnosing-item-level-problems",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#diagnosing-item-level-problems",
+    "title": "Identifying model  misspecifications",
+    "section": "Diagnosing item-level problems",
+    "text": "Diagnosing item-level problems\n\n\nItem-level fit with posterior predictive model checks\n\n\np-values\nConditional probabilities\nOdds ratios\n\n\nItem discrimination\nQ-matrix validation"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#item-discrimination",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#item-discrimination",
+    "title": "Identifying model  misspecifications",
+    "section": "Item discrimination",
+    "text": "Item discrimination\n\n\nEvaluates how well an item is able to distinguish between attribute profiles\n\nItem- and test-level discrimination (Henson & Douglas, 2005)\nAttribute-level discrimination (Henson et al., 2008)\n\n\nHigher is better, but no clear thresholds as values are dependent on the number of attributes, model that was estimated, etc.\nLow values may indicate an item is not measuring what we intend (or not measuring well)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#cdi-with-measr",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#cdi-with-measr",
+    "title": "Identifying model  misspecifications",
+    "section": "CDI with measr",
+    "text": "CDI with measr\n\ncdi(ecpe_lcdm)\n#&gt; $item_discrimination\n#&gt; # A tibble: 28 × 5\n#&gt;    item_id overall morphosyntactic cohesive lexical\n#&gt;    &lt;chr&gt;     &lt;dbl&gt;           &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n#&gt;  1 E1       0.0685          0.0639   0.0497  0     \n#&gt;  2 E2       0.0491          0        0.102   0     \n#&gt;  3 E3       0.0956          0.144    0       0.0400\n#&gt;  4 E4       0.141           0        0       0.293 \n#&gt;  5 E5       0.0908          0        0       0.188 \n#&gt;  6 E6       0.0750          0        0       0.155 \n#&gt;  7 E7       0.247           0.383    0       0.0797\n#&gt;  8 E8       0.0633          0        0.131   0     \n#&gt;  9 E9       0.0920          0        0       0.191 \n#&gt; 10 E10      0.201           0.416    0       0     \n#&gt; # ℹ 18 more rows\n#&gt; \n#&gt; $test_discrimination\n#&gt; # A tibble: 1 × 4\n#&gt;   overall morphosyntactic cohesive lexical\n#&gt;     &lt;dbl&gt;           &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n#&gt; 1    3.58            2.70    0.962    3.48"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#exercise-3",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#exercise-3",
+    "title": "Identifying model  misspecifications",
+    "section": "Exercise 3",
+    "text": "Exercise 3\n\nCalculate the CDI for the PIE HDCM model\nWhat conclusions or recommendations might we make based on these results?"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#section-2",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#section-2",
+    "title": "Identifying model  misspecifications",
+    "section": "",
+    "text": "cdi(pie_hdcm)\n#&gt; $item_discrimination\n#&gt; # A tibble: 15 × 5\n#&gt;    task  overall     L1     L2    L3\n#&gt;    &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;\n#&gt;  1 00592  0.124  0.737  0      0    \n#&gt;  2 14415  0.108  0.545  0      0    \n#&gt;  3 56400  0.0358 0.152  0      0    \n#&gt;  4 64967  0.0162 0.0760 0      0    \n#&gt;  5 06238  0.0974 0      0.175  0    \n#&gt;  6 10231  0.0613 0      0.110  0    \n#&gt;  7 54596  0.0224 0      0.0403 0    \n#&gt;  8 96748  0.148  0      0.267  0    \n#&gt;  9 97634  0.102  0      0.183  0    \n#&gt; 10 13080  0.631  0      0      1.11 \n#&gt; 11 27971  1.17   0      0      2.12 \n#&gt; 12 56741  0.389  0      0      0.699\n#&gt; 13 63088  1.90   0      0      3.53 \n#&gt; 14 81175  0.599  0      0      1.04 \n#&gt; 15 88063  0.234  0      0      0.395\n#&gt; \n#&gt; $test_discrimination\n#&gt; # A tibble: 1 × 4\n#&gt;   overall    L1    L2    L3\n#&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n#&gt; 1    5.63  1.51 0.776  8.90"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#q-matrix-validation",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#q-matrix-validation",
+    "title": "Identifying model  misspecifications",
+    "section": "Q-matrix validation",
+    "text": "Q-matrix validation\n\n\nThe Q-matrix defines which items measure each attribute\n\nIs the Q-matrix correct?\nAre there other Q-matrices that might better explain the observed data\n\n\nmeasr implements a general Q-matrix validation measure from de la Torre & Chiu (2016)\n\nAssumes that the set of attributes is correct\n\nDoes not evaluate whether additional, fewer, or different attributes would be appropriate"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#q-matrix-validation-with-measr",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#q-matrix-validation-with-measr",
+    "title": "Identifying model  misspecifications",
+    "section": "Q-matrix validation with measr",
+    "text": "Q-matrix validation with measr\n\nqmatrix_validation(ecpe_lcdm)\n#&gt; # A tibble: 28 × 5\n#&gt;    item_id original_specification original_pvaf empirical_specification\n#&gt;    &lt;chr&gt;   &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;                  \n#&gt;  1 E1      [1, 1, 0]                      0.995 &lt;NA&gt;                   \n#&gt;  2 E2      [0, 1, 0]                      0.989 &lt;NA&gt;                   \n#&gt;  3 E3      [1, 0, 1]                      0.996 &lt;NA&gt;                   \n#&gt;  4 E4      [0, 0, 1]                      0.980 &lt;NA&gt;                   \n#&gt;  5 E5      [0, 0, 1]                      0.993 &lt;NA&gt;                   \n#&gt;  6 E6      [0, 0, 1]                      0.980 &lt;NA&gt;                   \n#&gt;  7 E7      [1, 0, 1]                      1.000 &lt;NA&gt;                   \n#&gt;  8 E8      [0, 1, 0]                      0.986 &lt;NA&gt;                   \n#&gt;  9 E9      [0, 0, 1]                      0.925 [1, 0, 1]              \n#&gt; 10 E10     [1, 0, 0]                      0.983 &lt;NA&gt;                   \n#&gt; # ℹ 18 more rows\n#&gt; # ℹ 1 more variable: empirical_pvaf &lt;chr&gt;"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#exercise-4",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#exercise-4",
+    "title": "Identifying model  misspecifications",
+    "section": "Exercise 4",
+    "text": "Exercise 4\n\nCheck the Q-matrix for the PIE HDCM\nAre there any items that may measure additional pathway levels?"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-04-misspecifications-slides.html#section-3",
+    "href": "materials/slides/02-advdcm-04-misspecifications-slides.html#section-3",
+    "title": "Identifying model  misspecifications",
+    "section": "",
+    "text": "qmatrix_validation(pie_hdcm)\n#&gt; # A tibble: 15 × 5\n#&gt;    task  original_specification original_pvaf empirical_specification\n#&gt;    &lt;chr&gt; &lt;chr&gt;                          &lt;dbl&gt; &lt;chr&gt;                  \n#&gt;  1 00592 [1, 0, 0]                      0.450 [1, 0, 1]              \n#&gt;  2 14415 [1, 0, 0]                      0.580 [1, 0, 1]              \n#&gt;  3 56400 [1, 0, 0]                      0.699 [1, 0, 1]              \n#&gt;  4 64967 [1, 0, 0]                      0.150 [0, 1, 1]              \n#&gt;  5 06238 [0, 1, 0]                      0.522 [1, 1, 1]              \n#&gt;  6 10231 [0, 1, 0]                      0.551 [0, 1, 1]              \n#&gt;  7 54596 [0, 1, 0]                      0.470 [0, 1, 1]              \n#&gt;  8 96748 [0, 1, 0]                      0.875 [1, 1, 1]              \n#&gt;  9 97634 [0, 1, 0]                      0.461 [0, 1, 1]              \n#&gt; 10 13080 [0, 0, 1]                      0.997 &lt;NA&gt;                   \n#&gt; 11 27971 [0, 0, 1]                      1.000 &lt;NA&gt;                   \n#&gt; 12 56741 [0, 0, 1]                      0.996 &lt;NA&gt;                   \n#&gt; 13 63088 [0, 0, 1]                      1.000 &lt;NA&gt;                   \n#&gt; 14 81175 [0, 0, 1]                      1.000 &lt;NA&gt;                   \n#&gt; 15 88063 [0, 0, 1]                      1.000 &lt;NA&gt;                   \n#&gt; # ℹ 1 more variable: empirical_pvaf &lt;chr&gt;"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#data-for-examples",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#data-for-examples",
+    "title": "Diagnostic measurement  models",
+    "section": "Data for examples",
+    "text": "Data for examples\n\nExamination for the certificate of proficiency in English (ECPE; Templin & Hoffman, 2013)\n\n28 items measuring 3 total attributes\n2,922 respondents\n\n3 attributes\n\nMorphosyntactic rules\nCohesive rules\nLexical rules"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#ecpe-data",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#ecpe-data",
+    "title": "Diagnostic measurement  models",
+    "section": "ECPE data",
+    "text": "ECPE data\n\nlibrary(dcmdata)\n\necpe_data\n#&gt; # A tibble: 2,922 × 29\n#&gt;    resp_id    E1    E2    E3    E4    E5    E6    E7    E8    E9   E10   E11\n#&gt;      &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;\n#&gt;  1       1     1     1     1     0     1     1     1     1     1     1     1\n#&gt;  2       2     1     1     1     1     1     1     1     1     1     1     1\n#&gt;  3       3     1     1     1     1     1     1     0     1     1     1     1\n#&gt;  4       4     1     1     1     1     1     1     1     1     1     1     1\n#&gt;  5       5     1     1     1     1     1     1     1     1     1     1     1\n#&gt;  6       6     1     1     1     1     1     1     1     1     1     1     1\n#&gt;  7       7     1     1     1     1     1     1     1     1     1     1     1\n#&gt;  8       8     0     1     1     1     1     1     0     1     1     1     0\n#&gt;  9       9     1     1     1     1     1     1     1     1     1     1     1\n#&gt; 10      10     1     1     1     1     0     0     1     1     1     1     1\n#&gt; # ℹ 2,912 more rows\n#&gt; # ℹ 17 more variables: E12 &lt;int&gt;, E13 &lt;int&gt;, E14 &lt;int&gt;, E15 &lt;int&gt;, E16 &lt;int&gt;,\n#&gt; #   E17 &lt;int&gt;, E18 &lt;int&gt;, E19 &lt;int&gt;, E20 &lt;int&gt;, E21 &lt;int&gt;, E22 &lt;int&gt;,\n#&gt; #   E23 &lt;int&gt;, E24 &lt;int&gt;, E25 &lt;int&gt;, E26 &lt;int&gt;, E27 &lt;int&gt;, E28 &lt;int&gt;"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#ecpe-q-matrix",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#ecpe-q-matrix",
+    "title": "Diagnostic measurement  models",
+    "section": "ECPE Q-matrix",
+    "text": "ECPE Q-matrix\n\necpe_qmatrix\n#&gt; # A tibble: 28 × 4\n#&gt;    item_id morphosyntactic cohesive lexical\n#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;\n#&gt;  1 E1                    1        1       0\n#&gt;  2 E2                    0        1       0\n#&gt;  3 E3                    1        0       1\n#&gt;  4 E4                    0        0       1\n#&gt;  5 E5                    0        0       1\n#&gt;  6 E6                    0        0       1\n#&gt;  7 E7                    1        0       1\n#&gt;  8 E8                    0        1       0\n#&gt;  9 E9                    0        0       1\n#&gt; 10 E10                   1        0       0\n#&gt; # ℹ 18 more rows"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#data-for-exercises",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#data-for-exercises",
+    "title": "Diagnostic measurement  models",
+    "section": "Data for exercises",
+    "text": "Data for exercises\n\nPathways for Instructionally Embedded Assessment (PIE; ATLAS, 2025)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#exercise-1",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#exercise-1",
+    "title": "Diagnostic measurement  models",
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\nDownload the exercise files\n\n\nusethis::use_course(\"r-dcm/ncme2026-exercises\")\n\n\nOpen measurement-models.Rmd\nRun the setup chunk\nExplore the PIE field test data and Q-matrix\n\nHow many items are in the data?\nHow many respondents are in the data?\nHow many attributes are measured?"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#section",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#section",
+    "title": "Diagnostic measurement  models",
+    "section": "",
+    "text": "PIE FT dataPIE Q-matrix\n\n\n\n\n\npie_ft_data\n#&gt; # A tibble: 172 × 16\n#&gt;    student `00592` `14415` `56400` `64967` `06238` `10231` `54596` `96748`\n#&gt;    &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;   &lt;int&gt;\n#&gt;  1 8978593       1       1       1       1       1       0       1       1\n#&gt;  2 5231294       1       1       1       1       1       1       1       1\n#&gt;  3 3681220       1       1       1       1       1       1       1       1\n#&gt;  4 7763384       1       0       1       1       1       1       1       1\n#&gt;  5 1913897       1       1       1       1       1       1       1       1\n#&gt;  6 0692477       1       1       1       1       1       1       1       1\n#&gt;  7 6961042       1       1       0       1       1       1       1       1\n#&gt;  8 4241777       1       1       1       1       1       1       1       1\n#&gt;  9 3068583       1       1       1       1       1       1       1       1\n#&gt; 10 6607413       1       1       1       1       1       1       1       1\n#&gt; # ℹ 162 more rows\n#&gt; # ℹ 7 more variables: `97634` &lt;int&gt;, `13080` &lt;int&gt;, `27971` &lt;int&gt;,\n#&gt; #   `56741` &lt;int&gt;, `63088` &lt;int&gt;, `81175` &lt;int&gt;, `88063` &lt;int&gt;\n\n\n\n15 items\n172 respondents\n\n\n\n\n\n\n\npie_ft_qmatrix\n#&gt; # A tibble: 15 × 4\n#&gt;    task     L1    L2    L3\n#&gt;    &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;\n#&gt;  1 00592     1     0     0\n#&gt;  2 14415     1     0     0\n#&gt;  3 56400     1     0     0\n#&gt;  4 64967     1     0     0\n#&gt;  5 06238     0     1     0\n#&gt;  6 10231     0     1     0\n#&gt;  7 54596     0     1     0\n#&gt;  8 96748     0     1     0\n#&gt;  9 97634     0     1     0\n#&gt; 10 13080     0     0     1\n#&gt; 11 27971     0     0     1\n#&gt; 12 56741     0     0     1\n#&gt; 13 63088     0     0     1\n#&gt; 14 81175     0     0     1\n#&gt; 15 88063     0     0     1\n\n\n\n15 items\n3 attributes representing levels in a learning pathway\n\nLevel 1 (L1)\nLevel 2 (L2)\nLevel 3 (L3)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#model-specification",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#model-specification",
+    "title": "Diagnostic measurement  models",
+    "section": "Model specification",
+    "text": "Model specification\nSpecify a DCM with dcm_specify()\n\necpe_spec &lt;- dcm_specify(\n1  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n2  measurement_model = lcdm(),\n  structural_model = unconstrained()\n)\n\n\n1\n\nSpecify your Q-matrix, and ID column (if present)\n\n2\n\nChoose the measurement and structural model to estimate"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#model-estimation",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#model-estimation",
+    "title": "Diagnostic measurement  models",
+    "section": "Model estimation",
+    "text": "Model estimation\nEstimate a DCM with dcm_estimate()\n\necpe_lcdm &lt;- dcm_estimate(\n1  dcm_spec = ecpe_spec,\n2  data = ecpe_data,\n  identifier = \"resp_id\",\n3  method = \"pathfinder\",\n  backend = \"cmdstanr\",\n4  single_path_draws = 1000,\n  num_paths = 10,\n  draws = 2000,\n5  file = here(\"materials\", \"slides\", \"fits\", \"ecpe-lcdm-uncst\")\n)\n\n\n1\n\nDefine your model specification\n\n2\n\nSpecify your data and ID column (if present)\n\n3\n\nChoose your estimation method and backend\n\n4\n\nPass additional arguments to the backend\n\n5\n\nSave the model for future efficiency"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#dcm_estimate-options",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#dcm_estimate-options",
+    "title": "Diagnostic measurement  models",
+    "section": "dcm_estimate() options",
+    "text": "dcm_estimate() options\n\nmethod: How to estimate the model\n\nFull posterior sampling with “mcmc”\nQuicker, but more limited “optim”\nPosterior approximation with “variational” (default) or “pathfinder”\n\nVariational inference does not always converge\nPathfinder is only available for the cmdstanr backend\n\n\n...: Additional arguments that are passed to, depending on the method and backend\n\n\n\n\n\nrstan::sampling()\nrstan::optimizing()\nrstan::vb()\n\n\n\n\n\ncmdstanr::sample()\ncmdstanr::optimize()\ncmdstanr::variational()\ncmdstanr::pathfinder()"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#diagnostic-assessment-items",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#diagnostic-assessment-items",
+    "title": "Diagnostic measurement  models",
+    "section": "Diagnostic assessment items",
+    "text": "Diagnostic assessment items\n\nCan be multidimensional\nNo continuum of student achievement\nCategorical constructs\n\nUsually binary (e.g., master/nonmaster, proficient/not proficient)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#dcm-measurement-models",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#dcm-measurement-models",
+    "title": "Diagnostic measurement  models",
+    "section": "DCM measurement models",
+    "text": "DCM measurement models\n\nItems can measure one or both attributes\nDifferent DCMs define πic in different ways\n\nEach DCM makes different assumptions about how attributes proficiencies combine/interact to produce an item response\n\nItem characteristic bar charts"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#single-attribute-dcm-item",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#single-attribute-dcm-item",
+    "title": "Diagnostic measurement  models",
+    "section": "Single-attribute DCM item",
+    "text": "Single-attribute DCM item\n\n\n\nItem measures just attribute 1\nRespondents who are proficient on attribute 1 have high probability of correct response, regardless of other attributes"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#multi-attribute-items",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#multi-attribute-items",
+    "title": "Diagnostic measurement  models",
+    "section": "Multi-attribute items",
+    "text": "Multi-attribute items\n\nWhen items measure multiple attributes, what level of mastery is needed in order to provide a correct response?\nMany different types of DCMs that define this probability differently\n\nCompensatory (e.g., DINO)\nNoncompensatory (e.g., DINA)\nPartially compensatory (e.g., C-RUM)\n\nGeneral diagnostic models (e.g., LCDM)\nEach DCM makes different assumptions about how attributes proficiencies combine/interact to produce an item response"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#compensatory-dcms",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#compensatory-dcms",
+    "title": "Diagnostic measurement  models",
+    "section": "Compensatory DCMs",
+    "text": "Compensatory DCMs\n\n\n\nItem measures attributes 1 and 2\nMust be proficient in at least 1 attribute measured by the item to provide a correct response\nDeterministic inputs, noisy “or” gate (DINO; Templin & Henson, 2006)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#non-compensatory-dcms",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#non-compensatory-dcms",
+    "title": "Diagnostic measurement  models",
+    "section": "Non-compensatory DCMs",
+    "text": "Non-compensatory DCMs\n\n\n\nItem measures attributes 1 and 2\nMust be proficient in all attributes measured by the item to provide a correct response\nDeterministic inputs, noisy “and” gate (DINA; de la Torre & Douglas, 2004)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#partially-compensatory-dcms",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#partially-compensatory-dcms",
+    "title": "Diagnostic measurement  models",
+    "section": "Partially Compensatory DCMs",
+    "text": "Partially Compensatory DCMs\n\n\n\nSeparate increases for each acquired attribute\nCompensatory reparameterized unified model (C-RUM; Hartz, 2002)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#which-dcm-to-use",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#which-dcm-to-use",
+    "title": "Diagnostic measurement  models",
+    "section": "Which DCM to use?",
+    "text": "Which DCM to use?\n\nDINO, DINA, and C-RUM are just three of the MANY models that are available\nEach model comes with its own set of restrictions, and we typically have to specify a single model that is used for all items (software constraint)\nGeneral form diagnostic models\n\nFlexible; can subsume other more restrictive models\nAgain, several possibilities (e.g., G-DINA, GDM, LCDM)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#general-dcms",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#general-dcms",
+    "title": "Diagnostic measurement  models",
+    "section": "General DCMs",
+    "text": "General DCMs\n\n\n\nDifferent response probabilities for each class (partially compensatory)\nLog-linear cognitive diagnostic model (LCDM; Henson et al., 2009)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#the-lcdm-as-a-general-dcm",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#the-lcdm-as-a-general-dcm",
+    "title": "Diagnostic measurement  models",
+    "section": "The LCDM as a general DCM",
+    "text": "The LCDM as a general DCM\n\nSo called “general” DCM because the LCDM subsumes other DCMs\nConstraints on item parameters make LCDM equivalent to other DCMs (e.g., DINA and DINO)\n\nDINA\n\nOnly the intercept and highest-order interaction are non-0\n\nDINO\n\nAll main effects are equal\nAll two-way interactions are -1 \\(\\times\\) main effect\nAll three-way interactions are -1 \\(\\times\\) two-way interaction (i.e., equal to main effects)\nEtc.\n\nC-RUM\n\nOnly the intercept and main effects are non-0 (i.e., interactions are not estimated)\n\nInteractive Shiny app: https://atlas-aai.shinyapps.io/dcm-probs/"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#measurement-models-with-measr",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#measurement-models-with-measr",
+    "title": "Diagnostic measurement  models",
+    "section": "Measurement models with measr",
+    "text": "Measurement models with measr\nWe define a DCM using dcm_specify()\n\necpe_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = lcdm(),\n  structural_model = unconstrained()\n)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#supported-models",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#supported-models",
+    "title": "Diagnostic measurement  models",
+    "section": "Supported models",
+    "text": "Supported models\n\n\n\n\n\n\n  \n    \n    \n    \n  \n  \n    \n      model\n      description\n      measr\n    \n  \n  \n    \n      \n    \n    LCDM\nGeneral and flexible, subsumes other models\nlcdm()\n    \n      Non-compensatory\n    \n    DINA\nAll attributes must be present\ndina()\n    NIDA\nAttributes have multiplicative penalties equal across items\nnida()\n    NC-RUM\nAttributes have multiplicative penalites that vary across items\nncrum()\n    \n      Compensatory\n    \n    DINO\nAny one attribute must be present\ndino()\n    NIDO\nAttributes are additive and equal across items\nnido()\n    C-RUM\nAttributes are additive and vary across items\ncrum()"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#choose-a-new-measurement-model",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#choose-a-new-measurement-model",
+    "title": "Diagnostic measurement  models",
+    "section": "Choose a new measurement model",
+    "text": "Choose a new measurement model\n\necpe_dina_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = dina(),\n  structural_model = unconstrained()\n)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#exercise-2",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#exercise-2",
+    "title": "Diagnostic measurement  models",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\nEstimate an LCDM and a NIDA model on the PIE data\nFor the LCDM:\n\nUse MCMC as the method\nUse \"rstan\" as the backend\nUse 2 chains, each with 2000 total iterations, and 1000 warmup iterations\n\nFor the NIDA:\n\nUse variational inference as the method\nUse \"rstan\" as the backend\nUse the seed 19891213"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#section-1",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#section-1",
+    "title": "Diagnostic measurement  models",
+    "section": "",
+    "text": "LCDMNIDA\n\n\n\npie_lcdm_spec &lt;- dcm_specify(\n  qmatrix = pie_ft_qmatrix,\n  identifier = \"task\",\n  measurement_model = lcdm(),\n  structural_model = unconstrained()\n)\n\npie_lcdm &lt;- dcm_estimate(\n  pie_lcdm_spec,\n  data = pie_ft_data,\n  identifier = \"student\",\n  method = \"mcmc\",\n  backend = \"rstan\",\n  chains = 2,\n  iter = 2000,\n  warmup = 1000,\n  cores = 2,\n  file = here(\"materials\", \"slides\", \"fits\", \"pie-lcdm-uncst\")\n)\n\n\n\n\npie_nida_spec &lt;- dcm_specify(\n  qmatrix = pie_ft_qmatrix,\n  identifier = \"task\",\n  measurement_model = nida(),\n  structural_model = unconstrained()\n)\n\npie_nida &lt;- dcm_estimate(\n  pie_nida_spec,\n  data = pie_ft_data,\n  identifier = \"student\",\n  method = \"variational\",\n  backend = \"rstan\",\n  seed = 19891213,\n  file = here(\"materials\", \"slides\", \"fits\", \"pie-nida-uncst\")\n)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#modify-a-measurement-model",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#modify-a-measurement-model",
+    "title": "Diagnostic measurement  models",
+    "section": "Modify a measurement model",
+    "text": "Modify a measurement model\n\necpe_lcdm_main_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = lcdm(max_interaction = 1),\n  structural_model = unconstrained()\n)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#exercise-3",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#exercise-3",
+    "title": "Diagnostic measurement  models",
+    "section": "Exercise 3",
+    "text": "Exercise 3\n\nCreate a specification for a new LCDM for the PIE FT data\nLimit the model to only include intercepts, main effects, and two-way interactions\n\nHow is this model different from the original LCDM?"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#section-2",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#section-2",
+    "title": "Diagnostic measurement  models",
+    "section": "",
+    "text": "Examine possible parametersCreate specification\n\n\n\nget_parameters(pie_lcdm_spec)\n#&gt; # A tibble: 31 × 4\n#&gt;    task  type       attributes coefficient\n#&gt;    &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;      \n#&gt;  1 00592 intercept  &lt;NA&gt;       l1_0       \n#&gt;  2 00592 maineffect L1         l1_11      \n#&gt;  3 14415 intercept  &lt;NA&gt;       l2_0       \n#&gt;  4 14415 maineffect L1         l2_11      \n#&gt;  5 56400 intercept  &lt;NA&gt;       l3_0       \n#&gt;  6 56400 maineffect L1         l3_11      \n#&gt;  7 64967 intercept  &lt;NA&gt;       l4_0       \n#&gt;  8 64967 maineffect L1         l4_11      \n#&gt;  9 06238 intercept  &lt;NA&gt;       l5_0       \n#&gt; 10 06238 maineffect L2         l5_12      \n#&gt; # ℹ 21 more rows\n\n\n\n\ndcm_specify(\n  qmatrix = pie_ft_qmatrix,\n  identifier = \"task\",\n  measurement_model = lcdm(max_interaction = 2),\n  structural_model = unconstrained()\n)\n\nBecause all of the PIE items are single-attribute items, there’s no difference at all!"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#estimate-a-model-to-compare",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#estimate-a-model-to-compare",
+    "title": "Diagnostic measurement  models",
+    "section": "Estimate a model to compare",
+    "text": "Estimate a model to compare\n\nSpecificationEstimation\n\n\n\n\necpe_dina_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = dina(),\n  structural_model = unconstrained()\n)\n\n\n\n\n\n\necpe_dina &lt;- dcm_estimate(\n  ecpe_dina_spec,\n  data = ecpe_data,\n  identifier = \"resp_id\",\n  method = \"pathfinder\",\n  backend = \"cmdstanr\",\n  single_path_draws = 1000,\n  num_paths = 10,\n  draws = 2000,\n  file = here(\"materials\", \"slides\", \"fits\", \"ecpe-dina-uncst\")\n)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#compare-models-with-loo",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#compare-models-with-loo",
+    "title": "Diagnostic measurement  models",
+    "section": "Compare models with LOO",
+    "text": "Compare models with LOO\n\nloo_compare(ecpe_lcdm, ecpe_dina)\n#&gt;           elpd_diff se_diff\n#&gt; ecpe_lcdm    0.0       0.0 \n#&gt; ecpe_dina -128.7      21.6\n\n\nLCDM is the preferred model\n\nPreferred does not imply “good”\n\nDifference is much larger than the standard error of the difference\n\nApproximate threshold: Absolute difference is greater than 2.5 × standard error of the difference (Bengio & Grandvalet, 2004)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#exercise-4",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#exercise-4",
+    "title": "Diagnostic measurement  models",
+    "section": "Exercise 4",
+    "text": "Exercise 4\n\nCompare the LCDM and NIDA models we estimated for the PIE FT data\nWhich model is preferred?"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-02-measurement-models-slides.html#section-3",
+    "href": "materials/slides/02-advdcm-02-measurement-models-slides.html#section-3",
+    "title": "Diagnostic measurement  models",
+    "section": "",
+    "text": "loo_compare(pie_lcdm, pie_nida)\n#&gt;          elpd_diff se_diff\n#&gt; pie_lcdm   0.0       0.0  \n#&gt; pie_nida -35.4      10.4"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-05-closing-slides.html#learn-more-about-dcms",
+    "href": "materials/slides/01-introdcm-05-closing-slides.html#learn-more-about-dcms",
+    "title": "Wrap-Up",
+    "section": "Learn more about DCMs",
+    "text": "Learn more about DCMs"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-05-closing-slides.html#learn-more-about-measr",
+    "href": "materials/slides/01-introdcm-05-closing-slides.html#learn-more-about-measr",
+    "title": "Wrap-Up",
+    "section": "Learn more about measr",
+    "text": "Learn more about measr\n\n\n\n\n\n r-dcm case studies\n measr documentation\n r-dcm/measr"
+  },
+  {
+    "objectID": "materials/slides/01-introdcm-05-closing-slides.html#feedback",
+    "href": "materials/slides/01-introdcm-05-closing-slides.html#feedback",
+    "title": "Wrap-Up",
+    "section": "Feedback",
+    "text": "Feedback\n\n\nWe value your feedback! To answer a short survey about and provide feedback on the {measr} package, please follow this link to a Qualtrics survey.\nATLAS at the University of Kansas is conducting research to better understand the software development process for {measr}. Individuals who have used the {measr} package and are at least 18 years of age are invited to complete a 5-minute survey on their experiences. For questions, please contact Jake Thompson at wjakethompson@ku.edu."
+  },
+  {
     "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#data-for-examples",
     "href": "materials/slides/01-introdcm-03-estimation-slides.html#data-for-examples",
     "title": "Estimating diagnostic  classification models",
@@ -172,7 +557,7 @@
     "href": "materials/slides/01-introdcm-03-estimation-slides.html#specifying-custom-priors",
     "title": "Estimating diagnostic  classification models",
     "section": "Specifying custom priors",
-    "text": "Specifying custom priors\n\nDefine separatelyDefine in dcm_specify()Check priors\n\n\n\nmy_prior &lt;- c(\n  prior(normal(-1, 1), type = \"intercept\"),\n  prior(lognormal(0, 5), type = \"maineffect\")\n)\n\nnew_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = lcdm(),\n  structural_model = unconstrained(),\n  priors = my_prior\n)\n\n\n\n\nnew_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = lcdm(),\n  structural_model = unconstrained(),\n  priors = c(\n    prior(normal(-1, 1), type = \"intercept\"),\n    prior(lognormal(0, 5), type = \"maineffect\")\n  )\n)\n\n\n\n\nnew_spec\n#&gt; A loglinear cognitive diagnostic model (LCDM) measuring 3 attributes with 28\n#&gt; items.\n#&gt; \n#&gt; ℹ Attributes:\n#&gt; • \"morphosyntactic\" (13 items)\n#&gt; • \"cohesive\" (6 items)\n#&gt; • \"lexical\" (18 items)\n#&gt; \n#&gt; ℹ Attribute structure:\n#&gt;   Unconstrained\n#&gt; \n#&gt; ℹ Prior distributions:\n#&gt;   intercept ~ normal(-1, 1)\n#&gt;   maineffect ~ lognormal(0, 5)\n#&gt;   interaction ~ normal(0, 2)\n#&gt;   `Vc` ~ dirichlet(1, 1, 1)"
+    "text": "Specifying custom priors\n\nDefine separatelyDefine in dcm_specify()Check priors\n\n\n\nmy_prior &lt;- c(\n  prior(normal(-1, 1), type = \"intercept\"),\n  prior(lognormal(0, 5), type = \"maineffect\")\n)\n\nnew_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = lcdm(),\n  structural_model = unconstrained(),\n  priors = my_prior\n)\n\n\n\n\nnew_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = lcdm(),\n  structural_model = unconstrained(),\n  priors = c(\n    prior(normal(-1, 1), type = \"intercept\"),\n    prior(lognormal(0, 5), type = \"maineffect\")\n  )\n)\n\n\n\n\n\nnew_spec\n#&gt; A loglinear cognitive diagnostic model (LCDM) measuring 3 attributes with 28\n#&gt; items.\n#&gt; \n#&gt; ℹ Attributes:\n#&gt; • \"morphosyntactic\" (13 items)\n#&gt; • \"cohesive\" (6 items)\n#&gt; • \"lexical\" (18 items)\n#&gt; \n#&gt; ℹ Attribute structure:\n#&gt;   Unconstrained\n#&gt; \n#&gt; ℹ Prior distributions:\n#&gt;   intercept ~ normal(-1, 1)\n#&gt;   maineffect ~ lognormal(0, 5)\n#&gt;   interaction ~ normal(0, 2)\n#&gt;   `Vc` ~ dirichlet(1, 1, 1)"
   },
   {
     "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#extract-priors",
@@ -235,7 +620,7 @@
     "href": "materials/slides/01-introdcm-01-intro-slides.html#copy-and-run",
     "title": "Introduction to diagnostic  classification modeling",
     "section": "Copy and run",
-    "text": "Copy and run\n\ninstall.packages(c(\"measr\", \"tidyverse\", \"fs\", \"usethis\"))\n\n\n# Optional\ninstall.packages(\n  c(\"rstan\", \"StanHeaders\", \"cmdstanr\"),\n  repos = c(\"https://stan-dev.r-universe.dev\", getOption(\"repos\"))\n)\n\n## check toolchain\ncmdstanr::check_cmdstan_toolchain()\ncmdstanr::install_cmdstan(cores = 2)\n\nFor help installing RStan, CmdStanR, or configuring the toolchain, see the prework page."
+    "text": "Copy and run\n\ninstall.packages(c(\"measr\", \"tidyverse\", \"here\", \"fs\", \"usethis\"))\n\n\n# Optional\ninstall.packages(\n  c(\"rstan\", \"StanHeaders\", \"cmdstanr\"),\n  repos = c(\"https://stan-dev.r-universe.dev\", getOption(\"repos\"))\n)\n\n## check toolchain\ncmdstanr::check_cmdstan_toolchain()\ncmdstanr::install_cmdstan(cores = 2)\n\nFor help installing RStan, CmdStanR, or configuring the toolchain, see the prework page."
   },
   {
     "objectID": "materials/index.html",
@@ -289,7 +674,7 @@
     "href": "index.html",
     "title": "\n            Diagnostic Classification Modeling\n        ",
     "section": "",
-    "text": "Use R and Stan to estimate and evaluate diagnostic psychometric models\n        \n        \n            NCME 2026\n        \n    \n    \n      \n        \n        \n        \n      \n    \n\n\n\n\n\n\nInstructor\n\n   W. Jake Thompson, Ph.D.\n   ATLAS, University of Kansas\n   wjakethompson@ku.edu\n   in/wjakethompson\n   @wjakethompson.com\n\n\n\nNext course\n\n   National Council on Measurement in Education\n   April 8, 2026\n   8:00am–10:00am (intro)\n   10:30am-12:30pm (advanced)\n   Los Angeles, CA"
+    "text": "Use R and Stan to estimate and evaluate diagnostic psychometric models\n        \n        \n            Workshop materials for learning about diagnostic models and using the r-dcm suite of packages to apply them to your work.\n        \n    \n    \n      \n        \n        \n        \n      \n    \n\n\n\n\n\n\nInstructor\n\n   W. Jake Thompson, Ph.D.\n   ATLAS, University of Kansas\n   wjakethompson@ku.edu\n   in/wjakethompson\n   @wjakethompson.com\n\n\n\nNext course\n\n   National Council on Measurement in Education\n   April 8, 2026\n   8:00am–10:00am (intro)\n   10:30am-12:30pm (advanced)\n   Los Angeles, CA"
   },
   {
     "objectID": "materials/01-introdcm-02-dcm-intro.html",
@@ -705,7 +1090,7 @@
     "href": "materials/slides/01-introdcm-04-evaluation-slides.html#flagging-item-level-fit",
     "title": "Evaluating diagnostic  classification models",
     "section": "Flagging item-level fit",
-    "text": "Flagging item-level fit\n\np-valuesConditional probabilitiesOdds ratios\n\n\n\nmeasr_extract(ecpe_lcdm, \"ppmc_pvalue_flags\")\n#&gt; # A tibble: 0 × 7\n#&gt; # ℹ 7 variables: item_id &lt;fct&gt;, obs_pvalue &lt;dbl&gt;, ppmc_mean &lt;dbl&gt;, 2.5% &lt;dbl&gt;,\n#&gt; #   97.5% &lt;dbl&gt;, samples &lt;named list&gt;, ppp &lt;dbl&gt;\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"ppmc_conditional_prob_flags\")\n#&gt; # A tibble: 142 × 8\n#&gt;    item_id class   obs_cond_pval ppmc_mean `2.5%` `97.5%` samples          ppp\n#&gt;    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;named list&gt;   &lt;dbl&gt;\n#&gt;  1 E1      [0,0,0]         0.701     0.695  0.672   0.699 &lt;dbl [2,000]&gt; 0.0055\n#&gt;  2 E1      [1,0,0]         0.664     0.822  0.795   0.827 &lt;dbl [2,000]&gt; 1     \n#&gt;  3 E1      [0,0,1]         0.582     0.695  0.672   0.699 &lt;dbl [2,000]&gt; 1     \n#&gt;  4 E1      [1,1,0]         1         0.941  0.930   0.942 &lt;dbl [2,000]&gt; 0     \n#&gt;  5 E1      [1,0,1]         0.617     0.822  0.795   0.827 &lt;dbl [2,000]&gt; 1     \n#&gt;  6 E1      [0,1,1]         0.854     0.813  0.791   0.819 &lt;dbl [2,000]&gt; 0     \n#&gt;  7 E1      [1,1,1]         0.928     0.941  0.930   0.942 &lt;dbl [2,000]&gt; 0.98  \n#&gt;  8 E2      [1,0,0]         0.803     0.741  0.730   0.744 &lt;dbl [2,000]&gt; 0     \n#&gt;  9 E2      [0,0,1]         0.712     0.741  0.730   0.744 &lt;dbl [2,000]&gt; 0.991 \n#&gt; 10 E2      [1,1,0]         1         0.908  0.907   0.913 &lt;dbl [2,000]&gt; 0     \n#&gt; # ℹ 132 more rows\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"ppmc_odds_ratio_flags\")\n#&gt; # A tibble: 78 × 8\n#&gt;    item_1 item_2 obs_or ppmc_mean `2.5%` `97.5%` samples          ppp\n#&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;named list&gt;   &lt;dbl&gt;\n#&gt;  1 E1     E17      2.02      1.50   1.13    1.94 &lt;dbl [2,000]&gt; 0.0155\n#&gt;  2 E1     E26      1.61      1.29   1.05    1.57 &lt;dbl [2,000]&gt; 0.014 \n#&gt;  3 E1     E28      1.86      1.43   1.13    1.77 &lt;dbl [2,000]&gt; 0.0075\n#&gt;  4 E2     E4       1.73      1.35   1.09    1.65 &lt;dbl [2,000]&gt; 0.0055\n#&gt;  5 E2     E5       1.84      1.40   1.03    1.83 &lt;dbl [2,000]&gt; 0.024 \n#&gt;  6 E2     E6       1.72      1.33   1.00    1.72 &lt;dbl [2,000]&gt; 0.024 \n#&gt;  7 E2     E14      1.64      1.24   1.01    1.51 &lt;dbl [2,000]&gt; 0.002 \n#&gt;  8 E2     E15      1.92      1.45   1.07    1.90 &lt;dbl [2,000]&gt; 0.02  \n#&gt;  9 E4     E5       2.81      2.06   1.63    2.58 &lt;dbl [2,000]&gt; 0.0065\n#&gt; 10 E4     E8       2.14      1.48   1.13    1.90 &lt;dbl [2,000]&gt; 0.0005\n#&gt; # ℹ 68 more rows"
+    "text": "Flagging item-level fit\n\np-valuesConditional probabilitiesOdds ratios\n\n\n\nmeasr_extract(ecpe_lcdm, \"ppmc_pvalue_flags\")\n#&gt; # A tibble: 0 × 7\n#&gt; # ℹ 7 variables: item_id &lt;fct&gt;, obs_pvalue &lt;dbl&gt;, ppmc_mean &lt;dbl&gt;, 2.5% &lt;dbl&gt;,\n#&gt; #   97.5% &lt;dbl&gt;, samples &lt;named list&gt;, ppp &lt;dbl&gt;\n\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"ppmc_conditional_prob_flags\")\n#&gt; # A tibble: 142 × 8\n#&gt;    item_id class   obs_cond_pval ppmc_mean `2.5%` `97.5%` samples          ppp\n#&gt;    &lt;chr&gt;   &lt;chr&gt;           &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;named list&gt;   &lt;dbl&gt;\n#&gt;  1 E1      [0,0,0]         0.701     0.695  0.672   0.699 &lt;dbl [2,000]&gt; 0.0055\n#&gt;  2 E1      [1,0,0]         0.664     0.822  0.795   0.827 &lt;dbl [2,000]&gt; 1     \n#&gt;  3 E1      [0,0,1]         0.582     0.695  0.672   0.699 &lt;dbl [2,000]&gt; 1     \n#&gt;  4 E1      [1,1,0]         1         0.941  0.930   0.942 &lt;dbl [2,000]&gt; 0     \n#&gt;  5 E1      [1,0,1]         0.617     0.822  0.795   0.827 &lt;dbl [2,000]&gt; 1     \n#&gt;  6 E1      [0,1,1]         0.854     0.813  0.791   0.819 &lt;dbl [2,000]&gt; 0     \n#&gt;  7 E1      [1,1,1]         0.928     0.941  0.930   0.942 &lt;dbl [2,000]&gt; 0.98  \n#&gt;  8 E2      [1,0,0]         0.803     0.741  0.730   0.744 &lt;dbl [2,000]&gt; 0     \n#&gt;  9 E2      [0,0,1]         0.712     0.741  0.730   0.744 &lt;dbl [2,000]&gt; 0.991 \n#&gt; 10 E2      [1,1,0]         1         0.908  0.907   0.913 &lt;dbl [2,000]&gt; 0     \n#&gt; # ℹ 132 more rows\n\n\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"ppmc_odds_ratio_flags\")\n#&gt; # A tibble: 78 × 8\n#&gt;    item_1 item_2 obs_or ppmc_mean `2.5%` `97.5%` samples          ppp\n#&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;named list&gt;   &lt;dbl&gt;\n#&gt;  1 E1     E17      2.02      1.50   1.13    1.94 &lt;dbl [2,000]&gt; 0.0155\n#&gt;  2 E1     E26      1.61      1.29   1.05    1.57 &lt;dbl [2,000]&gt; 0.014 \n#&gt;  3 E1     E28      1.86      1.43   1.13    1.77 &lt;dbl [2,000]&gt; 0.0075\n#&gt;  4 E2     E4       1.73      1.35   1.09    1.65 &lt;dbl [2,000]&gt; 0.0055\n#&gt;  5 E2     E5       1.84      1.40   1.03    1.83 &lt;dbl [2,000]&gt; 0.024 \n#&gt;  6 E2     E6       1.72      1.33   1.00    1.72 &lt;dbl [2,000]&gt; 0.024 \n#&gt;  7 E2     E14      1.64      1.24   1.01    1.51 &lt;dbl [2,000]&gt; 0.002 \n#&gt;  8 E2     E15      1.92      1.45   1.07    1.90 &lt;dbl [2,000]&gt; 0.02  \n#&gt;  9 E4     E5       2.81      2.06   1.63    2.58 &lt;dbl [2,000]&gt; 0.0065\n#&gt; 10 E4     E8       2.14      1.48   1.13    1.90 &lt;dbl [2,000]&gt; 0.0005\n#&gt; # ℹ 68 more rows"
   },
   {
     "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#patterns-of-item-level-misfit",
@@ -747,7 +1132,7 @@
     "href": "materials/slides/01-introdcm-04-evaluation-slides.html#comparing-models",
     "title": "Evaluating diagnostic  classification models",
     "section": "Comparing models",
-    "text": "Comparing models\nFirst, we need another model to compare\n\necpe_dina_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = dina(),\n  structural_model = unconstrained()\n)\n\necpe_dina &lt;- dcm_estimate(\n  ecpe_dina_spec,\n  data = ecpe_data,\n  identifier = \"resp_id\",\n  method = \"pathfinder\",\n  backend = \"cmdstanr\",\n  single_path_draws = 1000,\n  num_paths = 10,\n  draws = 2000,\n  file = here(\"materials\", \"slides\", \"fits\", \"ecpe-dina-uncst\")\n)"
+    "text": "Comparing models\nFirst, we need another model to compare\n\n\necpe_dina_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = dina(),\n  structural_model = unconstrained()\n)\n\necpe_dina &lt;- dcm_estimate(\n  ecpe_dina_spec,\n  data = ecpe_data,\n  identifier = \"resp_id\",\n  method = \"pathfinder\",\n  backend = \"cmdstanr\",\n  single_path_draws = 1000,\n  num_paths = 10,\n  draws = 2000,\n  file = here(\"materials\", \"slides\", \"fits\", \"ecpe-dina-uncst\")\n)"
   },
   {
     "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#loo_compare",
@@ -789,21 +1174,21 @@
     "href": "materials/slides/01-introdcm-04-evaluation-slides.html#profile-level-classification",
     "title": "Evaluating diagnostic  classification models",
     "section": "Profile-level classification",
-    "text": "Profile-level classification\n\nProfile-level probabilitiesProfile-level classificationsProfile reliability\n\n\n\nmeasr_extract(ecpe_lcdm, \"class_prob\")\n#&gt; # A tibble: 2,922 × 9\n#&gt;    resp_id `[0,0,0]` `[1,0,0]` `[0,1,0]` `[0,0,1]` `[1,1,0]` `[1,0,1]` `[0,1,1]`\n#&gt;    &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;\n#&gt;  1 1         5.21e-6   1.27e-4   4.15e-7  0.00127  0.000118   0.0472     0.00171\n#&gt;  2 2         5.10e-6   1.25e-4   2.20e-7  0.00352  0.0000636  0.130      0.00156\n#&gt;  3 3         5.59e-6   1.87e-5   2.23e-6  0.00315  0.0000902  0.00959    0.0211 \n#&gt;  4 4         2.02e-7   4.94e-6   8.07e-8  0.000264 0.0000230  0.00981    0.00178\n#&gt;  5 5         6.73e-4   9.61e-3   2.69e-4  0.00112  0.0450     0.00920    0.00752\n#&gt;  6 6         1.93e-6   1.70e-5   7.70e-7  0.000840 0.0000795  0.00977    0.00566\n#&gt;  7 7         1.93e-6   1.70e-5   7.70e-7  0.000840 0.0000795  0.00977    0.00566\n#&gt;  8 8         2.62e-2   7.33e-5   1.09e-3  0.571    0.0000203  0.000295   0.400  \n#&gt;  9 9         4.77e-5   3.05e-4   1.91e-5  0.00606  0.00147    0.00935    0.0408 \n#&gt; 10 10        2.60e-1   5.98e-1   2.02e-3  0.0331   0.0556     0.0161     0.00432\n#&gt; # ℹ 2,912 more rows\n#&gt; # ℹ 1 more variable: `[1,1,1]` &lt;dbl&gt;\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"class_prob\") |&gt;\n  pivot_longer(-resp_id, names_to = \"profile\", values_to = \"prob\") |&gt;\n  slice_max(order_by = prob, by = resp_id)\n#&gt; # A tibble: 2,922 × 3\n#&gt;    resp_id profile  prob\n#&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;\n#&gt;  1 1       [1,1,1] 0.950\n#&gt;  2 2       [1,1,1] 0.864\n#&gt;  3 3       [1,1,1] 0.966\n#&gt;  4 4       [1,1,1] 0.988\n#&gt;  5 5       [1,1,1] 0.927\n#&gt;  6 6       [1,1,1] 0.984\n#&gt;  7 7       [1,1,1] 0.984\n#&gt;  8 8       [0,0,1] 0.571\n#&gt;  9 9       [1,1,1] 0.942\n#&gt; 10 10      [1,0,0] 0.598\n#&gt; # ℹ 2,912 more rows\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"pattern_reliability\")\n#&gt; # A tibble: 1 × 2\n#&gt;   accuracy consistency\n#&gt;      &lt;dbl&gt;       &lt;dbl&gt;\n#&gt; 1    0.736       0.653\n\n\nEstimating classification consistency and accuracy for cognitive diagnostic assessment (Cui et al., 2012)"
+    "text": "Profile-level classification\n\nProfile-level probabilitiesProfile-level classificationsProfile reliability\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"class_prob\")\n#&gt; # A tibble: 2,922 × 9\n#&gt;    resp_id `[0,0,0]` `[1,0,0]` `[0,1,0]` `[0,0,1]` `[1,1,0]` `[1,0,1]` `[0,1,1]`\n#&gt;    &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;\n#&gt;  1 1         5.21e-6   1.27e-4   4.15e-7  0.00127  0.000118   0.0472     0.00171\n#&gt;  2 2         5.10e-6   1.25e-4   2.20e-7  0.00352  0.0000636  0.130      0.00156\n#&gt;  3 3         5.59e-6   1.87e-5   2.23e-6  0.00315  0.0000902  0.00959    0.0211 \n#&gt;  4 4         2.02e-7   4.94e-6   8.07e-8  0.000264 0.0000230  0.00981    0.00178\n#&gt;  5 5         6.73e-4   9.61e-3   2.69e-4  0.00112  0.0450     0.00920    0.00752\n#&gt;  6 6         1.93e-6   1.70e-5   7.70e-7  0.000840 0.0000795  0.00977    0.00566\n#&gt;  7 7         1.93e-6   1.70e-5   7.70e-7  0.000840 0.0000795  0.00977    0.00566\n#&gt;  8 8         2.62e-2   7.33e-5   1.09e-3  0.571    0.0000203  0.000295   0.400  \n#&gt;  9 9         4.77e-5   3.05e-4   1.91e-5  0.00606  0.00147    0.00935    0.0408 \n#&gt; 10 10        2.60e-1   5.98e-1   2.02e-3  0.0331   0.0556     0.0161     0.00432\n#&gt; # ℹ 2,912 more rows\n#&gt; # ℹ 1 more variable: `[1,1,1]` &lt;dbl&gt;\n\n\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"class_prob\") |&gt;\n  pivot_longer(-resp_id, names_to = \"profile\", values_to = \"prob\") |&gt;\n  slice_max(order_by = prob, by = resp_id)\n#&gt; # A tibble: 2,922 × 3\n#&gt;    resp_id profile  prob\n#&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;\n#&gt;  1 1       [1,1,1] 0.950\n#&gt;  2 2       [1,1,1] 0.864\n#&gt;  3 3       [1,1,1] 0.966\n#&gt;  4 4       [1,1,1] 0.988\n#&gt;  5 5       [1,1,1] 0.927\n#&gt;  6 6       [1,1,1] 0.984\n#&gt;  7 7       [1,1,1] 0.984\n#&gt;  8 8       [0,0,1] 0.571\n#&gt;  9 9       [1,1,1] 0.942\n#&gt; 10 10      [1,0,0] 0.598\n#&gt; # ℹ 2,912 more rows\n\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"pattern_reliability\")\n#&gt; # A tibble: 1 × 2\n#&gt;   accuracy consistency\n#&gt;      &lt;dbl&gt;       &lt;dbl&gt;\n#&gt; 1    0.736       0.653\n\n\nEstimating classification consistency and accuracy for cognitive diagnostic assessment (Cui et al., 2012)"
   },
   {
     "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#attribute-level-classification",
     "href": "materials/slides/01-introdcm-04-evaluation-slides.html#attribute-level-classification",
     "title": "Evaluating diagnostic  classification models",
     "section": "Attribute-level classification",
-    "text": "Attribute-level classification\n\nAttribute-level probabilitiesAttribute-level classificationsClassification reliability\n\n\n\nmeasr_extract(ecpe_lcdm, \"attribute_prob\")\n#&gt; # A tibble: 2,922 × 4\n#&gt;    resp_id morphosyntactic cohesive lexical\n#&gt;    &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n#&gt;  1 1               0.997     0.951   1.000 \n#&gt;  2 2               0.995     0.866   1.000 \n#&gt;  3 3               0.976     0.987   1.000 \n#&gt;  4 4               0.998     0.990   1.000 \n#&gt;  5 5               0.990     0.979   0.944 \n#&gt;  6 6               0.993     0.989   1.000 \n#&gt;  7 7               0.993     0.989   1.000 \n#&gt;  8 8               0.00208   0.403   0.973 \n#&gt;  9 9               0.953     0.984   0.998 \n#&gt; 10 10              0.701     0.0932  0.0847\n#&gt; # ℹ 2,912 more rows\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"attribute_prob\") |&gt;\n  mutate(across(where(is.double), \\(x) as.integer(x &gt; 0.5)))\n#&gt; # A tibble: 2,922 × 4\n#&gt;    resp_id morphosyntactic cohesive lexical\n#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;\n#&gt;  1 1                     1        1       1\n#&gt;  2 2                     1        1       1\n#&gt;  3 3                     1        1       1\n#&gt;  4 4                     1        1       1\n#&gt;  5 5                     1        1       1\n#&gt;  6 6                     1        1       1\n#&gt;  7 7                     1        1       1\n#&gt;  8 8                     0        0       1\n#&gt;  9 9                     1        1       1\n#&gt; 10 10                    1        0       0\n#&gt; # ℹ 2,912 more rows\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"classification_reliability\")\n#&gt; # A tibble: 3 × 3\n#&gt;   attribute       accuracy consistency\n#&gt;   &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;\n#&gt; 1 morphosyntactic    0.896       0.818\n#&gt; 2 cohesive           0.851       0.800\n#&gt; 3 lexical            0.916       0.864\n\n\nMeasures of agreement to assess attribute-level classification accuracy and consistency for cognitive diagnostic assessments (Johnson & Sinharay, 2018)"
+    "text": "Attribute-level classification\n\nAttribute-level probabilitiesAttribute-level classificationsClassification reliability\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"attribute_prob\")\n#&gt; # A tibble: 2,922 × 4\n#&gt;    resp_id morphosyntactic cohesive lexical\n#&gt;    &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n#&gt;  1 1               0.997     0.951   1.000 \n#&gt;  2 2               0.995     0.866   1.000 \n#&gt;  3 3               0.976     0.987   1.000 \n#&gt;  4 4               0.998     0.990   1.000 \n#&gt;  5 5               0.990     0.979   0.944 \n#&gt;  6 6               0.993     0.989   1.000 \n#&gt;  7 7               0.993     0.989   1.000 \n#&gt;  8 8               0.00208   0.403   0.973 \n#&gt;  9 9               0.953     0.984   0.998 \n#&gt; 10 10              0.701     0.0932  0.0847\n#&gt; # ℹ 2,912 more rows\n\n\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"attribute_prob\") |&gt;\n  mutate(across(where(is.double), \\(x) as.integer(x &gt; 0.5)))\n#&gt; # A tibble: 2,922 × 4\n#&gt;    resp_id morphosyntactic cohesive lexical\n#&gt;    &lt;chr&gt;             &lt;int&gt;    &lt;int&gt;   &lt;int&gt;\n#&gt;  1 1                     1        1       1\n#&gt;  2 2                     1        1       1\n#&gt;  3 3                     1        1       1\n#&gt;  4 4                     1        1       1\n#&gt;  5 5                     1        1       1\n#&gt;  6 6                     1        1       1\n#&gt;  7 7                     1        1       1\n#&gt;  8 8                     0        0       1\n#&gt;  9 9                     1        1       1\n#&gt; 10 10                    1        0       0\n#&gt; # ℹ 2,912 more rows\n\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"classification_reliability\")\n#&gt; # A tibble: 3 × 3\n#&gt;   attribute       accuracy consistency\n#&gt;   &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;\n#&gt; 1 morphosyntactic    0.896       0.818\n#&gt; 2 cohesive           0.851       0.800\n#&gt; 3 lexical            0.916       0.864\n\n\nMeasures of agreement to assess attribute-level classification accuracy and consistency for cognitive diagnostic assessments (Johnson & Sinharay, 2018)"
   },
   {
     "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#attribute-level-probabilities-1",
     "href": "materials/slides/01-introdcm-04-evaluation-slides.html#attribute-level-probabilities-1",
     "title": "Evaluating diagnostic  classification models",
     "section": "Attribute-level probabilities",
-    "text": "Attribute-level probabilities\n\nAttribute-level probabilitiesProbability reliability\n\n\n\nmeasr_extract(ecpe_lcdm, \"attribute_prob\")\n#&gt; # A tibble: 2,922 × 4\n#&gt;    resp_id morphosyntactic cohesive lexical\n#&gt;    &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n#&gt;  1 1               0.997     0.951   1.000 \n#&gt;  2 2               0.995     0.866   1.000 \n#&gt;  3 3               0.976     0.987   1.000 \n#&gt;  4 4               0.998     0.990   1.000 \n#&gt;  5 5               0.990     0.979   0.944 \n#&gt;  6 6               0.993     0.989   1.000 \n#&gt;  7 7               0.993     0.989   1.000 \n#&gt;  8 8               0.00208   0.403   0.973 \n#&gt;  9 9               0.953     0.984   0.998 \n#&gt; 10 10              0.701     0.0932  0.0847\n#&gt; # ℹ 2,912 more rows\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"probability_reliability\")\n#&gt; # A tibble: 3 × 2\n#&gt;   attribute       informational\n#&gt;   &lt;chr&gt;                   &lt;dbl&gt;\n#&gt; 1 morphosyntactic         0.577\n#&gt; 2 cohesive                0.506\n#&gt; 3 lexical                 0.588\n\n\nThe reliability of the posterior probability of skill attainment in diagnostic classification models (Johnson & Sinharay, 2020)"
+    "text": "Attribute-level probabilities\n\nAttribute-level probabilitiesProbability reliability\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"attribute_prob\")\n#&gt; # A tibble: 2,922 × 4\n#&gt;    resp_id morphosyntactic cohesive lexical\n#&gt;    &lt;chr&gt;             &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;\n#&gt;  1 1               0.997     0.951   1.000 \n#&gt;  2 2               0.995     0.866   1.000 \n#&gt;  3 3               0.976     0.987   1.000 \n#&gt;  4 4               0.998     0.990   1.000 \n#&gt;  5 5               0.990     0.979   0.944 \n#&gt;  6 6               0.993     0.989   1.000 \n#&gt;  7 7               0.993     0.989   1.000 \n#&gt;  8 8               0.00208   0.403   0.973 \n#&gt;  9 9               0.953     0.984   0.998 \n#&gt; 10 10              0.701     0.0932  0.0847\n#&gt; # ℹ 2,912 more rows\n\n\n\n\n\nmeasr_extract(ecpe_lcdm, \"probability_reliability\")\n#&gt; # A tibble: 3 × 2\n#&gt;   attribute       informational\n#&gt;   &lt;chr&gt;                   &lt;dbl&gt;\n#&gt; 1 morphosyntactic         0.577\n#&gt; 2 cohesive                0.506\n#&gt; 3 lexical                 0.588\n\n\nThe reliability of the posterior probability of skill attainment in diagnostic classification models (Johnson & Sinharay, 2020)"
   },
   {
     "objectID": "materials/slides/01-introdcm-04-evaluation-slides.html#exercise-5",
@@ -818,5 +1203,306 @@
     "title": "Evaluating diagnostic  classification models",
     "section": "",
     "text": "measr_extract(roarpa_lcdm, \"classification_reliability\")\n#&gt; # A tibble: 3 × 3\n#&gt;   attribute accuracy consistency\n#&gt;   &lt;chr&gt;        &lt;dbl&gt;       &lt;dbl&gt;\n#&gt; 1 lsm          0.982       0.994\n#&gt; 2 del          0.963       0.958\n#&gt; 3 fsm          0.982       0.994"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#who-am-i",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#who-am-i",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "Who am I?",
+    "text": "Who am I?\n\n\nW. Jake Thompson, Ph.D.\n\nAssistant Director of Psychometrics\n\n\nATLAS | University of Kansas\n\n\nResearch: Applications of diagnostic psychometric models\n\nLead psychometrician and Co-PI for the Dynamic Learnings Maps assessments\nPI for an IES-funded project to develop software for diagnostic models\n\n\n\n\n\n\n\n   @wjakethompson   @wjakethompson.com"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#acknowledgements",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#acknowledgements",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nThe research reported here was supported by the Institute of Education Sciences, U.S. Department of Education, through Grants R305D210045 and R305D240032 to the University of Kansas Center for Research, Inc., ATLAS. The opinions expressed are those of the authors and do not represent the views of the the Institute or the U.S. Department of Education."
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#schedule",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#schedule",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "Schedule",
+    "text": "Schedule\n\n\nPart 1: Foundations\nMeasurement and structural models\n\n\n\n\n\nPart 2: Applications\nModel misspecifications"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#materials",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#materials",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "Materials",
+    "text": "Materials\nAll materials are available on the workshop website:\nhttps://learn.r-dcm.org"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#installation",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#installation",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "Installation",
+    "text": "Installation\n\nRequired\n\nR (≥ 4.5.0)\nrstan (≥ 2.32.7)\nmeasr (≥ 2.0.1)\n\n\nRecommended\n\nRStudio (≥ 2026.01.1-403)\ncmdstanr (≥ 0.9.0)\nCmdStan (≥ 2.38.0)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#copy-and-run",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#copy-and-run",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "Copy and run",
+    "text": "Copy and run\n\ninstall.packages(c(\"measr\", \"tidyverse\", \"pysch\", \"here\", \"fs\", \"usethis\"))\n\n\n# Optional\ninstall.packages(\n  c(\"rstan\", \"StanHeaders\", \"cmdstanr\"),\n  repos = c(\"https://stan-dev.r-universe.dev\", getOption(\"repos\"))\n)\n\n## check toolchain\ncmdstanr::check_cmdstan_toolchain()\ncmdstanr::install_cmdstan(cores = 2)\n\nFor help installing RStan, CmdStanR, or configuring the toolchain, see the prework page."
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#what-are-diagnostic-models",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#what-are-diagnostic-models",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "What are diagnostic models?",
+    "text": "What are diagnostic models?\n\n\n\nDCMs are psychometric models designed to classify\n\nThere is no scale score\nWe can define our attributes in any way that we choose\nItems depend on the attribute definitions\nClassifications are probabilistic\n\n\n\n\n\nDCMs provide valuable information with more feasible data demands than other psychometric models\n\nHigher reliability than IRT/MIRT models\nComplex item structures possible\nCriterion-referenced interpretations\nAlignment of assessment goals and psychometric model"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#statistical-foundation",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#statistical-foundation",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "Statistical foundation",
+    "text": "Statistical foundation\n\nLatent class models use responses to probabilistically place individuals into latent classes\n\nDCMs are confirmatory latent class models\n\nLatent classes specified a priori as attribute profiles\nQ-matrix specifies item-attribute structure\nPerson parameters are attribute proficiency probabilities"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#terminology",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#terminology",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "Terminology",
+    "text": "Terminology\n\n\nRespondents (r): The individuals from whom behavioral data are collected\n\nFor today, this is dichotomous assessment item responses\nNot limited to only item responses in practice\n\n\nItems (i): Assessment questions used to classify/diagnose respondents\n\nAttributes (a): Unobserved latent categorical characteristics underlying the behaviors (i.e., diagnostic status)\n\nLatent variables"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#attribute-profiles",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#attribute-profiles",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "Attribute profiles",
+    "text": "Attribute profiles\n\nWith binary attributes, there are 2A possible profiles\nExample 3-attribute assessment:\n\n\n[0, 0, 0]\n[1, 0, 0]\n[0, 1, 0]\n[0, 0, 1]\n[1, 1, 0]\n[1, 0, 1]\n[0, 1, 1]\n[1, 1, 1]"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#dcms-as-latent-class-models",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#dcms-as-latent-class-models",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "DCMs as latent class models",
+    "text": "DCMs as latent class models\n\\[\n\\color{#D55E00}{P(X_r=x_r)} = \\sum_{c=1}^C\\color{#009E73}{\\nu_c} \\prod_{i=1}^I\\color{#56B4E9}{\\pi_{ic}^{x_{ir}}(1-\\pi_{ic})^{1 - x_{ir}}}\n\\]\n\nObserved data: Probability of observing examinee r's item reponses\n\n\nStructural component: Proportion of examinees in each class\n\n\nMeasurement component: Product of item response probabilities"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#structural-models",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#structural-models",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "Structural models",
+    "text": "Structural models\n\\[\n\\color{#D55E00}{P(X_r=x_r)} = \\sum_{c=1}^C\\color{#009E73}{\\nu_c} \\prod_{i=1}^I\\color{#56B4E9}{\\pi_{ic}^{x_{ir}}(1-\\pi_{ic})^{1 - x_{ir}}}\n\\]\nStructural component: Proportion of examinees in each class\n\nPrevalence of each class in the population\n\nν1 + ν2 + … + νc = 1\n\n\nTypically unconstrained\n\nLog-linear structural models (Rupp et al., 2010)\nHierarchical diagnostic classification model (HDCM; Templin & Bradshaw, 2014)\nBayesian network (BayesNet; Hu & Templin)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#measurement-models",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#measurement-models",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "Measurement models",
+    "text": "Measurement models\n\\[\n\\color{#D55E00}{P(X_r=x_r)} = \\sum_{c=1}^C\\color{#009E73}{\\nu_c} \\prod_{i=1}^I\\color{#56B4E9}{\\pi_{ic}^{x_{ir}}(1-\\pi_{ic})^{1 - x_{ir}}}\n\\]\nMeasurement component: Product of item response probabilities\n\nTraditional psychometrics: Item response theory, classical test theory\n\nA single, unidimensional construct\nStudent results estimated on a continuum\nPerformance on individual items determined by an “item characteristic curve”\n\n\nDCMs: Many different options"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#existing-software",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#existing-software",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "Existing software",
+    "text": "Existing software\n\n\n\n\nSoftware Programs\n\n\nMplus, flexMIRT, mdltm\nLimitations\n\nTedious to implement, expensive, limited licenses, etc.\n\n\n\n\n\nR Packages\n\n\nCDM, GDINA, mirt, blatant\nLimitations\n\nLimited to constrained DCMs, under-documented\nDifferent packages have different functionality, and don’t talk to each other"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#dcms-with-stan",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#dcms-with-stan",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "DCMs with Stan",
+    "text": "DCMs with Stan\n\n\n\nStan is free and open-source\nExisting documentation for implementing DCMs\n\nCase study using the DINA model\nPaper describing LCDM implmentation\n\n\nAccess to other packages in the Stan ecosystem\n\nloo\ntidybayes\nposterior"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#limitations-of-stan-for-dcms",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#limitations-of-stan-for-dcms",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "Limitations of Stan for DCMs",
+    "text": "Limitations of Stan for DCMs\n\nVery tedious—prone to typos\nComplexity increases with the number of attributes and item structure\nStan code must be customized to each particular Q-matrix\nJust need to automate the creation of the Stan scripts…"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#what-is-measr",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#what-is-measr",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "What is measr?",
+    "text": "What is measr?\n\nR package that automates the creation of Stan scripts for DCMs\nWraps rstan or cmdstanr to estimate the models\nProvides additional functions to automate the evaluation of DCMs\n\nModel fit\nClassification accuracy and consistency"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-01-intro-slides.html#the-rest-of-today",
+    "href": "materials/slides/02-advdcm-01-intro-slides.html#the-rest-of-today",
+    "title": "Advanced diagnostic  classification modeling",
+    "section": "The rest of today",
+    "text": "The rest of today\n\nMeasurement models with dcmstan and measr\nStructural models with dcmstan and measr\nModel misspecifications with measr"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#what-is-a-structural-model",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#what-is-a-structural-model",
+    "title": "Diagnostic structural  models",
+    "section": "What is a structural model?",
+    "text": "What is a structural model?\n\nThe measurement model controls how the attributes relate to items\n\nThe structural model controls how the attributes relate to each other\n\nIndependent\nCorrelated\nDependencies"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#popular-structural-models",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#popular-structural-models",
+    "title": "Diagnostic structural  models",
+    "section": "Popular structural models",
+    "text": "Popular structural models\n\nLoglinear (Rupp et al., 2010)\n\nUnconstrained\nIndependent\n\n\nDependencies or hierarchies\n\nHierarchical DCM (HDCM; Templin & Bradshaw, 2014)\nBayesian Network (BayesNet; Hu & Templin)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#loglinear-model-specification",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#loglinear-model-specification",
+    "title": "Diagnostic structural  models",
+    "section": "Loglinear model specification",
+    "text": "Loglinear model specification\n\\[\n\\mu_c = \\color{#D55E00}{\\sum_{a=1}^A\\gamma_{1,(a)}\\alpha_{ca}} + \\color{#009E73}{\\sum_{a=1}^{A-1}\\sum_{a^\\prime=a+1}^A\\gamma_{2,(a,a^\\prime)}\\alpha_{ca}\\alpha_{ca^\\prime}} + ... + \\color{#56B4E9}{\\gamma_{A,(a,a^\\prime,...)}\\prod_{a=1}^A\\alpha_{ca}}\n\\]\n\nγ1,(1): Main effect for attribute 1\n\n\nγ2,(1,2): Two-way interaction between attributes 1 and 2\n\n\nγA,(1,2,...): A-way interaction between all attributes"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#from-kernels-to-class-proportions",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#from-kernels-to-class-proportions",
+    "title": "Diagnostic structural  models",
+    "section": "From kernels to class proportions",
+    "text": "From kernels to class proportions\n\\[\n\\nu_c = \\frac{\\exp(\\mu_c)}{\\sum_{c=1}^C\\exp(\\mu_c)}\n\\]\n\nThe class proportion is defined as the exponential of the class kernel divided by the sum of the exponential for all kernels"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#constraining-the-loglinear-model",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#constraining-the-loglinear-model",
+    "title": "Diagnostic structural  models",
+    "section": "Constraining the loglinear model",
+    "text": "Constraining the loglinear model\n\nAll possible interactions: saturated model, equivalent to an unconstrained model\nOnly main effects: Attributes are independent (i.e., no interactions allowed)\n\nAdditional interactions allows for additional moments of the latent variables\n\nFirst-order (main effects): means\nSecond-order (two-way interactions): variances\nThird-order (three-way interactions): skewness\nEtc."
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#defining-a-loglinear-model",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#defining-a-loglinear-model",
+    "title": "Diagnostic structural  models",
+    "section": "Defining a loglinear model",
+    "text": "Defining a loglinear model\n\n\nloglinear(max_interaction = Inf)\n\n\nBy default, a saturated model is estimated with all interactions"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#loglinear-model-specification-1",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#loglinear-model-specification-1",
+    "title": "Diagnostic structural  models",
+    "section": "Loglinear model specification",
+    "text": "Loglinear model specification\n\necpe_loglinear &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = lcdm(),\n  structural_model = loglinear(max_interaction = 2)\n)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#exercise-1",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#exercise-1",
+    "title": "Diagnostic structural  models",
+    "section": "Exercise 1",
+    "text": "Exercise 1\n\nOpen structural-models.Rmd and run the setup chunk.\n\nCreate a model specification for the PIE field test data\n\nMeasurement model: LCDM\nStructural model: Loglinear with independent attributes"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#section",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#section",
+    "title": "Diagnostic structural  models",
+    "section": "",
+    "text": "dcm_specify(\n  qmatrix = pie_ft_qmatrix,\n  identifier = \"task\",\n  measurement_model = lcdm(),\n  structural_model = loglinear(max_interaction = 1)\n)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#when-attributes-have-order",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#when-attributes-have-order",
+    "title": "Diagnostic structural  models",
+    "section": "When attributes have order",
+    "text": "When attributes have order\n\n\n\nWithout any ordering, there are 2A possible profiles\nSome profiles may be theoretically impossible given what we know about the domain\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMorphosyntactic\n      Cohesive\n      Lexical\n    \n\n\n0\n0\n0\n\n\n1\n0\n0\n\n\n0\n1\n0\n\n\n0\n0\n1\n\n\n1\n1\n0\n\n\n1\n0\n1\n\n\n0\n1\n1\n\n\n1\n1\n1"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#finding-the-possible-profiles",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#finding-the-possible-profiles",
+    "title": "Diagnostic structural  models",
+    "section": "Finding the possible profiles",
+    "text": "Finding the possible profiles\n\n\n\nConsider a scenario where the ECPE skills follow a defined order\n\nLexical → Cohesive → Morphosyntactic\n\n\nA respondent could be proficient on:\n\nNone of the attributes\nOnly lexical\nLexical and cohesive\nAll attributes\n\n\n\n\n\nAll other profiles should not be possible\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMorphosyntactic\n      Cohesive\n      Lexical\n    \n\n\n0\n0\n0\n\n\n1\n0\n0\n\n\n0\n1\n0\n\n\n0\n0\n1\n\n\n1\n1\n0\n\n\n1\n0\n1\n\n\n0\n1\n1\n\n\n1\n1\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMorphosyntactic\n      Cohesive\n      Lexical\n    \n\n\n0\n0\n0\n\n\n1\n0\n0\n\n\n0\n1\n0\n\n\n0\n0\n1\n\n\n1\n1\n0\n\n\n1\n0\n1\n\n\n0\n1\n1\n\n\n1\n1\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMorphosyntactic\n      Cohesive\n      Lexical\n    \n\n\n0\n0\n0\n\n\n1\n0\n0\n\n\n0\n1\n0\n\n\n0\n0\n1\n\n\n1\n1\n0\n\n\n1\n0\n1\n\n\n0\n1\n1\n\n\n1\n1\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMorphosyntactic\n      Cohesive\n      Lexical\n    \n\n\n0\n0\n0\n\n\n1\n0\n0\n\n\n0\n1\n0\n\n\n0\n0\n1\n\n\n1\n1\n0\n\n\n1\n0\n1\n\n\n0\n1\n1\n\n\n1\n1\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMorphosyntactic\n      Cohesive\n      Lexical\n    \n\n\n0\n0\n0\n\n\n1\n0\n0\n\n\n0\n1\n0\n\n\n0\n0\n1\n\n\n1\n1\n0\n\n\n1\n0\n1\n\n\n0\n1\n1\n\n\n1\n1\n1\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMorphosyntactic\n      Cohesive\n      Lexical\n    \n\n\n0\n0\n0\n\n\n1\n0\n0\n\n\n0\n1\n0\n\n\n0\n0\n1\n\n\n1\n1\n0\n\n\n1\n0\n1\n\n\n0\n1\n1\n\n\n1\n1\n1"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#structural-models-for-hierarchies",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#structural-models-for-hierarchies",
+    "title": "Diagnostic structural  models",
+    "section": "Structural models for hierarchies",
+    "text": "Structural models for hierarchies\n\n\n\n\n\n\n\n\n\n\n\nmodel\n      description\n      measr\n    \n\n\nHDCM\nHard constraints on profiles based on attribute dependencies\nhdcm()\n\n\nBayesNet\nSoft constraints on profiles based on attribute dependencies\nbayesnet()"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#defining-a-hierarchy-with-measr",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#defining-a-hierarchy-with-measr",
+    "title": "Diagnostic structural  models",
+    "section": "Defining a hierarchy with measr",
+    "text": "Defining a hierarchy with measr\n\nAttribute structure is defined using a DAG-like syntax\n\nArrows indicate the direction of the relationship\n\nThe parent is a prerequisite for the child\n\n\n\n\n\nhdcm(hierarchy = \"lexical -&gt; cohesive -&gt; morphosyntactic\")\n\n\n\n\necpe_structure &lt;- \"\n  lexcial -&gt; cohesive\n  cohesive -&gt; morphosyntactic\n\"\n\nhdcm(hierarchy = ecpe_structure)\n\n\n\n\nhdcm(hierarchy = \"morphosyntactic &lt;- cohesive &lt;- lexical\")"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#exercise-2",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#exercise-2",
+    "title": "Diagnostic structural  models",
+    "section": "Exercise 2",
+    "text": "Exercise 2\n\nWrite the hierarchy syntax for each of these structures"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#section-1",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#section-1",
+    "title": "Diagnostic structural  models",
+    "section": "",
+    "text": "Linear\nDiverging\nComplex\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nstructure &lt;- \"A1 -&gt; A2 -&gt; A3\"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nstructure &lt;- \"A2 &lt;- A1 -&gt; A3\"\n\nstructure &lt;- \"\n  A1 -&gt; A2\n  A1 -&gt; A3\n\"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nstructure &lt;- \"\n  A1 -&gt; A2\n  A2 -&gt; A3\n  A2 -&gt; A4\n  A3 -&gt; A5\n  A4 -&gt; A5\n\"\n\nstructure &lt;- \"\n  A1 -&gt; A2 -&gt; A3 -&gt; A5\n  A2 -&gt; A4 -&gt; A5\n\"\n\nstructure &lt;- \"\n  A1 -&gt; A2\n  A3 &lt;- A2 -&gt; A4\n  A3 -&gt; A5 &lt;- A4\n\""
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#estimating-an-attribute-hierarchy",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#estimating-an-attribute-hierarchy",
+    "title": "Diagnostic structural  models",
+    "section": "Estimating an attribute hierarchy",
+    "text": "Estimating an attribute hierarchy\n\n\nSpecification\nEstimation\n\n\n\n\necpe_hdcm_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = lcdm(),\n  structural_model = hdcm(hierarchy = \"lexical -&gt; cohesive -&gt; morphosyntactic\")\n)\n\n\n\n\necpe_hdcm &lt;- dcm_estimate(\n  ecpe_hdcm_spec,\n  data = ecpe_data,\n  identifier = \"resp_id\",\n  method = \"pathfinder\",\n  backend = \"cmdstanr\",\n  single_path_draws = 1000,\n  num_paths = 10,\n  draws = 2000,\n  file = here(\"materials\", \"slides\", \"fits\", \"ecpe-lcdm-hdcm\")\n)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#exercise-3",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#exercise-3",
+    "title": "Diagnostic structural  models",
+    "section": "Exercise 3",
+    "text": "Exercise 3\n\nWe hypothesize that our PIE attributes follow a linear hierarchy\n\nFit an HDCM to the PIE data where Level 1 is required before Level 2, and Level 2 is required before Level 3\n\nUse MCMC as the method\nUse \"rstan\" as the backend\nUse 2 chains, each with 2000 total iterations, and 1000 warmup iterations"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#section-2",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#section-2",
+    "title": "Diagnostic structural  models",
+    "section": "",
+    "text": "Specification\nEstimation\n\n\n\n\npie_hdcm_spec &lt;- dcm_specify(\n  qmatrix = pie_ft_qmatrix,\n  identifier = \"task\",\n  measurement_model = lcdm(),\n  structural_model = hdcm(\"L1 -&gt; L2 -&gt; L3\")\n)\n\n\n\n\npie_hdcm &lt;- dcm_estimate(\n  pie_hdcm_spec,\n  data = pie_ft_data,\n  identifier = \"student\",\n  method = \"mcmc\",\n  backend = \"rstan\",\n  chains = 2,\n  iter = 2000,\n  warmup = 1000,\n  cores = 2,\n  file = here(\"materials\", \"slides\", \"fits\", \"pie-lcdm-hdcm\")\n)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#testing-our-hypothesized-structure",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#testing-our-hypothesized-structure",
+    "title": "Diagnostic structural  models",
+    "section": "Testing our hypothesized structure",
+    "text": "Testing our hypothesized structure\n\nWe can enforce a hierarchy on our model\nIs that structure supported by the data we gathered?\n\nJust like with the measurement models, we can use model comparisons to test our hypothesis\n\nFit a model with all possible profiles\nFit a model with only hypothesized profiles\n\n\nIf structure holds, the two models should be about equal (i.e., removing profiles doesn’t hurt anything)"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#evaluating-attribute-structures-with-loo",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#evaluating-attribute-structures-with-loo",
+    "title": "Diagnostic structural  models",
+    "section": "Evaluating attribute structures with LOO",
+    "text": "Evaluating attribute structures with LOO\n\n\nSaturated model\nModel comparison\n\n\n\n\n\necpe_spec &lt;- dcm_specify(\n  qmatrix = ecpe_qmatrix,\n  identifier = \"item_id\",\n  measurement_model = lcdm(),\n  structural_model = unconstrained()\n)\n\necpe_lcdm &lt;- dcm_estimate(\n  dcm_spec = ecpe_spec,\n  data = ecpe_data,\n  identifier = \"resp_id\",\n  method = \"pathfinder\",\n  backend = \"cmdstanr\",\n  single_path_draws = 1000,\n  num_paths = 10,\n  draws = 2000,\n  file = here(\"materials\", \"slides\", \"fits\", \"ecpe-lcdm-uncst\")\n)\n\n\n\n\n\nloo_compare(ecpe_lcdm, ecpe_hdcm)\n#&gt;           elpd_diff se_diff\n#&gt; ecpe_hdcm  0.0       0.0   \n#&gt; ecpe_lcdm -5.6      11.9"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#exercise-4",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#exercise-4",
+    "title": "Diagnostic structural  models",
+    "section": "Exercise 4",
+    "text": "Exercise 4\n\nCompare our unconstrained model to the HDCM we just estimated\nWhich model is preferred? What does that tell us about our theory?"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-03-structural-models-slides.html#section-3",
+    "href": "materials/slides/02-advdcm-03-structural-models-slides.html#section-3",
+    "title": "Diagnostic structural  models",
+    "section": "",
+    "text": "Saturated model\nModel comparison\n\n\n\n\npie_lcdm_spec &lt;- dcm_specify(\n  qmatrix = pie_ft_qmatrix,\n  identifier = \"task\",\n  measurement_model = lcdm(),\n  structural_model = unconstrained()\n)\n\npie_lcdm &lt;- dcm_estimate(\n  pie_lcdm_spec,\n  data = pie_ft_data,\n  identifier = \"student\",\n  method = \"mcmc\",\n  backend = \"rstan\",\n  chains = 2,\n  iter = 2000,\n  warmup = 1000,\n  cores = 2,\n  file = here(\"materials\", \"slides\", \"fits\", \"pie-lcdm-uncst\")\n)\n\n\n\n\nloo_compare(pie_lcdm, pie_hdcm)\n#&gt;          elpd_diff se_diff\n#&gt; pie_hdcm 0.0       0.0    \n#&gt; pie_lcdm 0.0       3.0"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-05-closing-slides.html#learn-more-about-dcms",
+    "href": "materials/slides/02-advdcm-05-closing-slides.html#learn-more-about-dcms",
+    "title": "Wrap-Up",
+    "section": "Learn more about DCMs",
+    "text": "Learn more about DCMs"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-05-closing-slides.html#learn-more-about-measr",
+    "href": "materials/slides/02-advdcm-05-closing-slides.html#learn-more-about-measr",
+    "title": "Wrap-Up",
+    "section": "Learn more about measr",
+    "text": "Learn more about measr\n\n\n\n\n\n r-dcm case studies\n measr documentation\n r-dcm/measr"
+  },
+  {
+    "objectID": "materials/slides/02-advdcm-05-closing-slides.html#feedback",
+    "href": "materials/slides/02-advdcm-05-closing-slides.html#feedback",
+    "title": "Wrap-Up",
+    "section": "Feedback",
+    "text": "Feedback\n\n\nWe value your feedback! To answer a short survey about and provide feedback on the {measr} package, please follow this link to a Qualtrics survey.\nATLAS at the University of Kansas is conducting research to better understand the software development process for {measr}. Individuals who have used the {measr} package and are at least 18 years of age are invited to complete a 5-minute survey on their experiences. For questions, please contact Jake Thompson at wjakethompson@ku.edu."
   }
 ]
