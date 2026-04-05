@@ -1,0 +1,459 @@
+---
+title: Identifying model <br> misspecifications
+author: W. Jake Thompson, Ph.D.
+html-table-processing: none
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(ggmeasr)
+library(ggdist)
+library(magick)
+library(distributional)
+library(knitr)
+library(measr)
+library(here)
+library(fs)
+library(downlit)
+library(countdown)
+library(cmdstanr)
+library(gt)
+library(dcmdata)
+
+set_theme(plot_margin = margin(5, 0, 0, 0))
+
+msr_colors <- c("#8ECAE6", "#023047", "#D7263D")
+
+# gt theme ---------------------------------------------------------------------
+gt_theme_rdcm <- function(gt_dat, bg_color = "#FFFFFF", ...) {
+  gt_dat |>
+    gt::opt_all_caps() |>
+    gt::opt_table_font(
+      font = list(gt::google_font("Open Sans"), gt::default_fonts())
+    ) |>
+    gt::tab_options(
+      column_labels.background.color = bg_color,
+      column_labels.border.top.width = gt::px(3),
+      column_labels.border.top.color = bg_color,
+      table.border.top.width = gt::px(1),
+      table.border.bottom.width = gt::px(1),
+      heading.align = "left",
+      heading.background.color = bg_color,
+      source_notes.padding = gt::px(10),
+      source_notes.border.lr.width = gt::px(0),
+      source_notes.font.size = 12,
+      source_notes.background.color = bg_color,
+      table.font.size = 16,
+      data_row.padding = gt::px(3),
+      table.background.color = bg_color,
+      ...
+    ) |>
+    gt::tab_style(
+      style = gt::cell_borders(
+        sides = "bottom",
+        color = "transparent",
+        weight = gt::px(2)
+      ),
+      locations = gt::cells_body(
+        columns = gt::everything(),
+        rows = nrow(gt_dat$`_data`)
+      )
+    ) |>
+    gt::tab_style(
+      style = list(
+        gt::cell_text(
+          weight = "bold",
+          align = "center",
+          v_align = "middle",
+          color = msr_colors[2]
+        ),
+        gt::cell_borders(
+          sides = "bottom",
+          color = msr_colors[2],
+          weight = gt::px(3)
+        )
+      ),
+      locations = gt::cells_column_labels(gt::everything())
+    ) |>
+    gt::tab_style(
+      style = gt::cell_fill(color = bg_color),
+      locations = list(gt::cells_body(
+        columns = gt::everything(),
+        rows = gt::everything()
+      ))
+    )
+}
+```
+
+## Types of misspecifications
+
+* Attributes
+  * How many, and which ones?
+
+* Items
+  * Alignment to attributes
+  * Measurement model
+
+# Attribute misspecifications
+
+## Attribute identification
+
+* Have we identified the correct number of attributes?
+
+* Ideally, this is a content-driven process from the beginning
+  * Identify the skills or constructs we want to measure
+  * Develop items specifically for those skills using principles of evidence centered design
+
+* But often we're handed data, or are attempting to retrofit a DCM to a previously developed assessment
+
+## Too many attributes {.exercise}
+
+* What might some indicators be that we have included too many attributes in our model?
+
+:::{.fragment}
+* Some we'll examine today:
+  * Structural parameters: Are there classes that aren't observed and aren't explained by a hierarchy?
+  * Attribute correlations: If attributes are very highly correlated, are they really measuring distinct skills?
+:::
+
+## Structural parameters
+
+```{r}
+#| label: read-ecpe
+
+ecpe_spec <- dcm_specify(
+  qmatrix = ecpe_qmatrix,
+  identifier = "item_id",
+  measurement_model = lcdm(),
+  structural_model = unconstrained()
+)
+
+ecpe_lcdm <- dcm_estimate(
+  dcm_spec = ecpe_spec,
+  data = ecpe_data,
+  identifier = "resp_id",
+  method = "pathfinder",
+  backend = "cmdstanr",
+  single_path_draws = 1000,
+  num_paths = 10,
+  draws = 2000,
+  file = here("materials", "slides", "fits", "ecpe-lcdm-uncst")
+)
+
+ecpe_lcdm <- add_respondent_estimates(ecpe_lcdm)
+```
+
+```{r}
+#| label: ecpe-strc
+#| echo: true
+#| code-line-numbers: "|5,8,11,12"
+
+measr_extract(ecpe_lcdm, "strc_param")
+```
+
+* We see respondents in all of the expected classes
+
+## Attribute correlations
+
+```{r}
+#| label: attr_cor
+
+attribute_corr <- function(x) {
+  attr_cat <- measr_extract(x, "attribute_prob") |>
+    select(-x@data$respondent_identifier) |>
+    mutate(across(everything(), \(x) as.integer(x > 0.5)))
+
+  ret_mat <- diag(nrow = ncol(attr_cat))
+  rownames(ret_mat) <- colnames(attr_cat)
+  colnames(ret_mat) <- colnames(attr_cat)
+
+  att_combo <- combn(x = colnames(attr_cat), m = 2) |>
+    t()
+
+  for (i in seq_len(nrow(att_combo))) {
+    suppressMessages(
+      ret_mat[att_combo[i, 1], att_combo[i, 2]] <-
+        ret_mat[att_combo[i, 2], att_combo[i, 1]] <-
+          psych::tetrachoric(table(
+            attr_cat[[att_combo[i, 1]]],
+            attr_cat[[att_combo[i, 2]]]
+          ))$rho
+    )
+  }
+
+  ret_mat
+}
+```
+
+```{r}
+#| label: ecpe-attribute-correlation
+#| echo: true
+
+attribute_corr(ecpe_lcdm)
+```
+
+* We expect to see somewhat high correlations (but not perfect) due to the attribute dependencies
+
+## Exercise 1 {.exercise}
+
+* Open `misspecifications.Rmd` and run the `setup` chunk.
+
+* Examine the base rates and attribute correlations for the PIE HDCM model.
+
+* What do the findings indicate?
+
+{{< countdown "4:00" bottom="15%" >}}
+
+## {.exercise data-menu-title="Solution 1"}
+
+```{r}
+#| label: read-pie
+
+pie_hdcm_spec <- dcm_specify(
+  qmatrix = pie_ft_qmatrix,
+  identifier = "task",
+  measurement_model = lcdm(),
+  structural_model = hdcm("L1 -> L2 -> L3")
+)
+
+pie_hdcm <- dcm_estimate(
+  pie_hdcm_spec,
+  data = pie_ft_data,
+  identifier = "student",
+  method = "mcmc",
+  backend = "rstan",
+  chains = 2,
+  iter = 2000,
+  warmup = 1000,
+  cores = 2,
+  file = here("materials", "slides", "fits", "pie-lcdm-hdcm")
+)
+
+pie_hdcm <- add_respondent_estimates(pie_hdcm)
+```
+
+:::{.panel-tabset}
+
+### Structural parameters
+
+```{r}
+#| label: pie-strc
+#| echo: true
+#| code-line-numbers: "|6"
+
+measr_extract(pie_hdcm, "strc_param")
+```
+
+* Very few students are proficient on only Level 1 skills
+
+### Correlations
+
+```{r}
+#| label: pie-corr
+#| echo: true
+
+attribute_corr(pie_hdcm)
+```
+
+* Correlation between Levels 1 and 2 is much higher than between Levels 2 and 3
+
+:::
+
+## Too few attributes {.exercise}
+
+* What might some indicators be that we have included too few attributes in our model?
+
+:::{.fragment}
+* Some we'll examine today:
+  * Local independence: Item responses should be independent conditional on the respondent's profile of proficiency
+:::
+
+## Residual correlations with Yen's Q~3~
+
+* Residual correlations should all be relatively small (e.g., <.2)
+
+:::{.new-height style="--code-height: 420px;"}
+```{r}
+#| label: ecpe-yensq3
+#| echo: true
+
+yens_q3(ecpe_lcdm)
+```
+
+:::
+
+## Visualizing Yen's Q~3~
+
+```{r}
+#| label: vis-yensq3
+#| fig-asp: .4
+#| fig-alt: >
+#|   Histogram showing the distribution of residual correlations. All residual
+#|   correlations are within the expected bounds of -.2 to .2.
+
+ecpe_q3 <- yens_q3(ecpe_lcdm)
+
+ggplot(ecpe_q3, aes(x = resid_corr)) +
+  geom_histogram(binwidth = 0.01, boundary = 0, fill = palette_measr[1]) +
+  geom_vline(
+    xintercept = c(-.2, .2),
+    linetype = "dashed",
+    color = palette_measr[2]
+  ) +
+  expand_limits(x = c(-.25, .25)) +
+  labs(x = "Residual correlation", y = "Item pairs")
+```
+
+## Exercise 2 {.exercise}
+
+* Calculate Yen's Q~3~ (residual correlations) for the PIE HDCM
+
+* What do the findings indicate?
+
+{{< countdown "2:00" bottom="15%" >}}
+
+## {.exercise data-menu-title="Solution 2"}
+
+:::{.panel-tabset}
+
+### Q~3~ distribution
+
+```{r}
+#| label: vis-yensq3-pie
+#| warning: false
+#| fig-asp: .4
+#| fig-alt: >
+#|   Histogram showing the distribution of residual correlations. Several
+#    residual correlations are outside the expected bounds of -.2 to .2.
+
+pie_q3 <- yens_q3(pie_hdcm)
+
+ggplot(pie_q3, aes(x = resid_corr)) +
+  geom_histogram(binwidth = 0.01, boundary = 0, fill = palette_measr[1]) +
+  geom_vline(
+    xintercept = c(-.2, .2),
+    linetype = "dashed",
+    color = palette_measr[2]
+  ) +
+  expand_limits(x = c(-.25, .25)) +
+  labs(x = "Residual correlation", y = "Item pairs")
+```
+
+### Flagged pairs
+
+```{r}
+#| label: pie-q3
+#| echo: true
+
+yens_q3(pie_hdcm) |>
+  filter(flag)
+```
+
+:::
+
+# Item misspecifications
+
+## Diagnosing item-level problems
+
+* [Item-level fit](/materials/slides/01-introdcm-04-evaluation-slides.html#item-level-fit) with posterior predictive model checks
+  * *p*-values
+  * Conditional probabilities
+  * Odds ratios
+
+* Item discrimination
+
+* Q-matrix validation
+
+## Item discrimination
+
+* Evaluates how well an item is able to distinguish between attribute profiles
+  * Item- and test-level discrimination ([Henson & Douglas, 2005](https://doi.org/10.1177/0146621604272623))
+  * Attribute-level discrimination ([Henson et al., 2008](https://doi.org/10.1177/0146621607302478))
+
+* Higher is better, but no clear thresholds as values are dependent on the number of attributes, model that was estimated, etc.
+
+* Low values may indicate an item is not measuring what we intend (or not measuring well)
+
+## CDI with measr
+
+```{r}
+#| label: ecpe-cdi
+#| echo: true
+#| code-line-numbers: "|8|22"
+
+cdi(ecpe_lcdm)
+```
+
+## Exercise 3 {.exercise}
+
+* Calculate the CDI for the PIE HDCM model
+
+* What conclusions or recommendations might we make based on these results?
+
+{{< countdown "2:00" bottom="15%" >}}
+
+## {.exercise data-menu-title="Solution 3"}
+
+```{r}
+#| label: pie-cdi
+#| echo: true
+
+cdi(pie_hdcm)
+```
+
+## Q-matrix validation
+
+* The Q-matrix defines which items measure each attribute
+  * Is the Q-matrix correct?
+  * Are there other Q-matrices that might better explain the observed data
+
+* measr implements a general Q-matrix validation measure from [de la Torre & Chiu (2016)](https://doi.org/10.1007/s11336-015-9467-8)
+
+* Assumes that the set of attributes is correct
+  * Does not evaluate whether additional, fewer, or different attributes would be appropriate
+
+## Q-matrix validation with measr
+
+```{r}
+#| label: ecpe-qmatrix-validation
+#| echo: true
+#| code-line-numbers: "|13"
+
+qmatrix_validation(ecpe_lcdm)
+```
+
+## Exercise 4 {.exercise}
+
+* Check the Q-matrix for the PIE HDCM
+
+* Are there any items that may measure additional pathway levels?
+
+{{< countdown "2:00" bottom="15%" >}}
+
+## {.exercise data-menu-title="Solution 4"}
+
+```{r}
+#| label: pie-qmatrix-validation
+#| echo: true
+
+qmatrix_validation(pie_hdcm)
+```
+
+# {.closing data-menu-title="Closing"}
+
+<br>
+
+:::{.end-title color="white" font-size="200%"}
+Model misspecifications
+:::
+
+:::{.end-subtitle}
+Attributes and items
+:::
+
+:::{.center}
+<https://learn.r-dcm.org>
+:::

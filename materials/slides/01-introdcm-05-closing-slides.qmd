@@ -88,7 +88,7 @@ ATLAS at the University of Kansas is conducting research to better understand th
 
 :::{.column .image width="60%"}
 
-![](figure/measr.png){width="50%" fig-alt="Hex logo for the measr R package."}
+![](figure/conference-survey/ncme2026-qr-code.png){width="50%" fig-alt="QR code for the NCME session evaluation."}
 
 :::
 
