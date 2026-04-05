@@ -27,7 +27,7 @@ Here's your roadmap for the workshop!
 
 - [**Materials**](/materials/) ({{< fa book-open-reader >}}): This page contains the slides for each session.
 
-- [**Exercises**](https://github.com/measr-workshop/ncme2024-exercises) ({{< fa laptop-code >}}): This Github repository contains all of the exercises for each session.
+- [**Exercises**](https://github.com/r-dcm/ncme2026-exercises) ({{< fa laptop-code >}}): This Github repository contains all of the exercises for each session.
 
 ```{r}
 #| echo: false
