@@ -1005,9 +1005,7 @@ loo_compare(ecpe_lcdm, ecpe_hdcm)
 
 ## Exercise 4 {.exercise}
 
-* Run the included code to load back in our saturated PIE LCDM with all possible profiles
-
-* Compare that model to the HDCM we just estimated
+* Compare our unconstrained model to the HDCM we just estimated
 
 * Which model is preferred? What does that tell us about our theory?
 

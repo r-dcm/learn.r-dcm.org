@@ -881,6 +881,7 @@ measr_extract(ecpe_lcdm, "probability_reliability")
 ## Exercise 5 {.exercise}
 
 * Examine the attribute classification indices for the ROAR-PA LCDM.
+
 * Which attributes are the most and least reliable?
 
 {{< countdown "4:00" bottom="15%" >}}

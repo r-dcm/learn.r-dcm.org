@@ -113,7 +113,7 @@ All materials are available on the workshop website:
 #| echo: true
 #| eval: false
 
-install.packages(c("measr", "tidyverse", "fs", "usethis"))
+install.packages(c("measr", "tidyverse", "here", "fs", "usethis"))
 
 
 # Optional
