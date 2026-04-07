@@ -639,35 +639,60 @@
     "href": "materials/02-advdcm-04-misspecifications.html",
     "title": "Evaluating Diagnostic Classification Models",
     "section": "",
-    "text": "This session how to evaluate diagnostic classification models with Stan using the R package measr. We cover absolute and relative model fit, item-level fit, and reliability indices.\n Open slides in new window"
+    "text": "This session how to evaluate diagnostic classification models with Stan using the R package measr. We cover absolute and relative model fit, item-level fit, and reliability indices.\n Open slides in new window",
+    "crumbs": [
+      "Materials",
+      "Advanced DCMs",
+      "Model Misspecifications"
+    ]
   },
   {
     "objectID": "materials/02-advdcm-02-measurement-models.html",
     "href": "materials/02-advdcm-02-measurement-models.html",
     "title": "Introduction to Diagnostic Classification Models",
     "section": "",
-    "text": "This session provides a brief introduction to diagnostic classification models, including conceptual and statistical foundations.\n Open slides in new window"
+    "text": "This session provides a brief introduction to diagnostic classification models, including conceptual and statistical foundations.\n Open slides in new window",
+    "crumbs": [
+      "Materials",
+      "Advanced DCMs",
+      "Measurement Models"
+    ]
   },
   {
     "objectID": "materials/01-introdcm-05-closing.html",
     "href": "materials/01-introdcm-05-closing.html",
     "title": "Wrap-Up",
     "section": "",
-    "text": "This session wraps up the workshop, including resources for further learning. Please take our post-workshop survey!\n Open slides in new window"
+    "text": "This session wraps up the workshop, including resources for further learning. Please take our post-workshop survey!\n Open slides in new window",
+    "crumbs": [
+      "Materials",
+      "Introduction to DCMs",
+      "Wrap-Up"
+    ]
   },
   {
     "objectID": "materials/01-introdcm-03-estimation.html",
     "href": "materials/01-introdcm-03-estimation.html",
     "title": "Estimating Diagnostic Classification Models",
     "section": "",
-    "text": "This session provides a tutorial for estimation diagnostic classification models with Stan using the R package measr.\n Open slides in new window"
+    "text": "This session provides a tutorial for estimation diagnostic classification models with Stan using the R package measr.\n Open slides in new window",
+    "crumbs": [
+      "Materials",
+      "Introduction to DCMs",
+      "Estimating DCMs"
+    ]
   },
   {
     "objectID": "materials/01-introdcm-01-intro.html",
     "href": "materials/01-introdcm-01-intro.html",
     "title": "Welcome!",
     "section": "",
-    "text": "This session provides a brief introduction to the workshop and describes the required software for following along with the example code.\n Open slides in new window"
+    "text": "This session provides a brief introduction to the workshop and describes the required software for following along with the example code.\n Open slides in new window",
+    "crumbs": [
+      "Materials",
+      "Introduction to DCMs",
+      "Welcome!"
+    ]
   },
   {
     "objectID": "index.html",
@@ -681,35 +706,60 @@
     "href": "materials/01-introdcm-02-dcm-intro.html",
     "title": "Introduction to Diagnostic Classification Models",
     "section": "",
-    "text": "This session provides a brief introduction to diagnostic classification models, including conceptual and statistical foundations.\n Open slides in new window"
+    "text": "This session provides a brief introduction to diagnostic classification models, including conceptual and statistical foundations.\n Open slides in new window",
+    "crumbs": [
+      "Materials",
+      "Introduction to DCMs",
+      "Intro to DCMs"
+    ]
   },
   {
     "objectID": "materials/01-introdcm-04-evaluation.html",
     "href": "materials/01-introdcm-04-evaluation.html",
     "title": "Evaluating Diagnostic Classification Models",
     "section": "",
-    "text": "This session how to evaluate diagnostic classification models with Stan using the R package measr. We cover absolute and relative model fit, item-level fit, and reliability indices.\n Open slides in new window"
+    "text": "This session how to evaluate diagnostic classification models with Stan using the R package measr. We cover absolute and relative model fit, item-level fit, and reliability indices.\n Open slides in new window",
+    "crumbs": [
+      "Materials",
+      "Introduction to DCMs",
+      "Evaluating DCMs"
+    ]
   },
   {
     "objectID": "materials/02-advdcm-01-intro.html",
     "href": "materials/02-advdcm-01-intro.html",
     "title": "Welcome!",
     "section": "",
-    "text": "This session provides a brief introduction to the workshop and describes the required software for following along with the example code.\n Open slides in new window"
+    "text": "This session provides a brief introduction to the workshop and describes the required software for following along with the example code.\n Open slides in new window",
+    "crumbs": [
+      "Materials",
+      "Advanced DCMs",
+      "Welcome!"
+    ]
   },
   {
     "objectID": "materials/02-advdcm-03-structural-models.html",
     "href": "materials/02-advdcm-03-structural-models.html",
     "title": "Estimating Diagnostic Classification Models",
     "section": "",
-    "text": "This session provides a tutorial for estimation diagnostic classification models with Stan using the R package measr.\n Open slides in new window"
+    "text": "This session provides a tutorial for estimation diagnostic classification models with Stan using the R package measr.\n Open slides in new window",
+    "crumbs": [
+      "Materials",
+      "Advanced DCMs",
+      "Structural Models"
+    ]
   },
   {
     "objectID": "materials/02-advdcm-05-closing.html",
     "href": "materials/02-advdcm-05-closing.html",
     "title": "Wrap-Up",
     "section": "",
-    "text": "This session wraps up the workshop, including resources for further learning. Please take our post-workshop survey!\n Open slides in new window"
+    "text": "This session wraps up the workshop, including resources for further learning. Please take our post-workshop survey!\n Open slides in new window",
+    "crumbs": [
+      "Materials",
+      "Advanced DCMs",
+      "Wrap-Up"
+    ]
   },
   {
     "objectID": "materials/prework.html",
