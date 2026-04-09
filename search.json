@@ -571,7 +571,7 @@
     "href": "materials/slides/01-introdcm-03-estimation-slides.html#exercise-4",
     "title": "Estimating diagnostic  classification models",
     "section": "Exercise 4",
-    "text": "Exercise 4\nEstimate a new LCDM model for the ROAR-PA data with the following priors:\n\nIntercepts: normal(-1, 2)\n\nExcept item 3, which should use a normal(0, 1) prior\n\nMain effects: lognormal(0, 1)\n\nUse backend = \"optim\" for a speedier estimation\nExtract the prior to see that the specifications were applied"
+    "text": "Exercise 4\nEstimate a new LCDM model for the ROAR-PA data with the following priors:\n\nIntercepts: normal(-1, 2)\n\nExcept item 3, which should use a normal(0, 1) prior\n\nMain effects: lognormal(0, 1)\n\nUse method = \"optim\" for a speedier estimation\nExtract the prior to see that the specifications were applied"
   },
   {
     "objectID": "materials/slides/01-introdcm-03-estimation-slides.html#section-4",
