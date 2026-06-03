@@ -614,7 +614,7 @@ Estimate a new LCDM model for the ROAR-PA data with the following priors:
   * Except item 3, which should use a `normal(0, 1)` prior
 * Main effects: `lognormal(0, 1)`
 
-Use `backend = "optim"` for a speedier estimation
+Use `method = "optim"` for a speedier estimation
 
 Extract the prior to see that the specifications were applied
 
