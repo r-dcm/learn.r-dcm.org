@@ -2,6 +2,7 @@
 title: Introduction to diagnostic <br> classification modeling
 subtitle: With R and Stan
 author: W. Jake Thompson, Ph.D.
+freeze: false
 ---
 
 # Welcome!
@@ -11,6 +12,18 @@ author: W. Jake Thompson, Ph.D.
 #| include: false
 
 library(knitr)
+library(fs)
+library(here)
+
+# copy grid-worms
+if (!dir_exists(here("_site/materials/slides/"))) {
+  dir_create(here("_site/materials/slides/"))
+}
+dir_copy(
+  here("materials", "slides", "grid-worms"),
+  here("_site/materials/slides/grid-worms"),
+  overwrite = TRUE
+)
 ```
 
 ## Who am I?
