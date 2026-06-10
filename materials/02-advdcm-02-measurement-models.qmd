@@ -1,8 +1,8 @@
 ---
-title: "Introduction to Diagnostic Classification Models"
+title: "Measurement Models for DCMs"
 ---
 
-This session provides a brief introduction to diagnostic classification models, including conceptual and statistical foundations.
+This session describes how to choose and use different measurement models when estimating DCMs with the R package [measr](https://measr.r-dcm.org).
 
 ```{=html}
 <p class="buttons"><a class="btn btn-danger" target="_blank" href="slides/02-advdcm-02-measurement-models-slides.html"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open slides in new window</a>

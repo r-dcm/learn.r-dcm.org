@@ -2,7 +2,7 @@
 title: "Estimating Diagnostic Classification Models"
 ---
 
-This session provides a tutorial for estimation diagnostic classification models with [Stan](https://mc-stan.org) using the R package [measr](https://measr.r-dcm.org).
+This session describes how to use structural models to encode attribute relationships when estimating DCMs with the R package [measr](https://measr.r-dcm.org).
 
 ```{=html}
 <p class="buttons"><a class="btn btn-danger" target="_blank" href="slides/02-advdcm-03-structural-models-slides.html"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open slides in new window</a>
