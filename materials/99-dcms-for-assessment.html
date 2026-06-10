@@ -8,7 +8,7 @@
 
 <meta name="description" content="Learn how to use modern Bayesian methods to estimate and evaluation diagnostic classification models.">
 
-<title>Diagnostic Classification Modeling – r-dcm workshop</title>
+<title>Improving Assessment with DCMs – r-dcm workshop</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -27,25 +27,25 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href=".//files/icon-180.png" rel="icon" type="image/png">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-fb4d3de9209d47b8b654ac5ed16349f1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-b22e0a87cf7a0d96dc884cd99b859a64.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/quarto-contrib/fontawesome6-6.7.2/all.min.css" rel="stylesheet">
-<link href="site_libs/quarto-contrib/fontawesome6-6.7.2/latex-fontsize.css" rel="stylesheet">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="..//files/icon-180.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-fb4d3de9209d47b8b654ac5ed16349f1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-b22e0a87cf7a0d96dc884cd99b859a64.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/quarto-contrib/fontawesome6-6.7.2/all.min.css" rel="stylesheet">
+<link href="../site_libs/quarto-contrib/fontawesome6-6.7.2/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -75,15 +75,15 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<meta property="og:title" content="Diagnostic Classification Modeling – r-dcm workshop">
-<meta property="og:description" content="Use R and Stan to estimate and evaluate diagnostic psychometric models">
+<meta property="og:title" content="Improving Assessment with DCMs – r-dcm workshop">
+<meta property="og:description" content="">
 <meta property="og:image" content="https://learn.r-dcm.org/files/social-image-measr.png">
 <meta property="og:site_name" content="r-dcm workshop">
 <meta property="og:locale" content="en_US">
 <meta property="og:image:height" content="630">
 <meta property="og:image:width" content="1200">
-<meta name="twitter:title" content="Diagnostic Classification Modeling – r-dcm workshop">
-<meta name="twitter:description" content="Use R and Stan to estimate and evaluate diagnostic psychometric models">
+<meta name="twitter:title" content="Improving Assessment with DCMs – r-dcm workshop">
+<meta name="twitter:description" content="">
 <meta name="twitter:image" content="https://learn.r-dcm.org/files/social-image-measr.png">
 <meta name="twitter:creator" content="@wjakethompson">
 <meta name="twitter:site" content="@atlas4learning">
@@ -92,14 +92,14 @@ ul.task-list li input[type="checkbox"] {
 <meta name="twitter:image-width" content="1200">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-sidebar docked nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">r-dcm workshop</span>
     </a>
   </div>
@@ -110,11 +110,11 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./schedule.html"> 
+    <a class="nav-link" href="../schedule.html"> 
 <span class="menu-text">Schedule</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./materials/index.html"> 
+    <a class="nav-link active" href="../materials/index.html" aria-current="page"> 
 <span class="menu-text">Materials</span></a>
   </li>  
 </ul>
@@ -123,61 +123,179 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../materials/99-dcms-for-assessment.html">Short Courses</a></li><li class="breadcrumb-item"><a href="../materials/99-dcms-for-assessment.html">Improving Assessment with DCMs</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-<!-- margin-sidebar -->
-    
-<!-- main -->
-<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"><h1 class="course-title title display-7">
-            Diagnostic Classification Modeling
-        </h1></header>
-
-<div class="grid title-block">
-    <div class="course-details-title-block g-col-12 g-col-sm-8 order-2 order-sm-1 text-center text-sm-start">
-        
-        <div class="course-subtitle">
-            <p>Use R and Stan to estimate and evaluate diagnostic psychometric models</p>
-        </div>
-        <div class="course-meta">
-            <p></p><p>Workshop materials for learning about diagnostic models and using the r-dcm suite of packages to apply them to your work.</p><p></p>
-        </div>
-    </div>
-    <div class="g-col-12 g-col-sm-4 order-1 order-sm-2">
-      <div class="grid" style="--bs-columns: 5;">
-        <div class="g-col-1 g-col-sm-0"></div>
-        <div class="g-col-3 g-col-sm-5"><img src="./files/img/measr-hex.png" class="img-fluid"></div>
-        <div class="g-col-1 g-col-sm-0"></div>
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Overview</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
       </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Materials</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/prework.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prework</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Introduction to DCMs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/01-introdcm-01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome!</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/01-introdcm-02-dcm-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intro to DCMs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/01-introdcm-03-estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estimating DCMs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/01-introdcm-04-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Evaluating DCMs</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/01-introdcm-05-closing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wrap-Up</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Advanced DCMs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/02-advdcm-01-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome!</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/02-advdcm-02-measurement-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Measurement Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/02-advdcm-03-structural-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Structural Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/02-advdcm-04-misspecifications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Model Misspecifications</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/02-advdcm-05-closing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Wrap-Up</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Short Courses</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/99-dcms-for-assessment.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Improving Assessment with DCMs</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
     </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../materials/99-dcms-for-assessment.html">Short Courses</a></li><li class="breadcrumb-item"><a href="../materials/99-dcms-for-assessment.html">Improving Assessment with DCMs</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Improving Assessment with DCMs</h1>
 </div>
 
 
-<div class="home">
-<div class="grid course-details">
-<section id="instructor" class="level3 g-col-12 g-col-sm-6">
-<h3 class="anchored" data-anchor-id="instructor">Instructor</h3>
-<ul>
-<li><i class="fa-solid fa-user" aria-label="user"></i> &nbsp; <a href="https://wjakethompson.com"><strong>W. Jake Thompson, Ph.D.</strong></a></li>
-<li><i class="fa-solid fa-university" aria-label="university"></i> &nbsp; <a href="https://atlas.ku.edu">ATLAS, University of Kansas</a></li>
-<li><i class="fa-solid fa-envelope" aria-label="envelope"></i> &nbsp; <a href="mailto:{{< instructor.email >}}">wjakethompson@ku.edu</a></li>
-<li><i class="fa-brands fa-linkedin" aria-label="linkedin"></i> &nbsp; <a href="https://www.linkedin.com/in/wjakethompson">in/wjakethompson</a></li>
-<li><i class="fa-brands fa-bluesky" aria-label="bluesky"></i> &nbsp; <a href="https://bsky.app/profile/wjakethompson.com">@wjakethompson.com</a></li>
-</ul>
-</section>
-<section id="next-course" class="level3 g-col-12 g-col-sm-6">
-<h3 class="anchored" data-anchor-id="next-course">Next course</h3>
-<ul>
-<li><i class="fa-solid fa-chalkboard-user" aria-label="chalkboard-user"></i> &nbsp; Paris Conference on Education</li>
-<li><i class="fa-solid fa-calendar-alt" aria-label="calendar-alt"></i> &nbsp; June 16, 2026</li>
-<li><i class="fa-solid fa-clock" aria-label="clock"></i> &nbsp; 1:30pm–2:20pm (CEST)</li>
-<li><i class="fa-solid fa-location-dot" aria-label="location-dot"></i> &nbsp; Paris, France</li>
-</ul>
-</section>
-</div>
-</div>
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This 1-hour short course highlights how DCMs can be used to improve how assessments are used. We also describe how the R package <a href="https://measr.r-dcm.org">measr</a> can be used to estimate these models in applied settings.</p>
+<p class="buttons"><a class="btn btn-danger" target="_blank" href="slides/99-dcms-for-assessment-slides.html"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open slides in new window</a>
+<iframe width="768" height="432" src="slides/99-dcms-for-assessment-slides.html" style="border:1px solid #023047" title="Short Course Slides"></iframe>
+</p>
 
 
 </main> <!-- /main -->

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.24">
+<meta name="generator" content="quarto-1.10.7">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -71,12 +71,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="..//files/icon-180.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d5df66f4a05902e0b7d3becaade48e35.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-fb4d3de9209d47b8b654ac5ed16349f1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-b22e0a87cf7a0d96dc884cd99b859a64.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -281,6 +280,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Short Courses</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/99-dcms-for-assessment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Improving Assessment with DCMs</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -327,9 +343,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>(Recommended) A recent version of RStudio Desktop (≥ 2026.01.1-403), available for free at <a href="https://posit.co/download/rstudio-desktop/" class="uri">https://posit.co/download/rstudio-desktop/</a></li>
 <li>The R packages we will use, which you can install by connecting to the internet, opening RStudio, and running the following code in the console:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"measr"</span>, <span class="st">"tidyverse"</span>, <span class="st">"psych"</span>, <span class="st">"here"</span>, <span class="st">"fs"</span>, <span class="st">"usethis"</span>),</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">repos =</span> <span class="st">"https://cran.rstudio.com/"</span>,</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(<span class="st">"measr"</span>, <span class="st">"tidyverse"</span>, <span class="st">"psych"</span>, <span class="st">"here"</span>, <span class="st">"fs"</span>, <span class="st">"usethis"</span>),</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repos =</span> <span class="st">"https://cran.rstudio.com/"</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">dependencies =</span> <span class="cn">TRUE</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <section id="optional" class="level2">
 <h2 class="anchored" data-anchor-id="optional">Optional</h2>
 <p>By default, measr uses <a href="https://mc-stan.org/rstan">rstan</a> as a backend for estimating models. However, the version of rstan on CRAN is outdated. Therefore, I recommend using an updated version of rstan from the <a href="https://github.com/stan-dev/r-packages">stan-dev/r-packages</a> repository, or using the <a href="https://mc-stan.org/cmdstanr">cmdstanr</a> interface to CmdStan.</p>
@@ -345,9 +363,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="cmdstanr" class="level3">
 <h3 class="anchored" data-anchor-id="cmdstanr">cmdstanr</h3>
-<p>For cmdstanr, I recommend installing the development version directly from Github:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"remotes"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"stan-dev/cmdstanr"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>cmdstanr can also be installed from the <a href="https://stan-dev.r-universe.dev/builds">stan-dev r-universe repository</a>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">"cmdstanr"</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">repos =</span> <span class="fu">c</span>(<span class="st">"https://stan-dev.r-universe.dev"</span>, <span class="fu">getOption</span>(<span class="st">"repos"</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>After installing cmdstanr, you will also need to install CmdStan, which can be by running:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>cmdstanr<span class="sc">::</span><span class="fu">install_cmdstan</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>To ensure that cmdstanr and CmdStan are installed properly, try running the following code. If it works, then you are good to go! For help with install cmdstanr, see the <a href="https://mc-stan.org/cmdstanr/articles/cmdstanr.html">Getting Started with CmdStanR</a> vignette.</p>
@@ -359,6 +379,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 
 </main> <!-- /main -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Section titles to keep EXPANDED by default. Everything else collapses.
+    const keepOpen = ["Overview", "Short Courses"];
+
+    document
+      .querySelectorAll('#quarto-sidebar ul.sidebar-section[id^="quarto-sidebar-section-"]')
+      .forEach(function (ul) {
+        const toggles = document.querySelectorAll(
+          '[data-bs-target="#' + ul.id + '"]'
+        );
+        const title = (toggles[0] && toggles[0].textContent.trim()) || "";
+
+        // Keep open if allowlisted OR it contains the current/active page.
+        const hasActive = ul.querySelector("a.active") !== null;
+        if (keepOpen.includes(title) || hasActive) return;
+
+        ul.classList.remove("show");
+        toggles.forEach(function (t) {
+          t.setAttribute("aria-expanded", "false");
+          t.classList.add("collapsed");
+        });
+      });
+  });
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

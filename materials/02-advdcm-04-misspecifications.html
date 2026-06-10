@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.24">
+<meta name="generator" content="quarto-1.10.7">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -36,12 +36,11 @@ ul.task-list li input[type="checkbox"] {
 <link href="..//files/icon-180.png" rel="icon" type="image/png">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d5df66f4a05902e0b7d3becaade48e35.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-fb4d3de9209d47b8b654ac5ed16349f1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap-b22e0a87cf7a0d96dc884cd99b859a64.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -246,6 +245,23 @@ ul.task-list li input[type="checkbox"] {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Short Courses</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../materials/99-dcms-for-assessment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Improving Assessment with DCMs</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -276,13 +292,38 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>This session how to evaluate diagnostic classification models with <a href="https://mc-stan.org">Stan</a> using the R package <a href="https://measr.r-dcm.org">measr</a>. We cover absolute and relative model fit, item-level fit, and reliability indices.</p>
+<p>This session provides a tutorial for detecting and correcting misspecification in DCMs with the R package <a href="https://measr.r-dcm.org">measr</a>.</p>
 <p class="buttons"><a class="btn btn-danger" target="_blank" href="slides/02-advdcm-04-misspecifications-slides.html"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open slides in new window</a>
 <iframe width="768" height="432" src="slides/02-advdcm-04-misspecifications-slides.html" style="border:1px solid #023047" title="Misspecifications Slides"></iframe>
 </p>
 
 
 </main> <!-- /main -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Section titles to keep EXPANDED by default. Everything else collapses.
+    const keepOpen = ["Overview", "Short Courses"];
+
+    document
+      .querySelectorAll('#quarto-sidebar ul.sidebar-section[id^="quarto-sidebar-section-"]')
+      .forEach(function (ul) {
+        const toggles = document.querySelectorAll(
+          '[data-bs-target="#' + ul.id + '"]'
+        );
+        const title = (toggles[0] && toggles[0].textContent.trim()) || "";
+
+        // Keep open if allowlisted OR it contains the current/active page.
+        const hasActive = ul.querySelector("a.active") !== null;
+        if (keepOpen.includes(title) || hasActive) return;
+
+        ul.classList.remove("show");
+        toggles.forEach(function (t) {
+          t.setAttribute("aria-expanded", "false");
+          t.classList.add("collapsed");
+        });
+      });
+  });
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
