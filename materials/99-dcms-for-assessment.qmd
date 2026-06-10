@@ -1,0 +1,13 @@
+---
+title: "Improving Assessment with DCMs"
+---
+
+This 1-hour short course highlights how DCMs can be used to improve how assessments are used. We also describe how the R package [measr](https://measr.r-dcm.org) can be used to estimate these models in applied settings.
+
+```{=html}
+<p class="buttons"><a class="btn btn-danger" target="_blank" href="slides/99-dcms-for-assessment-slides.html"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open slides in new window</a>
+```
+
+```{=html}
+<iframe width="768" height="432" src="slides/99-dcms-for-assessment-slides.html" style="border:1px solid #023047" title="Short Course Slides"></iframe>
+```
