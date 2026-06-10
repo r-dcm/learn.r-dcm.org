@@ -10,9 +10,11 @@ To prepare for the workshop, please install the following:
 * The R packages we will use, which you can install by connecting to the internet, opening RStudio, and running the following code in the console:
 
 ```{.r}
-install.packages(c("measr", "tidyverse", "psych", "here", "fs", "usethis"),
-                 repos = "https://cran.rstudio.com/",
-                 dependencies = TRUE)
+install.packages(
+  c("measr", "tidyverse", "psych", "here", "fs", "usethis"),
+  repos = "https://cran.rstudio.com/",
+  dependencies = TRUE
+)
 ```
 
 ## Optional
@@ -43,11 +45,13 @@ example(stan_model, package = "rstan", run.dontrun = TRUE)
 
 ### cmdstanr
 
-For cmdstanr, I recommend installing the development version directly from Github:
+cmdstanr can also be installed from the [stan-dev r-universe repository](https://stan-dev.r-universe.dev/builds):
 
 ```{.r}
-install.packages("remotes")
-remotes::install_github("stan-dev/cmdstanr")
+install.packages(
+  "cmdstanr",
+  repos = c("https://stan-dev.r-universe.dev", getOption("repos"))
+)
 ```
 
 After installing cmdstanr, you will also need to install CmdStan, which can be by running:

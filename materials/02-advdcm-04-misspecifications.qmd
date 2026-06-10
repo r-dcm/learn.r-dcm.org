@@ -2,8 +2,7 @@
 title: "Evaluating Diagnostic Classification Models"
 ---
 
-This session how to evaluate diagnostic classification models with [Stan](https://mc-stan.org) using the R package [measr](https://measr.r-dcm.org).
-We cover absolute and relative model fit, item-level fit, and reliability indices.
+This session provides a tutorial for detecting and correcting misspecification in DCMs with the R package [measr](https://measr.r-dcm.org).
 
 ```{=html}
 <p class="buttons"><a class="btn btn-danger" target="_blank" href="slides/02-advdcm-04-misspecifications-slides.html"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open slides in new window</a>

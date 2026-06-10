@@ -35,7 +35,6 @@ course-logo: /files/img/measr-hex.png
 - {{< fa chalkboard-user >}} &nbsp; {{< var event.name >}}
 - {{< fa calendar-alt >}} &nbsp; {{< var event.dates >}}
 - {{< fa clock >}} &nbsp; {{< var event.time >}}
-- {{< fa clock >}} &nbsp; {{< var event.time2 >}}
 - {{< fa location-dot >}} &nbsp; {{< var event.location >}}
 :::
 

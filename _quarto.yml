@@ -66,7 +66,10 @@ website:
               file: materials/02-advdcm-04-misspecifications.qmd
             - text: "Wrap-Up"
               file: materials/02-advdcm-05-closing.qmd
-
+        - section: "Short Courses"
+          contents:
+            - text: "Improving Assessment with DCMs"
+              file: materials/99-dcms-for-assessment.qmd
   
   page-footer:
     left: |
@@ -83,5 +86,6 @@ format:
     theme:
       - litera
       - html/custom.scss
+    include-after-body: html/sidebar-collapse.html
     toc: true
     highlight-style: github

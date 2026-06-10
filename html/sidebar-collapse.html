@@ -1,0 +1,25 @@
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Section titles to keep EXPANDED by default. Everything else collapses.
+    const keepOpen = ["Overview", "Short Courses"];
+
+    document
+      .querySelectorAll('#quarto-sidebar ul.sidebar-section[id^="quarto-sidebar-section-"]')
+      .forEach(function (ul) {
+        const toggles = document.querySelectorAll(
+          '[data-bs-target="#' + ul.id + '"]'
+        );
+        const title = (toggles[0] && toggles[0].textContent.trim()) || "";
+
+        // Keep open if allowlisted OR it contains the current/active page.
+        const hasActive = ul.querySelector("a.active") !== null;
+        if (keepOpen.includes(title) || hasActive) return;
+
+        ul.classList.remove("show");
+        toggles.forEach(function (t) {
+          t.setAttribute("aria-expanded", "false");
+          t.classList.add("collapsed");
+        });
+      });
+  });
+</script>
